@@ -1,0 +1,39 @@
+.md-header {
+    background: #3dafe5;
+  }
+  
+  p img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+  }
+  
+  p {
+    text-align: justify;
+  }
+
+  table {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  thead tr {
+    background: #3dafe5 !important;
+    color: white;
+  }
+  
+  tr:nth-child(odd) {
+    background: #f8f8f816;
+  }
+  
+  td,
+  th {
+    text-align: center !important;
+    vertical-align: middle !important;
+  }
+  
+  img[alt="logo"] {
+    width: 20rem;
+    object-fit: cover;
+  }

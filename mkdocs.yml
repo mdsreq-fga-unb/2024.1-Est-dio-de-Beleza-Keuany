@@ -1,0 +1,46 @@
+site_name: Studio de Beleza Keuany
+
+repo_name: "2024.1-Est-dio-de-Beleza-Keuany"
+repo_url: "https://github.com/mdsreq-fga-unb/2024.1-Est-dio-de-Beleza-Keuany"
+
+theme:
+  name: material
+  language: "pt"
+  # favicon: docs_separados/assets/logo.png  
+  # icon:
+  #   logo: material/food-variant
+  #   repo: fontawesome/brands/github
+  
+  palette:
+
+    # Palette toggle for light mode
+    - scheme: default
+      toggle:
+        icon: material/brightness-7 
+        name: Switch to dark mode
+      primary: #3dafe5
+      accent: #3dafe5
+    # Palette toggle for dark mode
+    - scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+      primary: #3dafe5
+      accent: #3dafe5
+
+  font:
+    text: "Montserrat"
+    code: "sans-serif"
+
+extra_css:
+  - stylesheets/styles.css
+
+nav:
+  - Introdução: index.md
+  - Visão do Produto e projeto:
+    - Visão do produto: visao_produto_projeto/visao_do_produto.md
+    - Visão do Projeto: visao_produto_projeto/visao_do_projeto.md
+  - Processo de Desenvolvimento de Software: /processoDev.md 
+  - Lições Aprendidas: licoesAprendidas.md
+  - Entregas:
+    - Unidade 1: entregas/unidade01.md
