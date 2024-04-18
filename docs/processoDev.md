@@ -46,27 +46,27 @@ Sobre as facetas da ER **escolhemos o processo participativo**, este é um proce
 
 ## Etapas do processo de ER
 
-- Elicitação e Descoberta: Atividade que busca levantar os requisitos iniciais, ajudar a entender o problema e se alinhar com os stakeholders.
+- **Elicitação e Descoberta**: Atividade que busca levantar os requisitos iniciais, ajudar a entender o problema e se alinhar com os stakeholders.
 
     - <u>Como iremos aplicar</u>: Entrevistas com o cliente por meio de plataformas como Google Meet, Discord, Teams ou similares. Anotando todas as declarações em um documento.
 
-- Análise e Consenso: Pegar requisitos “brutos” e fazer uma análise e assim decidir se fazem sentido e estão alinhados com os objetivos do projeto. 
+- **Análise e Consenso**: Pegar requisitos “brutos” e fazer uma análise e assim decidir se fazem sentido e estão alinhados com os objetivos do projeto. 
 
     - <u>Como iremos aplicar</u>:  Iremos revisar os requisitos coletados, identificar conflitos ou inconsistências e trabalhar para resolvê-los. Promoveremos discussões e reuniões com os stakeholders para garantir que todos concordem com os requisitos definidos por meio das ferramentas de vídeo chamadas listadas na etapa anterior.
 
-- Declaração: Refere-se a declarar seja por linguagem natural/oral/estruturada ou não os requisitos que estão sendo levantados, é feita junto com a Elicitação e Descoberta.
+- **Declaração**: Refere-se a declarar seja por linguagem natural/oral/estruturada ou não os requisitos que estão sendo levantados, é feita junto com a Elicitação e Descoberta.
 
     - <u>Como iremos aplicar</u>: Os requisitos serão separados em funcionais e não-funcionais no backlog do produto, e os funcionais irão passar por um refinamento até chegarem no nível de história do usuário e estarem prontos para entrar em uma Sprint.
 
-- Representação: Define como os requisitos serão apresentados no projeto, seja de maneira formal, semiformal ou informal.
+- **Representação**: Define como os requisitos serão apresentados no projeto, seja de maneira formal, semiformal ou informal.
 
     - <u>Como iremos aplicar</u>: Vamos documentar os requisitos no backlog por meio de níveis de refinamento (Temas, Épicos e Histórias de Usuário), de maneira padronizada por tabela.
 
-- Verificação e Validação: Revisão e testes são realizados para garantir que os requisitos estejam corretos e alinhados com as necessidades do usuário final.
+- **Verificação e Validação**: Revisão e testes são realizados para garantir que os requisitos estejam corretos e alinhados com as necessidades do usuário final.
 
     - <u>Como iremos aplicar</u>: Para uma história ser definida como concluída ao fim de uma sprint ela deverá passar pelos critérios de aceitação definidos pelo cliente, para que atendam as necessidades esperadas.
 
-- Organização e Atualização: Os requisitos são organizados de forma sistemática e atualizados conforme necessário ao longo do ciclo de desenvolvimento.
+- **Organização e Atualização**: Os requisitos são organizados de forma sistemática e atualizados conforme necessário ao longo do ciclo de desenvolvimento.
 
     - <u>Como iremos aplicar</u>: Como já dito anteriormente, os requisitos estarão organizados em um Backlog, que sempre será atualizado em caso de alteração dos requisitos.
 

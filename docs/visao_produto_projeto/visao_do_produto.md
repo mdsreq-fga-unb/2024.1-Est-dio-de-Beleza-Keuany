@@ -40,7 +40,7 @@
 
 **Objetivo Secundário #1:** Criar mais meios de divulgação do trabalho do cliente além do Instagram.
 
-##  Tecnologias utilizadas:
+##  Tecnologias utilizadas
 
 | Atividade | Tecnologia |
 | :--------: |  :--------: |
