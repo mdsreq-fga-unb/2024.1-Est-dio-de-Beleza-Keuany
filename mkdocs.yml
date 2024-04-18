@@ -37,10 +37,10 @@ extra_css:
 
 nav:
   - Introdução: index.md
-  - Visão do Produto e projeto:
-    - Visão do produto: visao_produto_projeto/visao_do_produto.md
+  - Visão do Produto e Projeto:
+    - Visão do Produto: visao_produto_projeto/visao_do_produto.md
     - Visão do Projeto: visao_produto_projeto/visao_do_projeto.md
-  - Processo de Desenvolvimento de Software: /processoDev.md 
+  - Processo de Desenvolvimento de Software: processoDev.md 
   - Lições Aprendidas: licoesAprendidas.md
   - Entregas:
     - Unidade 1: entregas/unidade01.md

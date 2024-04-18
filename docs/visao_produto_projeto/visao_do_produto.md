@@ -5,6 +5,7 @@
 | **Data** | **Versão** | **Descrição** | **Autor** |
 | :--------: | :--------: | :--------:  | :--------: | 
 | 16/04/2024 | 1.0 | Criação do Documento  | Mateus, Raphael, Ana Karoliny, Gustavo Melo |
+| 17/04/2024 | 1.01 | Adição das tecnologias utilizadas  | Raphael, Gustavo Melo |
 
 ##  Problema
 
@@ -41,18 +42,10 @@
 
 ##  Tecnologias utilizadas:
 
-| Tecnologia | Propósito |
+| Atividade | Tecnologia |
 | :--------: |  :--------: |
-| **Front-end** | Foi escolhido o framework **React.Js**,  que é utilizado para construção de interfaces de usuário em páginas web. |
-| **Back-end** | O **Node.js** é um ambiente de execução do código JavaScript com o objetivo de criar servidores. |
-| **Banco de Dados** | Foi escolhido o **MongoDB** é um sistema gerenciador de banco de dados orientado a documentos. |
-
-##  Ferramentas utilizadas:
-
-| | Ferramenta | Propósito |
-| :--------: | :--------: | :--------: |
-|  <img src="../assets/images/logo_whatsapp.png" width="50" style="border-radius: 50%" />  | WhatsApp | Comunicação assíncrona entre o time e com o cliente |
-|  <img src="../assets/images/logo_meets.png" width="50" style="border-radius: 50%" />  | Google Meets | Reuniões síncronas com o cliente |
-|  <img src="../assets/images/logo_discord.png" width="50" style="border-radius: 50%" />  | Discord | Comunicações e registros de informações internas / Pareamentos |
-|  <img src="../assets/images/logo_drive.png" width="70" style="border-radius: 50%" />  | Google Drive | Armazenamento e manuseio de documentos |
-|  <img src="../assets/images/logo_github.png" width="50" style="border-radius: 50%" />  | Github | Repositórios de documentação e código do projeto |
+| **Front-end** | TypeScript (ReactJS) |
+| **Back-end** | TypeScript (NodeJS) |
+| **Banco de Dados** | MongoDB |
+| **Reuniões** | Discord |
+| **Prototipagem** | Figma |

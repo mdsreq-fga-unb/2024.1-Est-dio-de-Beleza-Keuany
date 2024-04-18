@@ -5,6 +5,7 @@
 | **Data** | **Versão** | **Descrição** | **Autor** |
 | :--------: | :--------: | :--------:  | :--------: | 
 | 16/04/2024 | 1.0 | Criação do Documento  | Mateus, Raphael, Ana Karoliny, Gustavo Melo |
+| 17/04/2024 | 1.01 | Adicionando critérios de replanejamento  | João, Raphael, Gustavo Melo |
 
 ##  Organização do Projeto
 
@@ -58,8 +59,13 @@
 
 ##  Critérios de Replanejamento
 
-| Tipos de Risco    | Descrição     | Ação para contingenciar |  Impacto |
-| :--------: | :--------: | :--------: | :--------: |
-| Escopo | Mesmo depois de todo o processo de concepção e produção da solução através do processo RAD, o cliente não estar satisfeito com a entrega | Estar em constante contato com o cliente e buscar aplicar bem as etapas do RAD | Médio |
-| Prazo | Caso a equipe seja reduzida a metade da sua composição original | Replanejar o escopo do projeto e o cronograma | Alto |
-| Entrega | A falta de conhecimento com as tecnologias pode atrasar as entregas, levando a necessidade de um novo escopo de tempo e projeto a ser executado pela equipe | Realizar estudos e ações conuntas para mitigar a falta de saber da equipe | Médio |
+
+
+
+
+| Critérios    | Quando ocorre     | Passo a Passo | 
+| :--------: | :--------: | :--------: | 
+| Trancamento da disciplina por um membro da equipe | Muitos membros trancam a matéria | <ol><li>Verificar com os membros se eles trancaram a disciplina.</li><li>Comunicar o professor sobre os trancamentos.</li><li>Verificar se o trabalho planejado para esses membros não pode ser facilmente redistribuído.</li><li>Conversar com o professor sobre as consequências.</ul>  | 
+| Mudança do cliente | O cliente por algum motivo teve que ser alterado no meio do projeto | <ol><li>Verificar se todos os canais de comunicação com o cliente de fato foram acionados.</li><li>Avisar o professor sobre a mudança de cliente.</li><li> Verificar com o novo cliente se ele deseja continuar o mesmo projeto ou pretende alterar os requisitos do projeto.</ul> | 
+| Mudança de tecnologia | Ocorre quando uma tecnologia não serve para resolver um determinado problema, gerando a adoção de outra tecnologia | <ol><li>Avisar ao professor.</li><li>Disponibilizar um tempo para aprender a tecnologia.</li><li>Replanejar as sprints.</ul> | 
+|Mudança nos requisitos | Ocorre quando o cliente exiige que devem ser incrementadas novas funcionalidades no projeto, e isso acarreta um replanejamento nos requisitos do projeto que foram previamente decididos. | <ol><li>Verificar com o cliente se essas novas funcionalidades são realmente necessárias.</li><li>Se reunir com o grupo para replanejar os requisitos do projeto.</li><li>Se reunir novamente com o cliente para averiguar se os requisitos atualizados satisfazem as necessidades do cliente.</ul> | 

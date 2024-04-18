@@ -15,7 +15,6 @@
     src="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAGAivf3taU&#x2F;Ru67r-ZPEoe6dvfassgGpA&#x2F;view?embed" allowfullscreen="allowfullscreen" allow="fullscreen">
   </iframe>
 </div>
-<a href="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAGAivf3taU&#x2F;Ru67r-ZPEoe6dvfassgGpA&#x2F;view?utm_content=DAGAivf3taU&amp;utm_campaign=designshare&amp;utm_medium=embeds&amp;utm_source=link" target="_blank" rel="noopener">
 
 ## Slides sobre Processos de Desenvolvimento
 
@@ -26,6 +25,5 @@
     src="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAGBNmE9V6o&#x2F;HZqYesy3BI8SSmiDuqcP4Q&#x2F;view?embed" allowfullscreen="allowfullscreen" allow="fullscreen">
   </iframe>
 </div>
-<a href="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAGBNmE9V6o&#x2F;HZqYesy3BI8SSmiDuqcP4Q&#x2F;view?utm_content=DAGBNmE9V6o&amp;utm_campaign=designshare&amp;utm_medium=embeds&amp;utm_source=link" target="_blank" rel="noopener">
 
 ## Vídeo de Entrega da Unidade 01
