@@ -11,7 +11,7 @@ O projeto vem com o objetivo que criar um site para Keuany Gomes, que trabalha c
 
 ## Documentação
 <p>
-A documentação pode ser consultada <a href="https://mdsreq-fga-unb.github.io/2024.1-Est-dio-de-Beleza-Keuany/">AQUI</a>
+A documentação pode ser consultada <a href="https://mdsreq-fga-unb.github.io/2024.1-Est-dio-de-Beleza-Keuany/" target="_blank" rel="external">Aqui</a>
 </p>
 
 ## Instalação
