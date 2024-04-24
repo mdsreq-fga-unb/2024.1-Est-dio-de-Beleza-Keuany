@@ -6,6 +6,7 @@
 | :--------: | :--------: | :--------:  | :--------: | 
 | 16/04/2024 | 1.0 | Criação do Documento  | Mateus, Raphael, Ana Karoliny, Gustavo Melo |
 | 17/04/2024 | 1.01 | Adicionando critérios de replanejamento  | João, Raphael, Gustavo Melo |
+| 23/04/2024 | 1.02 | Adicionando papéis referentes a Engenharia de Requisitos  | Raphael, Gustavo Melo |
 
 ##  Organização do Projeto
 
@@ -13,10 +14,15 @@
 | --- | --- | --- | --- |
 | Desenvolvedor | Codificar o produto, codificar testes unitários, realizar refatoração. | Gustavo Melo | Gustavo Melo <br> Ana Karoliny <br> Eduardo Belarmino <br> Gustavo Alves <br> João Pedro <br> Mateus Levy <br> Raphael Mendes |
 | Dono do Produto | Atualizar o escopo do produto, organizar o escopo das sprints, validar as entregas | Ana Karoliny | Ana Karoliny |
-|Scrum Master | Garantir que o processo do Scrum XP e seus devidos rituais sejam seguidos, lidar com adaptações no processo, servir como consultor de Scrum XP do grupo. | Raphael Mendes | Raphael Mendes |
-| Analista de Requisitos | Liderar a estipulação de requisitos, garantir se o desenvolvimento está alinhado com os requisitos estimados pelo stakeholders. | Gustavo Alves | Gustavo Melo <br> Ana Karoliny <br> Eduardo Belarmino <br> Gustavo Alves <br> João Pedro <br> Mateus Levy <br> Raphael Mendes |
-| Analista de Qualidade | Garantir a qualidade do produto, garantir o cumprimento do conceito de pronto, realizar inspeções de código | Mateus Levy | Mateus Levy e Gustavo Alves |
+| Scrum Master | Garantir que o processo do Scrum XP e seus devidos rituais sejam seguidos, lidar com adaptações no processo, servir como consultor de Scrum XP do grupo. | Raphael Mendes | Raphael Mendes |
+| Elicitação e Descoberta de Requisitos | Extrair os requisitos do stakeholder e de sistemas referenciais | Ana Karoliny | Gustavo Melo <br> Ana Karoliny <br> Eduardo Belarmino <br> Gustavo Alves <br> João Pedro <br> Mateus Levy <br> Raphael Mendes |
+| Análise e Consenso de Requisitos | Liderar a estipulação de requisitos, garantir se o desenvolvimento está alinhado com os requisitos estimados pelo stakeholders. | Gustavo Alves | Gustavo Melo <br> Ana Karoliny <br> Eduardo Belarmino <br> Gustavo Alves <br> João Pedro <br> Mateus Levy <br> Raphael Mendes |
+| Declaração e Representação de Requisitos | Comunica e declara todos os requisitos funcionais e não funcionais de forma oral e escrita | Gustavo Melo | Gustavo Melo <br> Ana Karoliny <br> Eduardo Belarmino <br> Gustavo Alves <br> João Pedro <br> Mateus Levy <br> Raphael Mendes |
+| Verificação e Validação dos Requisitos | Garantir a qualidade dos requisitos, se estão de acordo com os critérios de DoD e DoR estabelecidos para o projeto.  | Mateus Levy | Gustavo Melo <br> Ana Karoliny <br> Eduardo Belarmino <br> Gustavo Alves <br> João Pedro <br> Mateus Levy <br> Raphael Mendes |
+| Organização e Atualização dos Requisitos | Manter o conjunto de requisitos adequadamente organizados e atualizados ao longo do tempo.  | João Pedro | Gustavo Melo <br> Ana Karoliny <br> Eduardo Belarmino <br> Gustavo Alves <br> João Pedro <br> Mateus Levy <br> Raphael Mendes |
+| Revisor | Consultor do projeto, gera feedbacks sobre o projeto| Luan, George Marsicano | Luan, George Marsicano |
 | Cliente | Fornecer as informações necessárias para construção do backlog e validar as entregas | Keuany Gomes <br> George Marsicano | Keuany Gomes <br> George Marsicano |
+
 
 
 ##  Planejamento das Fases e/ou Iterações do Projeto
@@ -43,8 +49,8 @@
 | --- | --- | --- | --- |
 | **Daily** <br> Acompanhamento diário da situação atual do projeto por meio de mensagens | Equipe do Projeto | Diária | Relatório da Daily |
 | **Sprint Planning** <br> Planejamento de história de usuários a serem abordadas na próxima Sprint | Equipe de Projeto | A cada 2 semanas | Backlog da Sprint; e <br> Atualização do Backlog do Produto |
-| **Sprint Review** <br> Revisão do processo do Scrum na Sprint | Equipe do Projeto,<br> Cliente | Ao fim de cada sprint | Ata de reunião; e <br> Relatório de Situação do Projeto |
-| **Sprint Retrospective** <br> Reunião entre a equipe para levantar possíveis melhorias para a próxima Sprint | Equipe do Projeto | Após a Sprint Review | Relatório de Feedbacks; e <br> Atualização do Backlog do Produto|
+| **Sprint Review** <br>  Revisão do desenvolvimento do produto durante a sprint, entrando em contato com o cliente para validar e verificar| Equipe do Projeto,<br> Cliente | Ao fim de cada Sprint | Ata de reunião; e <br> Relatório de Situação do Projeto |
+| **Sprint Retrospective** <br> Revisão do processo do Scrum na Sprint, reunião entre a equipe para levantar possíveis melhorias para a próxima Sprint| Equipe do Projeto | Após a Sprint Review | Relatório de Feedbacks; e <br> Atualização do Backlog do Produto|
 
 ##  Gerenciamento de Riscos 
 

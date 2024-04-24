@@ -1,4 +1,4 @@
-site_name: Studio de Beleza Keuany
+site_name: BrowStyle
 
 repo_name: "2024.1-Est-dio-de-Beleza-Keuany"
 repo_url: "https://github.com/mdsreq-fga-unb/2024.1-Est-dio-de-Beleza-Keuany"
@@ -41,6 +41,8 @@ nav:
     - Visão do Produto: visao_produto_projeto/visao_do_produto.md
     - Visão do Projeto: visao_produto_projeto/visao_do_projeto.md
   - Processo de Desenvolvimento de Software: processoDev.md 
+  - Sprints:
+    - Sprint 1: sprints/sprint-1.md
   - Lições Aprendidas: licoesAprendidas.md
   - Entregas:
     - Unidade 1: entregas/unidade01.md

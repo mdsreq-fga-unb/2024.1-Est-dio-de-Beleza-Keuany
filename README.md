@@ -2,7 +2,7 @@
 
 ## Sobre 
 <p align="justify">
-O projeto Estúdio de Beleza Keuany, está sendo desenvolvido pela equipe Ordem dos Caçadores Cósmicos, da disciplina gamificada de Requisitos de Software, da Universidade de Brasília, no semestre 2024.1. 
+O projeto BrowStyle, está sendo desenvolvido pela equipe Ordem dos Caçadores Cósmicos, da disciplina gamificada de Requisitos de Software, da Universidade de Brasília, no semestre 2024.1. 
 </p>
 
 <p align="justify">

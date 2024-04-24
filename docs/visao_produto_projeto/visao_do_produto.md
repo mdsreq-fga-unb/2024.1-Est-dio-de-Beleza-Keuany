@@ -6,6 +6,7 @@
 | :--------: | :--------: | :--------:  | :--------: | 
 | 16/04/2024 | 1.0 | Criação do Documento  | Mateus, Raphael, Ana Karoliny, Gustavo Melo |
 | 17/04/2024 | 1.01 | Adição das tecnologias utilizadas  | Raphael, Gustavo Melo |
+| 23/04/2024 | 1.02 | Atualização nome do projeto  | Mateus, Raphael, Ana Karoliny, Gustavo Melo, Gustavo Alves |
 
 ##  Problema
 
@@ -25,10 +26,10 @@
 
 ##  Declaração de Posição do Produto
 
-| Para | Estúdio de Beleza Keuany |
+| Para | Designer de Sobrancelha Keuany |
 | --- | --- |
 | Quem | Clientes que desejam realizar um agendamentos e a Keuany na divulgação de seu negócio |
-| O Estúdio de Beleza Keuany | É uma aplicação web no ramo da tecnologia que promove serviços online |
+| O BrowStyle | É uma aplicação web no ramo da tecnologia que promove serviços online |
 | Que | Permite que os clientes agendem um horário para realizar o design de sobrancelha e que divulgue o portfólio da Keuany afim de promover seu trabalho |
 | Ao contrário | SOS Unhas |
 | Nosso produto | Envia uma confirmação do agendamento para o cliente antes do atendimento para evitar possíveis cancelamentos em cima da hora |
@@ -36,9 +37,21 @@
 ##  Objetivos do Produto
 **Objetivo Principal #1:** Diminuir o número de cancelamentos tardios.
 
+- <u>Notificação</u>: lembrando da sessão marcada. Pensamos em mandar por Whatsapp/Telegram e/ou e-mail automaticamente.
+
 **Objetivo Principal #2:** Garantir disponibilidade da vaga perdida em tempo hábil de inscrição.
 
+- <u>Pedido de confirmação</u>: Funciona como uma notificação, mas se o cliente não responder ou responder que não vai, a sessão é cancelada.
+
+- <u>Agenda Virtual</u>: mostra os horários vagos e cheios. Uma vaga cancelada aparecia vaga na agenda imediatamente.
+
+- <u>Sistema de Fila</u>: que permite aos usuários entrarem na fila de um horário específico. A atualização do status dessa vaga seria notificado por e-mail ou WhatsApp/Telegram tbm.
+
 **Objetivo Secundário #1:** Criar mais meios de divulgação do trabalho do cliente além do Instagram.
+
+- <u>Informação Geral da Empresa</u>: fotos, localização, funcionários que fazem as sessões, redes sociais, contato, tudo no website, complementando o Instagram e o WhatsApp.
+
+- <u>Sistema de Avaliação do Serviço</u>: A Keu (nossa stakeholder) tinha seu negócio em outra cidade antes. Ela era bem conhecida por lá, mas vindo pra Brasília, ela perdeu essa base de clientes. O sistema de avaliação funcionaria como uma forma de tentar aproveitar essa base anterior de clientes que ela tinha.
 
 ##  Tecnologias utilizadas
 
