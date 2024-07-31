@@ -5,28 +5,20 @@ repo_url: "https://github.com/mdsreq-fga-unb/2024.1-Est-dio-de-Beleza-Keuany"
 
 theme:
   name: material
-  language: "pt"
-  # favicon: docs_separados/assets/logo.png  
-  # icon:
-  #   logo: material/food-variant
-  #   repo: fontawesome/brands/github
-  
   palette:
-
-    # Palette toggle for light mode
     - scheme: default
       toggle:
-        icon: material/brightness-7 
+        icon: material/brightness-7
         name: Switch to dark mode
-      primary: #3dafe5
-      accent: #3dafe5
-    # Palette toggle for dark mode
+      primary: '#3dafe5'
+      accent: '#3dafe5'
     - scheme: slate
       toggle:
         icon: material/brightness-4
         name: Switch to light mode
-      primary: #3dafe5
-      accent: #3dafe5
+      primary: '#3dafe5'
+      accent: '#3dafe5'
+
 
   font:
     text: "Montserrat"
@@ -41,6 +33,9 @@ nav:
     - Visão do Produto: visao_produto_projeto/visao_do_produto.md
     - Visão do Projeto: visao_produto_projeto/visao_do_projeto.md
   - Processo de Desenvolvimento de Software: processoDev.md 
+  - Backlog:
+    - Requisitos e Critérios: backlog/requisitos-criterios.md
+    - MVP: backlog/mvp.md
   - Sprints:
     - Sprint 1: sprints/sprint-1.md
   - Lições Aprendidas: licoesAprendidas.md

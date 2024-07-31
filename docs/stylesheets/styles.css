@@ -23,9 +23,9 @@
     color: white;
   }
   
-  tr:nth-child(odd) {
+/*   tr:nth-child(odd) {
     background: #f8f8f816;
-  }
+  } */
   
   td,
   th {

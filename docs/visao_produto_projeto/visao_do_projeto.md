@@ -33,15 +33,14 @@
 | Sprint | Atividades realizadas | Data Início | Data Fim |
 |:-----:|:---|:-----:|:----:|
 | 1 | Definição do  Problema <br> Escolha do Processo <br> Criação do GitPages| 05/04/24 | 18/04/24
-| 2 | Elaboração do Backlog do Produto | 19/04/24 | 02/05/24 |
-| 3 | Minimum Valuable Product (MVP)| 03/05/24 | 16/05/24 |
-| 4 | DoD, DoR e Início do Desenvolvimento | 17/05/24 | 30/05/24 |
-| 5 | Desenvolvimento do MVP| 31/05/24 | 13/06/24|
-| 6 | Concluindo o MVP| 14/06/24 | 27/06/24 |
-| 7 | Revisão do projeto, integração do sistema e finalização| 28/06/24 | 11/07/24 |
+| 2 | Elaboração do Backlog do Produto <br> Minimum Valuable Product (MVP) | 17/07/24 | 30/07/24 |
+| 3 | DoD, DoR e Início do Desenvolvimento | 31/07/24 | 13/08/24 |
+| 4 | Desenvolvimento do MVP e Conclusão do MVP  | 14/08/24 | 27/08/24 |
+| 5 | Revisão do projeto, integração do sistema e finalização | 28/08/24 | 10/09/24 |
 
 </center>
 
+* **OBS**: Devido a greve dos professores às datas das sprints 2 em diante foram alteradas.
 
 ##  Matriz de Comunicação
 
