@@ -2,9 +2,9 @@
 
 ##  Histórico de Versão
 
-| **Data** | **Versão** | **Descrição** | **Autor** |
-| :--------: | :--------: | :--------:  | :--------: | 
-| 16/04/2024 | 1.0 | Criação do Documento  | Gustavo Melo |
+|  **Data**  | **Versão** |    **Descrição**     |  **Autor**   |
+| :--------: | :--------: | :------------------: | :----------: |
+| 16/04/2024 |    1.0     | Criação do Documento | Gustavo Melo |
 
 ## Slides Ordem dos Caçadores Cósmicos
 
