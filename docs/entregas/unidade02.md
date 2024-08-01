@@ -6,10 +6,13 @@
 | :--------: | :--------: | :------------------: | :------------: |
 | 31/07/2024 |    1.0     | Criação do Documento | Raphael Mendes |
 
-Nessa Entrega houve duas entregas:
-- Backlog do produto
-- Vídeo de apresentação
-- Correções de problemas apontados pelo professor
+Nessa Entrega houveram três entregas:
+
+* Backlog do produto (Requistos Funcionais e Não-Funcionais, Critérios e MVP)
+* Vídeo de apresentação
+* Correções de problemas apontados pelo professor
+
+---
 
 ## Vídeo de Entrega da Unidade 02
 
