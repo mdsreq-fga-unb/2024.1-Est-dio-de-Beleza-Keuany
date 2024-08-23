@@ -10,6 +10,7 @@ services:
       - "3301:3301"
     volumes:
       - db_data:/var/lib/mysql
+      - ./backend/db:/docker-entrypoint-initdb.d
 
   backend:
     build: ./backend
