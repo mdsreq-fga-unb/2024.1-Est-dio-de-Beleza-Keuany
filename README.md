@@ -22,6 +22,7 @@ cd 2024.1-Est-dio-de-Beleza-Keuany
 
 ## Como rodar o projeto
 * Renomeie o arquivo _.env.example_ para apenas _.env_ e preencha com dados à sua escolha.
+* Instale as dependências tanto do backend como frontend.
 * É necessário ter Docker e Docker Compose para subir os contâiners e assim subir a aplicação.
 * Primeiro esteja na diretório raíz do projeto (o qual possui o arquivo _docker-compose.yml_) e então digite no terminal:
 ```

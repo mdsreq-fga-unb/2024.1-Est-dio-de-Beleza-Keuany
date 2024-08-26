@@ -1,5 +1,5 @@
 import procedureService from "../services/procedure.service";
-import { Procedure } from "../types/types";
+import { Procedure, URLParams } from "../types/types";
 import { FastifyRequest, FastifyReply } from "fastify";
 
 const createProcedure = async (req: FastifyRequest, res: FastifyReply) => {
@@ -14,10 +14,16 @@ const createProcedure = async (req: FastifyRequest, res: FastifyReply) => {
         if (!duration)
             return res.code(400).send({ message: 'Informe a duração do procedimento (em minutos)!' });
 
+        if (duration <= 0 || duration > 360)
+            return res.code(400).send({ message: 'Tempo de duração inválido!' });
+
         if (!price)
             return res.code(400).send({ message: 'Informe o valor do procedimento em R$!' });
 
-        const procedure = await procedureService.createProcedureService(body);
+        if (price <= 0 || price > 2000)
+            return res.code(400).send({ message: 'Preço inválido!' });
+
+        const procedure = await procedureService.createService(body);
 
         if (!procedure)
             return res.code(400).send({ message: 'Erro no cadastro do procedimento!' });
@@ -40,6 +46,83 @@ const createProcedure = async (req: FastifyRequest, res: FastifyReply) => {
     }
 }
 
+const findAllProcedure = async (req: FastifyRequest, res: FastifyReply) => {
+    try {
+        const procedures = await procedureService.findAllService();
+
+        if (procedures.length === 0)
+            return res.code(400).send({ message: 'Não há procedimentos cadastrados!' });
+
+        res.code(200).send(procedures);
+    } catch (err: unknown) {
+        if (err instanceof Error) 
+            res.code(500).send({ procedureController: err.message });    
+        else
+            res.code(500).send({ procedureController: 'Erro desconhecido!' });
+    }
+}
+
+const updateProcedure = async (req: FastifyRequest<{ Params: URLParams }>, res: FastifyReply) => {
+    try {
+        const id = Number(req.params.id);
+        const body = req.body as Partial<Procedure>;
+
+        if (isNaN(id))
+            return res.code(400).send({ message: 'ID do procedimento não fornecido ou inválido!' });
+
+        const { name, duration, price, description, status } = body;
+
+        if (!name && !duration && !price && !description && !status)
+            return res.code(400).send({ message: 'Preencha pelo menos um campo para atualização!' });
+
+        if (duration) {
+            if (duration <= 0 || duration > 360)
+                return res.code(400).send({ message: 'Tempo de duração inválido!' });
+        }
+
+        if (price) {
+            if (price <= 0 || price > 2000)
+                return res.code(400).send({ message: 'Preço inválido!' });
+        }
+
+        const success = await procedureService.updateService(id, body);
+
+        if (!success)
+            return res.code(404).send({ message: 'Procedimento não encontrado' });
+
+        res.code(200).send({ message: 'Procedimento atualizado com sucesso!' });
+    } catch (err: unknown) {
+        if (err instanceof Error) 
+            res.code(500).send({ procedureController: err.message });    
+        else
+            res.code(500).send({ procedureController: 'Erro desconhecido!' });
+    }
+}
+
+const deleteProcedure = async (req: FastifyRequest<{ Params: URLParams }>, res: FastifyReply) => {
+    try {
+        const id = Number(req.params.id);
+
+        if (isNaN(id))
+            return res.code(400).send({ message: 'ID do procedimento não fornecido ou inválido!' });
+        
+        const success = await procedureService.deleteService(id);
+
+        if (!success)
+            return res.code(404).send({ message: 'Procedimento não encontrado' });
+
+        res.code(200).send({ message: 'Procedimento removido com sucesso!' });
+    } catch (err: unknown) {
+        if (err instanceof Error) 
+            res.code(500).send({ procedureController: err.message });    
+        else
+            res.code(500).send({ procedureController: 'Erro desconhecido!' });
+    }
+}
+
 export default {
     createProcedure,
+    findAllProcedure,
+    updateProcedure,
+    deleteProcedure
 }
