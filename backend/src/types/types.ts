@@ -11,3 +11,21 @@ export interface Procedure {
     description?: string, // opcional
     status?: number, // opcional
 }
+
+// Interface para grade horária
+type dayOfWeek = 'MON' | 'TUE' | 'WED' | 'THU' | 'FRI' | 'SAT' | 'SUN';
+
+export interface WorkSchedule {
+    dayOfWeek: dayOfWeek,
+    startTime: string,
+    endTime: string,
+    activeDay: number,
+}
+
+// Interface para exceção da grade
+export interface ExceptionSchedule {
+    exceptionDate: string,
+    startTime: string,
+    endTime: string,
+    isAvailable: number,
+}

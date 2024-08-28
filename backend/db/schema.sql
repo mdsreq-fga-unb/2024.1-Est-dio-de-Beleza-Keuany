@@ -58,8 +58,9 @@ CREATE TABLE IF NOT EXISTS WORK_SCHEDULE (
 CREATE TABLE IF NOT EXISTS EXCEPTION_SCHEDULE (
     idExceptionSchedule INT NOT NULL AUTO_INCREMENT,
     exceptionDate DATE NOT NULL,
-    startTime TIME NOT NULL,
-    endTime TIME NOT NULL,
+    startTime TIME,
+    endTime TIME,
     isAvailable INT NOT NULL, -- diz se irá trabalhar ou não
-    CONSTRAINT EXCEPTION_SCHEDULE_PK PRIMARY KEY (idExceptionSchedule)
+    CONSTRAINT EXCEPTION_SCHEDULE_PK PRIMARY KEY (idExceptionSchedule),
+    INDEX EXCEPTION_SCHEDULE_exceptionDate_IDX (exceptionDate)
 );
