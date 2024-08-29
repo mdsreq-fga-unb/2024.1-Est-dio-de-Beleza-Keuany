@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS `PROCEDURE` (
 CREATE TABLE IF NOT EXISTS APPOINTMENT (
     idAppointment INT NOT NULL AUTO_INCREMENT,
     schedule DATETIME NOT NULL,
-    status INT,
+    status INT, -- 0 agendado / 1 confirmado / 2 fila / 3 finalizado / 4 cancelado
     idProcedure INT,
     CONSTRAINT APPOINTMENT_PK PRIMARY KEY (idAppointment),
     CONSTRAINT APPOINTMENT_PROCEDURE_FK FOREIGN KEY (idProcedure)

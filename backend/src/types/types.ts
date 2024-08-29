@@ -1,6 +1,7 @@
 // Parâmetros da URL para o Fastify
 export interface URLParams {
-    id: string;
+    id: string,
+    procedureID?: string, // opcional
 }
 
 // Interface para procedimento
@@ -28,4 +29,19 @@ export interface ExceptionSchedule {
     startTime: string,
     endTime: string,
     isAvailable: number,
+}
+
+// Interface para agendamento
+export interface Appointment {
+    schedule: string,
+    status: number,
+    idProcedure: number,
+}
+
+// Interface para fila
+export interface Queue {
+    customerPhone: string,
+    customerName: string,
+    position: number,
+    idAppointment: number,
 }
