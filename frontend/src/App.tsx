@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import './App.css';
 import { Card } from './components/card/card';
-import { FoodData } from './interface/FoodData';
+import { foodItem } from './interface/FoodData';
 
 
 function App() {
-  const data: FoodData[] = [];  
+  const data = foodItem;  
 
   return (
       <div className="container">
