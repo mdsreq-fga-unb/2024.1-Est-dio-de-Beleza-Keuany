@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS `PROCEDURE` (
 CREATE TABLE IF NOT EXISTS APPOINTMENT (
     idAppointment INT NOT NULL AUTO_INCREMENT,
     schedule DATETIME NOT NULL,
-    status INT,
+    status INT, -- 0 agendado / 1 confirmado / 2 fila / 3 finalizado / 4 cancelado
     idProcedure INT,
     CONSTRAINT APPOINTMENT_PK PRIMARY KEY (idAppointment),
     CONSTRAINT APPOINTMENT_PROCEDURE_FK FOREIGN KEY (idProcedure)
@@ -58,8 +58,9 @@ CREATE TABLE IF NOT EXISTS WORK_SCHEDULE (
 CREATE TABLE IF NOT EXISTS EXCEPTION_SCHEDULE (
     idExceptionSchedule INT NOT NULL AUTO_INCREMENT,
     exceptionDate DATE NOT NULL,
-    startTime TIME NOT NULL,
-    endTime TIME NOT NULL,
+    startTime TIME,
+    endTime TIME,
     isAvailable INT NOT NULL, -- diz se irá trabalhar ou não
-    CONSTRAINT EXCEPTION_SCHEDULE_PK PRIMARY KEY (idExceptionSchedule)
+    CONSTRAINT EXCEPTION_SCHEDULE_PK PRIMARY KEY (idExceptionSchedule),
+    INDEX EXCEPTION_SCHEDULE_exceptionDate_IDX (exceptionDate)
 );
