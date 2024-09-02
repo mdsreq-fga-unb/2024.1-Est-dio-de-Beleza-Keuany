@@ -1,6 +1,6 @@
 import appointmentService from "../services/appointment.service";
 import procedureService from "../services/procedure.service";
-import { Appointment, Queue, URLParams, WorkSchedule } from "../types/types";
+import { Appointment, Queue, URLParams } from "../types/types";
 import { FastifyRequest, FastifyReply } from "fastify";
 import { formatDateTime, isValidDateTimeFormat, isValidPhoneNumber, convertObjDate, intStatusToString, hasSufficientSlots, isToday } from "../utils/utils";
 

@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS APPOINTMENT (
         REFERENCES `PROCEDURE` (idProcedure)
             ON UPDATE CASCADE
             ON DELETE SET NULL,
-    INDEX APPOINTMENT_schedule_IDX (schedule)
+    CONSTRAINT APPOINTMENT_UK UNIQUE (schedule)
 );
 
 CREATE TABLE IF NOT EXISTS REVIEW (
@@ -65,3 +65,13 @@ CREATE TABLE IF NOT EXISTS EXCEPTION_SCHEDULE (
     CONSTRAINT EXCEPTION_SCHEDULE_PK PRIMARY KEY (idExceptionSchedule),
     INDEX EXCEPTION_SCHEDULE_exceptionDate_IDX (exceptionDate)
 );
+
+-- Populando a grade horária
+INSERT INTO WORK_SCHEDULE (dayOfWeek, startTime, endTime, activeDay) VALUES 
+    ("MON", "08:00", "18:00", 1),
+    ("TUE", "08:00", "18:00", 1),
+    ("WED", "08:00", "18:00", 1),
+    ("THU", "08:00", "18:00", 1),
+    ("FRI", "08:00", "18:00", 1),
+    ("SAT", "10:00", "16:00", 1),
+    ("SUN", "08:00", "18:00", 0);

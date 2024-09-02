@@ -3,6 +3,7 @@ export interface URLParams {
     id: string,
     procedureID?: string, // opcional
     customerPhone?: string, // opcional
+    appointmentID?: string, // opcional
 }
 
 // Interface para procedimento
@@ -38,6 +39,13 @@ export interface Appointment {
     status: number,
     idProcedure: number,
     idAppointment?: number,
+}
+
+// Interface para Avaliação
+export interface Review {
+    rating: number,
+    idAppointment: number,
+    comment?: string,
 }
 
 // Interface para fila
