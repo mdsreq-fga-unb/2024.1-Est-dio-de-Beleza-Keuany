@@ -80,7 +80,7 @@ const listAllAppointmentsService = async (): Promise<AppointmentWithQueue[]> => 
     return appointmentList;
 }
 
-const cancelAppointmentService = async (id: number, customerPhone: string): Promise<boolean> => {
+const deleteAppointmentService = async (id: number, customerPhone: string): Promise<boolean> => {
     const connection = await dbPool.getConnection();
     try {
         await connection.beginTransaction();
@@ -135,6 +135,22 @@ const cancelAppointmentService = async (id: number, customerPhone: string): Prom
     } finally {
         connection.release();
     }
+}
+
+const adminCancelAppointmentService = async (id: number): Promise<boolean> => {
+    const [result] = await dbPool.query("UPDATE APPOINTMENT SET status = 3 WHERE idAppointment = ?", [id]);
+
+    const okPacket = result as mysql.OkPacketParams;
+
+    return okPacket.affectedRows && okPacket.affectedRows > 0 ? true : false;
+}
+
+const finishingAppointmentService = async (id: number): Promise<boolean> => {
+    const [result] = await dbPool.query("UPDATE APPOINTMENT SET status = 2 WHERE idAppointment = ?", [id]);
+
+    const okPacket = result as mysql.OkPacketParams;
+
+    return okPacket.affectedRows && okPacket.affectedRows > 0 ? true : false;
 }
 
 const listAvailableSchedulesService = async (
@@ -220,7 +236,7 @@ const listAvailableSchedulesService = async (
             );
             
             const hasAppointmentsWithOtherProcedures = (otherAppointments as any)[0].otherAppointmentsCount > 0;
-            console.log(appointmentStatus);
+            
             if (!hasAppointmentsWithOtherProcedures && appointmentStatus != 1) {
                 availableTimes.push({
                     time: currentTime,
@@ -270,7 +286,9 @@ export default {
     enterQueueService,
     listCustomerAppointmentsService,
     listAllAppointmentsService,
-    cancelAppointmentService,
+    deleteAppointmentService,
+    adminCancelAppointmentService,
+    finishingAppointmentService,
     listAvailableSchedulesService,
     confirmAppointmentService,
 }

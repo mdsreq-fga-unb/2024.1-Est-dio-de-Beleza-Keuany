@@ -156,7 +156,7 @@ const listAllAppointments = async (req: FastifyRequest, res: FastifyReply) => {
     }
 }
 
-const cancelAppointment = async (req: FastifyRequest<{ Params: URLParams }>, res: FastifyReply) => {
+const deleteAppointment = async (req: FastifyRequest<{ Params: URLParams }>, res: FastifyReply) => {
     try {
         const id = Number(req.params.id);
         const { customerPhone } = req.query as Partial<Queue>;
@@ -167,9 +167,51 @@ const cancelAppointment = async (req: FastifyRequest<{ Params: URLParams }>, res
         if (!customerPhone)
             return res.code(400).send({ message: 'Insira um número de telefone!' });
 
-        await appointmentService.cancelAppointmentService(id, customerPhone);
+        await appointmentService.deleteAppointmentService(id, customerPhone);
 
         res.code(200).send({ message: 'Atendimento cancelado com sucesso!' });
+    } catch (err: unknown) {
+        if (err instanceof Error) 
+            res.code(500).send({ appointmentController: err.message });    
+        else
+            res.code(500).send({ appointmentController: 'Erro desconhecido!' });
+    }
+}
+
+const adminCancelAppointment = async (req: FastifyRequest<{ Params: URLParams }>, res: FastifyReply) => {
+    try {
+        const idAppointment = Number(req.params.id);
+
+        if (isNaN(idAppointment))
+            return res.code(400).send({ message: 'ID do agendamento não fornecido ou inválido!' });
+
+        const result = await appointmentService.adminCancelAppointmentService(idAppointment);
+
+        if (!result)
+            return res.code(400).send({ message: 'Agendamento não encontrado!' });
+
+        res.code(200).send({ message: 'Atendimento cancelado com sucesso!' });
+    } catch (err: unknown) {
+        if (err instanceof Error) 
+            res.code(500).send({ appointmentController: err.message });    
+        else
+            res.code(500).send({ appointmentController: 'Erro desconhecido!' });
+    }
+}
+
+const finishingAppointment = async (req: FastifyRequest<{ Params: URLParams }>, res: FastifyReply) => {
+    try {
+        const idAppointment = Number(req.params.id);
+
+        if (isNaN(idAppointment))
+            return res.code(400).send({ message: 'ID do agendamento não fornecido ou inválido!' });
+
+        const result = await appointmentService.finishingAppointmentService(idAppointment);
+
+        if (!result)
+            return res.code(400).send({ message: 'Agendamento não encontrado!' });
+
+        res.code(200).send({ message: 'Atendimento finalizado com sucesso!' });
     } catch (err: unknown) {
         if (err instanceof Error) 
             res.code(500).send({ appointmentController: err.message });    
@@ -233,7 +275,9 @@ export default {
     enterQueue,
     listCustomerAppointments,
     listAllAppointments,
-    cancelAppointment,
+    deleteAppointment,
+    adminCancelAppointment,
+    finishingAppointment,
     listAvailableSchedules,
     confirmAppointment,
 }

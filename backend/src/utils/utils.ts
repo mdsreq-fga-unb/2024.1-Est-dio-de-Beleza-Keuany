@@ -122,8 +122,6 @@ export function isValidPhoneNumber(phoneNumber: string): boolean {
 
 // Converte status inteiro para correspondente em string
 export function intStatusToString(status: number, position: number): string {
-    console.log(`status: ${status}, position: ${position}`);
-    
     if (status === 0) {
         if (position === 1)
             return 'Agendado';

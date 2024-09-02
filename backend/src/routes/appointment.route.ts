@@ -8,7 +8,9 @@ async function appointmentRoutes(fastify: FastifyInstance) {
     fastify.get('/cliente/:customerPhone', appointmentController.listCustomerAppointments);
     fastify.get('/:procedureID', appointmentController.listAvailableSchedules);
     fastify.patch('/confirmar/:id', appointmentController.confirmAppointment);
-    fastify.delete('/:id', appointmentController.cancelAppointment);
+    fastify.patch('/cancelar/:id', appointmentController.adminCancelAppointment);
+    fastify.patch('/finalizar/:id', appointmentController.finishingAppointment);
+    fastify.delete('/:id', appointmentController.deleteAppointment);
 }
 
 export default appointmentRoutes;
