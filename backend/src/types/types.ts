@@ -2,6 +2,7 @@
 export interface URLParams {
     id: string,
     procedureID?: string, // opcional
+    customerPhone?: string, // opcional
 }
 
 // Interface para procedimento
@@ -10,7 +11,7 @@ export interface Procedure {
     duration: number,
     price: number,
     description?: string, // opcional
-    status?: number, // opcional
+    procedureStatus?: number, // opcional
 }
 
 // Interface para grade horária
@@ -36,6 +37,7 @@ export interface Appointment {
     schedule: string,
     status: number,
     idProcedure: number,
+    idAppointment?: number,
 }
 
 // Interface para fila
@@ -45,3 +47,26 @@ export interface Queue {
     position: number,
     idAppointment: number,
 }
+
+// Interface para dados de um agendamento que é exibido para o cliente
+export interface CustomerAppointment {
+    procedureName: string,
+    procedureDuration: number,
+    procedurePrice: number,
+    appointmentId: number,
+    appointmentStatus: number,
+    appointmentSchedule: string,
+    queuePosition: number,
+}
+
+// Interface para os dados de agendamento e sua respectiva fila de clientes
+export interface AppointmentWithQueue extends Appointment, Procedure {
+    queue: Queue[];
+}
+
+// Interface que representa o slot de horário que é retornado
+// pela função que lista horários disponíveis para agendamentos
+export interface TimeSlot {
+    time: string;
+    queueCount: number;
+}  

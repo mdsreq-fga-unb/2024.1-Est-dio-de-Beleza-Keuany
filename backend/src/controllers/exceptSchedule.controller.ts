@@ -48,7 +48,7 @@ const findAllExceptionSchedule = async (req: FastifyRequest, res: FastifyReply) 
         const exceptionSchedules = await exceptScheduleService.findAllService();
 
         if (exceptionSchedules.length === 0)
-            return res.code(400).send({ message: 'Não há dias exceções cadastrados!' });
+            return res.code(404).send({ message: 'Não há dias exceções cadastrados!' });
 
         res.code(200).send(exceptionSchedules);
     } catch (err: unknown) {
@@ -71,7 +71,7 @@ const findByDateExceptionSchedule = async (req: FastifyRequest, res: FastifyRepl
         const exceptionSchedule = await exceptScheduleService.findOneByDateService(exceptionDate);
 
         if (!exceptionSchedule)
-            return res.code(400).send({ message: 'Data não encontrada!' });
+            return res.code(404).send({ message: 'Data não encontrada!' });
 
         res.code(200).send(exceptionSchedule);
     } catch (err: unknown) {

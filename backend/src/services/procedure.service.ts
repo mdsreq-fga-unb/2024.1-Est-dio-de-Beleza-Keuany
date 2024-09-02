@@ -14,6 +14,17 @@ const findAllService = async (): Promise<Procedure[]> => {
     return result as Procedure[];
 }
 
+const findByIdService = async (id: number): Promise<Procedure | null> => {
+    const [result] = await dbPool.query("SELECT * FROM `PROCEDURE` WHERE idProcedure = ?", [id]);
+
+    const rows = result as Procedure[];
+
+    if (rows.length > 0)
+        return rows[0];
+
+    return null;
+}
+
 const updateService = async (id: number, updatedData: Partial<Procedure>): Promise<boolean> => {
     const [result] = await dbPool.query("UPDATE `PROCEDURE` SET ? WHERE idProcedure = ?",
                                         [updatedData, id]
@@ -35,6 +46,7 @@ const deleteService = async (id: number): Promise<boolean> => {
 export default {
     createService,
     findAllService,
+    findByIdService,
     updateService,
     deleteService
 }

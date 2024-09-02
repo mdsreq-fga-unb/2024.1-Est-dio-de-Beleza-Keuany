@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS `PROCEDURE` (
     `name` VARCHAR(50) NOT NULL,
     duration INT NOT NULL,
     price DECIMAL(5,2) NOT NULL,
-    status INT DEFAULT 1, -- procedimento está ativo ou não
+    procedureStatus INT DEFAULT 1, -- procedimento está ativo ou não
     `description` VARCHAR(200),
     CONSTRAINT PROCEDIMENTO_PK PRIMARY KEY (idProcedure)
 );
@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS `PROCEDURE` (
 CREATE TABLE IF NOT EXISTS APPOINTMENT (
     idAppointment INT NOT NULL AUTO_INCREMENT,
     schedule DATETIME NOT NULL,
-    status INT, -- 0 agendado / 1 confirmado / 2 fila / 3 finalizado / 4 cancelado
+    status INT, -- 0 agendado | fila / 1 confirmado / 2 finalizado / 3 cancelado
     idProcedure INT,
     CONSTRAINT APPOINTMENT_PK PRIMARY KEY (idAppointment),
     CONSTRAINT APPOINTMENT_PROCEDURE_FK FOREIGN KEY (idProcedure)
@@ -42,7 +42,8 @@ CREATE TABLE IF NOT EXISTS `QUEUE` (
         REFERENCES APPOINTMENT (idAppointment)
             ON UPDATE CASCADE
             ON DELETE CASCADE,
-    INDEX QUEUE_idAppointment_IDX (idAppointment)
+    INDEX QUEUE_idAppointment_IDX (idAppointment),
+    CONSTRAINT QUEUE_UK UNIQUE (customerPhone, idAppointment)
 );
 
 CREATE TABLE IF NOT EXISTS WORK_SCHEDULE (

@@ -1,9 +1,28 @@
+import { TimeSlot } from "../types/types";
+
 // Converte a data para o formato SQL
 // 26/08/2024 -> 2024-08-26
 export function convertToSQLDate(date: string): string {
     const [day, month, year] = date.split('/');
 
     return `${year}-${month}-${day}`;
+}
+
+// Converte um obj date ISO para DD/MM/YYYY hh:mm
+// 2024-08-31T14:51:00.000Z -> 31/08/2024 14:51
+export function convertObjDate(dateTime: string): string {
+    const dateObj = new Date(dateTime);
+
+    // Adiciona um zero à frente dos números menores que 10 para garantir formato DD/MM/YYYY hh:mm
+    const pad = (n: number) => (n < 10 ? '0' + n : n);
+
+    const day = pad(dateObj.getUTCDate());
+    const month = pad(dateObj.getUTCMonth() + 1); // Janeiro é 0, então adicionamos 1
+    const year = dateObj.getUTCFullYear();
+    const hours = pad(dateObj.getUTCHours());
+    const minutes = pad(dateObj.getUTCMinutes());
+
+    return `${day}/${month}/${year} ${hours}:${minutes}`;
 }
 
 // Verifica se uma data está no futuro
@@ -18,6 +37,23 @@ export function isFutureDate(date: string): boolean {
 
     // Comparar as datas
     return providedDate >= currentUTCDate;
+}
+
+// Verifica se uma data é a data atual do sitema
+export function isToday(date: string): boolean {
+    const [day, month, year] = date.split('/').map(Number);
+    const inputDate = new Date(Date.UTC(year, month - 1, day));
+
+    const now = new Date();
+    const utc3Offset = -3 * 60;
+    
+    const localTime = new Date(now.getTime() + now.getTimezoneOffset() * 60000 + utc3Offset * 60000);
+
+    return (
+        inputDate.getUTCFullYear() === localTime.getUTCFullYear() &&
+        inputDate.getUTCMonth() === localTime.getUTCMonth() &&
+        inputDate.getUTCDate() === localTime.getUTCDate()
+    );
 }
 
 // Verifica se a data é real
@@ -83,3 +119,41 @@ export function isValidPhoneNumber(phoneNumber: string): boolean {
 
     return phoneRegex.test(phoneNumber);
 }
+
+// Converte status inteiro para correspondente em string
+export function intStatusToString(status: number, position: number): string {
+    console.log(`status: ${status}, position: ${position}`);
+    
+    if (status === 0) {
+        if (position === 1)
+            return 'Agendado';
+        else
+            return 'Na Fila';
+    } else if (status === 1) 
+        return 'Confirmado';
+      else if (status === 2)
+        return 'Finalizado';
+      else
+        return 'Cancelado';
+}
+
+export function hasSufficientSlots(timeSlots: TimeSlot[], chosenTime: string, slotSpace: number): boolean {
+    // Encontra o índice do horário escolhido no array
+    const startIndex = timeSlots.findIndex(slot => slot.time === chosenTime);
+    
+    // Se o horário escolhido não for encontrado, retorna falso
+    if (startIndex === -1) return false;
+  
+    // Verifica se existem slots subsequentes suficientes
+    for (let i = 0; i < slotSpace; i++) {
+      const currentIndex = startIndex + i;
+      
+      // Se o índice atual ultrapassar o tamanho do array, não há slots suficientes
+      if (currentIndex >= timeSlots.length) return false;
+      
+      // Se o horário subsequente não estiver livre, retorna falso
+      if (timeSlots[currentIndex].queueCount > 0) return false;
+    }
+  
+    return true;
+  }

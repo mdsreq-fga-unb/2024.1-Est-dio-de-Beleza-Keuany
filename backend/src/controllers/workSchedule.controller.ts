@@ -39,7 +39,7 @@ const findAllWorkSchedule = async (req: FastifyRequest, res: FastifyReply) => {
         const workSchedules = await workScheduleService.findAllService();
 
         if (workSchedules.length === 0)
-            return res.code(400).send({ message: 'Não há grades cadastradas!' });
+            return res.code(404).send({ message: 'Não há grades cadastradas!' });
 
         res.code(200).send(workSchedules);
     } catch (err: unknown) {

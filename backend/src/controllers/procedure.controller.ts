@@ -51,7 +51,7 @@ const findAllProcedure = async (req: FastifyRequest, res: FastifyReply) => {
         const procedures = await procedureService.findAllService();
 
         if (procedures.length === 0)
-            return res.code(400).send({ message: 'Não há procedimentos cadastrados!' });
+            return res.code(404).send({ message: 'Não há procedimentos cadastrados!' });
 
         res.code(200).send(procedures);
     } catch (err: unknown) {
@@ -70,9 +70,9 @@ const updateProcedure = async (req: FastifyRequest<{ Params: URLParams }>, res: 
         if (isNaN(id))
             return res.code(400).send({ message: 'ID do procedimento não fornecido ou inválido!' });
 
-        const { name, duration, price, description, status } = body;
+        const { name, duration, price, description, procedureStatus } = body;
 
-        if (!name && !duration && !price && !description && !status)
+        if (!name && !duration && !price && !description && !procedureStatus)
             return res.code(400).send({ message: 'Preencha pelo menos um campo para atualização!' });
 
         if (duration) {
