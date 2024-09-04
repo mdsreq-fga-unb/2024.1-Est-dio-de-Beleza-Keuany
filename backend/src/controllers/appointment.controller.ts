@@ -37,7 +37,7 @@ const createAppointment = async (req: FastifyRequest<{ Params: URLParams }>, res
 
         const availableTimes = await appointmentService.listAvailableSchedulesService(procedureID, date, dayOfWeek);
 
-         if (!hasSufficientSlots(availableTimes, time, slotSpace))
+        if (!hasSufficientSlots(availableTimes, time, slotSpace))
             return res.code(400).send({
                  message: `O procedimento escolhido dura ${slotSpace} horas, porém não há horários subsequentes disponíveis para realizar tal procedimento. Tente outro horário!`
             });
@@ -146,6 +146,17 @@ const listCustomerAppointments = async (req: FastifyRequest, res: FastifyReply) 
 const listAllAppointments = async (req: FastifyRequest, res: FastifyReply) => {
     try {
         const appointments = await appointmentService.listAllAppointmentsService();
+
+        if (appointments.length > 0) {
+            const formattedAppointments = appointments.map(appointment => {
+                return {
+                    ...appointment,
+                    procedureDuration: Math.ceil(appointment.procedureDuration / 60) * 60
+                }
+            });
+
+            return res.code(200).send(formattedAppointments);
+        }
 
         res.code(200).send(appointments);
     } catch (err: unknown) {

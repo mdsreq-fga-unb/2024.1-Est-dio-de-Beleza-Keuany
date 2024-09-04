@@ -1,9 +1,10 @@
-import { useEffect } from 'react'; 
+import { useEffect, useState } from 'react'; 
 import { Calendar, momentLocalizer } from 'react-big-calendar'; 
 import 'react-big-calendar/lib/css/react-big-calendar.css'; 
 import moment from 'moment'; 
 import { useDispatch, useSelector } from 'react-redux'; 
 import { filterAgendamentos } from '../../store/modules/agendamento/actions'; 
+import { getAllAppointments } from '../../store/modules/agendamento/sagas';
 import util from '../../util'; 
 
 
@@ -14,30 +15,34 @@ const localizer = momentLocalizer(moment);
 const Agendamentos = () => {
     
     const dispatch = useDispatch();  
-    const { agendamentos } = useSelector((state) => state.agendamento)
-    console.log(agendamentos);
+    //const { agendamentos } = useSelector((state) => state.agendamento)
+    const [agendamentos, setAgendamentos] = useState([]);
 
-    const formatEventos = agendamentos. map(agendamento => ({
-        title: agendamento.servicoId.titulo,  
-        start: moment(agendamento.data).toDate(), 
-        end: moment(agendamento.data)
-            .add(
-                util.hourToMinutes(
-                    moment(agendamento.servicoId.duracao).format('HH:mm')
-                ),
-                'minutes'
-            )
-            .toDate(), 
+    async function listAllAppointments() {
+        const response = await getAllAppointments();
+        setAgendamentos(response.data);
+    }
+
+    const formatEventos = agendamentos.map(agendamento => ({
+        title: agendamento.procedureName,  
+        start: moment(agendamento.appointmentSchedule)
+                .utcOffset(0)
+                .add(3, 'hours')
+                .toDate(), 
+        end: moment(agendamento.appointmentSchedule)
+                .utcOffset(0)
+                .add(3, 'hours')
+                .add(agendamento.procedureDuration, 'minutes')
+                .toDate(), 
     }));
-
 
     useEffect(() => {
 
-        dispatch(filterAgendamentos(
+        /* dispatch(filterAgendamentos(
             moment().weekday(0).format('YYYY-MM-DD'), 
             moment().weekday(6).format('YYYY-MM-DD'),
-        ));
-        
+        )); */
+        listAllAppointments();
 
     },[]);
 

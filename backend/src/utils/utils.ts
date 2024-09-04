@@ -142,16 +142,38 @@ export function hasSufficientSlots(timeSlots: TimeSlot[], chosenTime: string, sl
     // Se o horário escolhido não for encontrado, retorna falso
     if (startIndex === -1) return false;
   
+    // Função para converter "HH:mm" em objeto Date
+    const timeToDate = (time: string) => {
+        const [hours, minutes] = time.split(':').map(Number);
+        const date = new Date();
+        date.setHours(hours, minutes, 0, 0);
+        return date;
+    };
+
     // Verifica se existem slots subsequentes suficientes
     for (let i = 0; i < slotSpace; i++) {
       const currentIndex = startIndex + i;
-      
+
       // Se o índice atual ultrapassar o tamanho do array, não há slots suficientes
       if (currentIndex >= timeSlots.length) return false;
-      
+
+      // Verifica se o próximo slot tem 1 hora de diferença
+      if (i > 0) {
+        const prevTime = timeToDate(timeSlots[startIndex + i - 1].time);
+        const currentTime = timeToDate(timeSlots[currentIndex].time);
+        
+        // Calcula a diferença em milissegundos e converte para horas
+        const diffInHours = (currentTime.getTime() - prevTime.getTime()) / (1000 * 60 * 60);
+        
+        // Se a diferença de tempo não for de exatamente 1 hora, retorna falso
+        if (diffInHours !== 1) {
+          return false;
+        }
+      }
+
       // Se o horário subsequente não estiver livre, retorna falso
       if (timeSlots[currentIndex].queueCount > 0) return false;
     }
-  
+
     return true;
-  }
+}

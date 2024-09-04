@@ -70,6 +70,7 @@ export interface CustomerAppointment {
 // Interface para os dados de agendamento e sua respectiva fila de clientes
 export interface AppointmentWithQueue extends Appointment, Procedure {
     queue: Queue[];
+    procedureDuration: number;
 }
 
 // Interface que representa o slot de horário que é retornado

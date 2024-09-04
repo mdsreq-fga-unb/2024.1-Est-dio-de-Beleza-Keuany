@@ -7,11 +7,11 @@ import consts from '../../../consts';
 
 export function* filterAgendamento({ start }) {
     try {
-        const {data: res} = yield call(api.get, '/agendamento/1', {
+        const {data: res} = yield call(api.get, '/agendamento', {
             
-            "schedule": start,
-            "customerName": consts.customerName, 
-            "customerPhone": consts.customerPhone 
+            "appointmentSchedule": start,
+            "queue[0].customerName": consts.customerName, 
+            "queue[0].customerPhone": consts.customerPhone 
                 
             
         });
@@ -28,6 +28,12 @@ export function* filterAgendamento({ start }) {
 
     }
 
+}
+
+export function getAllAppointments() {
+    const response = api.get(`/agendamento`);
+
+    return response;
 }
 
 export default all([takeLatest(types.FILTER_AGENDAMENTOS, filterAgendamento)]); 
