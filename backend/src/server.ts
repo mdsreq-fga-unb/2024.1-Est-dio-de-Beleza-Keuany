@@ -1,4 +1,5 @@
 import Fastify from "fastify";
+import fastifyCors from "@fastify/cors";
 
 // Rotas
 import procedureRoutes from "./routes/procedure.route";
@@ -11,6 +12,15 @@ const fastify = Fastify({ logger: true });
 
 const start = async () => {
     try {
+        // CORS
+        fastify.register(fastifyCors, {
+            origin: 'http://localhost:8080',
+            methods: ['GET', 'PATCH', 'POST', 'DELETE'],
+            allowedHeaders: ['Content-Type', 'Authorization'],
+            credentials: true
+        });
+
+        // Registrar rotas
         fastify.register(procedureRoutes, { prefix: '/procedimento' });
         fastify.register(workScheduleRoutes, { prefix: '/grade' });
         fastify.register(exceptScheduleRoutes, { prefix: '/excecao' });
