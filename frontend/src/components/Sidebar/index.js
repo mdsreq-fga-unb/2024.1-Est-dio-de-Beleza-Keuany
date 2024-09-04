@@ -10,7 +10,7 @@ const Sidebar = () => {
             <img src={foto} alt="" className="img-fluid px-3 py-4" />
             <ul className="p-0 m-0">
                 <li>
-                    <Link to="/" className={location.pathname === '/' ? 'active' : ''}>
+                    <Link to="/agendamentos" className={location.pathname === '/agendamentos' ? 'active' : ''}>
                         <span className="mdi mdi-calendar-check"></span>
                         <p>Agendamentos</p>
                     </Link>                   

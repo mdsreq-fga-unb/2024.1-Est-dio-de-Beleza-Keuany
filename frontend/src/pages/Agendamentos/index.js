@@ -14,7 +14,7 @@ const localizer = momentLocalizer(moment);
 
 const Agendamentos = () => {
     
-    const dispatch = useDispatch();  
+   const dispatch = useDispatch();  
     //const { agendamentos } = useSelector((state) => state.agendamento)
     const [agendamentos, setAgendamentos] = useState([]);
 
@@ -33,16 +33,20 @@ const Agendamentos = () => {
                 .utcOffset(0)
                 .add(3, 'hours')
                 .add(agendamento.procedureDuration, 'minutes')
-                .toDate(), 
+
+            
+            .toDate(), 
     }));
+
 
     useEffect(() => {
 
-        /* dispatch(filterAgendamentos(
+       /* dispatch(filterAgendamentos(
             moment().weekday(0).format('YYYY-MM-DD'), 
             moment().weekday(6).format('YYYY-MM-DD'),
         )); */
         listAllAppointments();
+
 
     },[]);
 

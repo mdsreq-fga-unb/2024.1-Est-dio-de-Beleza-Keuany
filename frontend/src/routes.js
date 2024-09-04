@@ -14,9 +14,12 @@ const Routes = () => {
             <div className="container-fluid h-100">
                 <div className="row h-100">
                     <Router>
-                        <Sidebar />
                         <Switch>
                             <Route path="/" exact element={<Agendamentos/>} />
+                        </Switch>
+                        <Sidebar />
+                        <Switch>
+                            <Route path="/agendamentos" exact element={<Agendamentos/>} />
                             <Route path="/clientes" exact element={<Clientes/>} />
 
                         </Switch>    

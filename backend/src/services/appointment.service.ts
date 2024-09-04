@@ -2,7 +2,7 @@ import dbPool from "../database/connection";
 import mysql from "mysql2/promise";
 import { Appointment, Queue, CustomerAppointment, AppointmentWithQueue, TimeSlot } from "../types/types";
 import { convertToSQLDate } from "../utils/utils";
-import { sendMessage } from "../../bot-wp/sendMessage";
+//import { sendMessage } from "../../bot-wp/sendMessage";
 
 const createAppointmentAndQueueService = async (appointmentBody: Appointment, queueBody: Partial<Queue>): Promise<number | undefined> => {
     const connection = await dbPool.getConnection();
@@ -277,7 +277,7 @@ const confirmAppointmentService = async (id: number): Promise<boolean> => {
 
         if (appointmentConfirmed) {
             const message = `Seu agendamento com ID ${id} foi confirmado com sucesso!`;
-            await sendMessage("5561944442222", message);
+            //await sendMessage("5561944442222", message);
         }
 
         return okPacket.affectedRows && okPacket.affectedRows > 0 ? true : false;
