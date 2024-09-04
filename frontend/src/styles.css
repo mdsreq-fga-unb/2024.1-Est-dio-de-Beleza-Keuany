@@ -48,3 +48,53 @@ header small {
     display: block; 
     margin-top: -20px; 
 }
+
+sidebar {
+    background-color: var(--dark); 
+}
+
+sidebar ul li {
+    list-style: none; 
+    width: 100%; 
+}
+
+sidebar ul li a {
+    width: 100%; 
+    color: #fff; 
+    opacity: 0.6; 
+    text-decoration: none; 
+    display: flex; 
+    align-items: center; 
+    padding: 10px 5px;  
+    margin: 2.5px 0; 
+    transition: 0.5s; 
+    border-radius: 5px; 
+}
+
+sidebar ul li a.active{
+    opacity: 1; 
+    background-color: rgba(0, 0, 0, 0.6); 
+}
+
+sidebar ul li a.active .mdi {
+    color: var(--primary); 
+}
+
+sidebar ul li a:visited, 
+sidebar ul li a:focus {
+    color: #fff; 
+}
+
+sidebar ul li a:hover {
+    opacity: 1; 
+    background-color: rgba(0, 0, 0, 0.6); 
+}
+
+sidebar ul li span.mdi {
+    font-size: 25px; 
+    margin: 0 15px;  
+}
+
+sidebar ul li a text { 
+    font-size: 14px; 
+}
