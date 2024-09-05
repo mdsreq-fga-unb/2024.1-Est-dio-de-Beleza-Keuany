@@ -27,7 +27,6 @@ const Header = () => {
               
                 <div className="text-right-mr-10">
                     <span className="d-block m-0 p-0 text-white">Estúdio Keuanny</span>
-                    <small className="m-0 p-0">Plano Gold</small>
                 </div>
                 <img src={logo} alt="" />
                 <span className="mdi mdi-chevron-down text-white"></span>
