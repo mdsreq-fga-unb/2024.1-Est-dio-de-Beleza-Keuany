@@ -49,6 +49,47 @@ header small {
     margin-top: -20px; 
 }
 
+header ul li {
+    list-style: none; 
+    width: 100%; 
+    color: var(--dark); 
+    
+}
+
+header ul li a {
+    width: 100%; 
+    color: #fff; 
+    opacity: 1; 
+    text-decoration: none; 
+    display: flex; 
+    align-items: center; 
+    padding: 10px 20px;  
+    margin: 2.5px 10px; 
+    transition: 0.5s; 
+    border-radius: 15px; 
+
+
+}
+
+header ul li a.active{
+    opacity: 1; 
+    background-color: rgba(6, 247, 247, 0.6); 
+    
+   
+}
+
+header ul li a.active .mdi {
+    color: var(--primary); 
+}
+
+header ul li a:visited, 
+header ul li a:focus {
+    color: #fff; 
+}
+
+
+
+
 sidebar {
     background-color: var(--dark); 
 }

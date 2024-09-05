@@ -10,9 +10,12 @@ const Sidebar = () => {
             <img src={foto} alt="" className="img-fluid px-3 py-4" />
             <ul className="p-0 m-0">
                 <li>
-                    <Link to="/agendamentos" className={location.pathname === '/agendamentos' ? 'active' : ''}>
+                    <Link 
+                        to="/agendamentos" 
+                        className={location.pathname === '/agendamentos' ? 'active' : ''}
+                        >
                         <span className="mdi mdi-calendar-check"></span>
-                        <p>Agendamentos</p>
+                        <text>Agendamentos</text>
                     </Link>                   
                 </li>
                 <li>
@@ -21,9 +24,10 @@ const Sidebar = () => {
                         className={location.pathname === '/clientes' ? 'active' : ''}
                         > 
                         <span className="mdi mdi-account-multiple"></span> 
-                        <p>Clientes</p>
+                        <text>Clientes</text>
                     </Link>
                 </li>
+               
             </ul>
         </sidebar>
     );
