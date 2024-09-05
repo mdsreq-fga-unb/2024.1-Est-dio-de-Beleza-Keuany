@@ -125,3 +125,48 @@ sidebar ul li a text {
   .comment {
     font-size: 16px;
   }
+
+.service-card {
+    background-color: #F9ECD4;
+    border-radius: 100px;
+    padding: 20px;
+    margin: 20px 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.service-card .row {
+    width: 100%;
+}
+
+.service-card .col-6.botao_reservar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.service-card button {
+    background-color:#65558f;
+    border-radius:100px;
+    padding:0px;
+    display:flex;
+    width: 75%;
+    flex-direction:column;
+    gap:8px;
+    border-style:hidden;
+    outline:none;
+    font-size: larger;
+}
+
+@media screen and (min-width: 1200px) {
+    .service-card button {
+        font-size: xx-large;
+    }
+}
+
+.service-card .nome {
+    font-size: x-large;
+    font-weight: bold;
+}

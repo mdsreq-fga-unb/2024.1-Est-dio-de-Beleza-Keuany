@@ -4,11 +4,9 @@
 const AvaliacaoCard = ({rating, name, comment}) =>{
 
 
-
     return(
 
-
-        <div className="review-card">
+      <div className="review-card">
         <div className="stars">
           {"★".repeat(rating)}
           {"☆".repeat(5 - rating)}
