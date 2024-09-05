@@ -139,3 +139,30 @@ sidebar ul li span.mdi {
 sidebar ul li a text { 
     font-size: 14px; 
 }
+
+.review-card {
+    background-color: #cda7ed;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px 0;
+    width: 1200px;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .stars {
+    font-size: 24px;
+    color: #000;
+  }
+  
+  .reviewer-name {
+    font-weight: bold;
+    font-size: 20px;
+  }
+  
+  .comment {
+    font-size: 16px;
+  }
