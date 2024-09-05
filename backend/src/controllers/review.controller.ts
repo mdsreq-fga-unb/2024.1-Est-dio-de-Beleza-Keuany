@@ -7,7 +7,7 @@ const createReview = async (req: FastifyRequest<{ Params: URLParams }>, res: Fas
         const appointmentID = Number(req.params.appointmentID);
         const body = req.body as Review;
 
-        const { rating, comment } = body;
+        const { rating, comment, anonymous } = body;
 
         if (isNaN(appointmentID))
             return res.code(400).send({ message: 'ID do agendamento não fornecido ou inválido!' });
@@ -18,9 +18,13 @@ const createReview = async (req: FastifyRequest<{ Params: URLParams }>, res: Fas
         if (rating < 1 || rating > 5)
             return res.code(400).send({ message: 'A nota só pode ser de 1 a 5!' });
 
+        if (!anonymous)
+            return res.code(400).send({ message: 'Informe se a avaliação será anônima ou não' });
+
         let reviewBody: Review = {
             rating,
-            idAppointment: appointmentID
+            idAppointment: appointmentID,
+            anonymous
         }
 
         if (comment)
@@ -30,12 +34,13 @@ const createReview = async (req: FastifyRequest<{ Params: URLParams }>, res: Fas
 
         if (!review)
             return res.code(400).send({ message: 'Erro no cadastro da avaliação!' });
-
+        
         res.code(201).send({
             review: {
                 id: review,
                 rating,
                 comment,
+                anonymous,
                 idAppointment: appointmentID,
             },
             message: 'Avaliação cadastrada com sucesso!'
@@ -54,8 +59,20 @@ const findAllReviews = async (req: FastifyRequest, res: FastifyReply) => {
 
         if (reviews.length === 0)
             return res.code(404).send({ message: 'Não há avaliações cadastradas!' });
+        else {
+            const formattedReviews = reviews.map(review => {
+                const customerName = review.anonymous ? "Anônimo" : review.customerName;
+                
+                const { anonymous, ...rest } = review;
 
-        res.code(200).send(reviews);
+                return {
+                    ...rest,
+                    customerName,
+                }
+            });
+
+            return res.code(200).send(formattedReviews);
+        }
     } catch (err: unknown) {
         if (err instanceof Error) 
             res.code(500).send({ reviewController: err.message });    

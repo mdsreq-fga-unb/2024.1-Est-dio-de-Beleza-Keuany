@@ -146,12 +146,26 @@ const adminCancelAppointmentService = async (id: number): Promise<boolean> => {
     return okPacket.affectedRows && okPacket.affectedRows > 0 ? true : false;
 }
 
-const finishingAppointmentService = async (id: number): Promise<boolean> => {
-    const [result] = await dbPool.query("UPDATE APPOINTMENT SET status = 2 WHERE idAppointment = ?", [id]);
+const finishingAppointmentService = async (id: number): Promise<number> => {
+    try {
+        const [appointment] = await dbPool.query("SELECT status FROM APPOINTMENT WHERE idAppointment = ?", [id]);
 
-    const okPacket = result as mysql.OkPacketParams;
+        const rows = appointment as Partial<Appointment[]>;
+        const appointmentStatus = rows[0]?.status;
 
-    return okPacket.affectedRows && okPacket.affectedRows > 0 ? true : false;
+        if (!appointmentStatus)
+            throw new Error("Agendamento não encontrado!");
+        else if (appointmentStatus != 1)
+            throw new Error("Para um agendamento ser finalizado ele deve ter sido confirmado!");
+
+        const [result] = await dbPool.query("UPDATE APPOINTMENT SET status = 2 WHERE idAppointment = ?", [id]);
+
+        const okPacket = result as mysql.OkPacketParams;
+
+        return okPacket.affectedRows && okPacket.affectedRows > 0 ? 1 : 0; // true or false
+    } catch (err) {
+        throw err;
+    }
 }
 
 const listAvailableSchedulesService = async (
@@ -277,7 +291,7 @@ const confirmAppointmentService = async (id: number): Promise<boolean> => {
 
         if (appointmentConfirmed) {
             const message = `Seu agendamento com ID ${id} foi confirmado com sucesso!`;
-            await sendMessage("61944442222", message);
+            await sendMessage("6182896001", message);
         }
 
         return okPacket.affectedRows && okPacket.affectedRows > 0 ? true : false;

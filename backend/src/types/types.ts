@@ -46,6 +46,8 @@ export interface Review {
     rating: number,
     idAppointment: number,
     comment?: string,
+    anonymous: number,
+    customerName?: string,
 }
 
 // Interface para fila

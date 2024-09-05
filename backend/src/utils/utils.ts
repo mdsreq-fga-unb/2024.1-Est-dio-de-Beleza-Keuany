@@ -177,3 +177,7 @@ export function hasSufficientSlots(timeSlots: TimeSlot[], chosenTime: string, sl
 
     return true;
 }
+
+export function formatPhoneNumber(phoneNumber: string): string {
+    return phoneNumber.slice(0, 2) + phoneNumber.slice(3);
+}

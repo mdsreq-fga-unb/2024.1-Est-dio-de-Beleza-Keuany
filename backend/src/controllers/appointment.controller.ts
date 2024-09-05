@@ -57,6 +57,11 @@ const createAppointment = async (req: FastifyRequest<{ Params: URLParams }>, res
         if (!customerPhone)
             return res.code(400).send({ message: 'Insira o telefone do cliente' });
 
+        if (!isValidPhoneNumber(customerPhone) || customerPhone[2] !== '9')
+            return res.code(400).send({ message: 'Insira um número válido (XX9XXXXXX)' });
+
+        console.log(typeof(customerPhone[2]));
+
         let queueBody: Partial<Queue> = {
             customerName,
             customerPhone,
@@ -95,8 +100,8 @@ const enterQueue = async (req: FastifyRequest, res: FastifyReply) => {
         if (!customerPhone)
             return res.code(400).send({ message: 'Insira o telefone do cliente' });
 
-        if (!isValidPhoneNumber(customerPhone))
-            return res.code(400).send({ message: 'Insira um número válido (DDD + 9 dígitos)' });
+        if (!isValidPhoneNumber(customerPhone) && customerPhone[2] !== '9')
+            return res.code(400).send({ message: 'Insira um número válido (XX9XXXXXX)' });
 
         const success = await appointmentService.enterQueueService(body);
 

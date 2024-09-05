@@ -1,7 +1,7 @@
 
 
 
-const AvaliacaoCard = ({rating, name, comment}) =>{
+const AvaliacaoCard = ({rating, name, comment, customerName}) =>{
 
 
     return(
@@ -13,6 +13,7 @@ const AvaliacaoCard = ({rating, name, comment}) =>{
         </div>
         <div className="reviewer-name">{name}</div>
         <div className="comment">{comment}</div>
+        <div className="customerName">{customerName}</div>
       </div>
     )
     

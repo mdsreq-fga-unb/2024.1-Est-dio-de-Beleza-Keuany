@@ -10,10 +10,11 @@ const createService = async (body: Review): Promise<number | undefined> => {
 
 const findAllService = async (): Promise<Review[]> => {
     const query = `
-        SELECT R.idReview, P.name, R.rating, R.comment
+        SELECT R.idReview, P.name, R.rating, R.comment, Q.customerName, R.anonymous
             FROM REVIEW R
                 JOIN APPOINTMENT A ON R.idAppointment = A.idAppointment
                 JOIN \`PROCEDURE\` P ON A.idProcedure = P.idProcedure
+                JOIN \`QUEUE\` Q ON A.idAppointment = Q.idAppointment
             ORDER BY A.schedule DESC; 
     `;
     
