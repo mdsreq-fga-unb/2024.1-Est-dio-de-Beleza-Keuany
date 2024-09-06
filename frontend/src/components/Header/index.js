@@ -28,6 +28,15 @@ const Header = () => {
                         <text>Avaliações</text>
                     </Link>
                 </li>
+                <li className="mx-3">
+                    <Link 
+                        to="/admin"
+                        className={location.pathname === '/admin' ? 'active' : ''}
+                        > 
+                        <span className="mdi mdi-account-multiple"></span> 
+                        <text>Login</text>
+                    </Link>
+                </li>
             </ul>
 
             </div>
