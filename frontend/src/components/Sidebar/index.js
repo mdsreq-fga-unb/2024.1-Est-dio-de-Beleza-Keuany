@@ -27,15 +27,7 @@ const Sidebar = () => {
                         <text>Clientes</text>
                     </Link>
                 </li>
-                <li>
-                    <Link 
-                        to="/avaliacoes"
-                        className={location.pathname === '/avaliacoes' ? 'active' : ''}
-                        > 
-                        <span className="mdi mdi-star-box "></span> 
-                        <p>Avaliações</p>
-                    </Link>
-                </li>
+               
             </ul>
         </sidebar>
     );

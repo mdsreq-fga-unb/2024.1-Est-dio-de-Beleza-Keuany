@@ -26,12 +26,12 @@ const createReview = async (req: FastifyRequest<{ Params: URLParams }>, res: Fas
             idAppointment: appointmentID,
             anonymous
         }
-
+       
         if (comment)
             reviewBody.comment = comment;
 
         const review = await reviewService.createService(reviewBody);
-
+        console.log(review); 
         if (!review)
             return res.code(400).send({ message: 'Erro no cadastro da avaliação!' });
         

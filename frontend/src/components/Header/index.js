@@ -7,10 +7,10 @@ const Header = () => {
         <header >
             <div className="container-fluid d-flex justify-content-start">
             <div className="d-flex align-items-center">
-            <ul className="p-0 m-0">
+            <ul className="p-0 m-0 d-flex list-unstyled">
               
             
-                <li>
+                <li className="mx-3">
                     <Link 
                         to="/" 
                         className={location.pathname === '/' ? 'active' : ''}
@@ -19,9 +19,19 @@ const Header = () => {
                         <text>Home</text>
                     </Link>                   
                 </li>
+                <li className="mx-3">
+                    <Link 
+                        to="/avaliacoes"
+                        className={location.pathname === '/avaliacoes' ? 'active' : ''}
+                        > 
+                        <span className="mdi mdi-star-box"></span> 
+                        <text>Avaliações</text>
+                    </Link>
+                </li>
             </ul>
 
             </div>
+            
             <div className="container-fluid d-flex justify-content-end">
             <div className="d-flex align-items-center">
               
