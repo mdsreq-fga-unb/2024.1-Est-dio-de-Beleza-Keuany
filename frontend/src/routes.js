@@ -19,10 +19,8 @@ const Routes = () => {
     return (
         <Router>
             <Header />
-<<<<<<< HEAD
             <MainContent />
         </Router>
-=======
             <div className="container-fluid h-100">
                 <div className="row h-100">
                     <Router>
@@ -47,7 +45,6 @@ const Routes = () => {
 
             </div>
         </>
->>>>>>> dev-agendamento
     );
 };
 
