@@ -8,17 +8,11 @@ import { getAllAppointments } from '../../store/modules/agendamento/sagas';
 import util from '../../util'; 
 import { Link } from 'react-router-dom';
 
-import ServicoCard from "../../components/ServicoCard";
-
-
 
 const localizer = momentLocalizer(moment); 
 
 
 const Agendamentos = () => {
-
-
-    const [service, setService] = useState("");
 
     const dispatch = useDispatch();  
     //const { agendamentos } = useSelector((state) => state.agendamento)
@@ -59,46 +53,20 @@ const Agendamentos = () => {
 
     return(
         <div className="col p-5 overflow-auto h-100">
-            {service === "" ? (
-                <div>
-                    <div className="row">
-                        <div className="col-12">
-                            <div className="w-100 d-flex justify-content-between">
-                                <h2 className="mb-4 mt-0">Selecione o Procedimento</h2>
-                                <button className="btn btn-primary btn-lg">
-                                    <span className="mdi">Meus Agendamentos</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <ServicoCard nome={"Design Simples"} tempo_estimado={20} preco={35} changePage={setService}></ServicoCard>
-                    </div>
-
-                    <div className="row">
-                        <ServicoCard nome={"Design Simples"} tempo_estimado={20} preco={35} changePage={setService}></ServicoCard>
-                    </div>
-                    
-                    {/* Adicionar mais caso queira. */}
-
+            <div className="row">
+                <div className="col-12">
+                    <h2 className="mb-4 mt-0">Agendamentos</h2>
+                    <Calendar
+                        localizer={localizer}
+                        events={formatEventos} 
+                        defaultView="week"
+                        selectable
+                        popup
+                        style={{ height: 600 }}
+                    />
                 </div>
-            ) : (
-                <div className="row">
-                    <div className="col-12">
-                        <h2 className="mb-4 mt-0">Agendamentos</h2>
-                        <Calendar
-                            localizer={localizer}
-                            events={formatEventos} 
-                            defaultView="week"
-                            selectable
-                            popup
-                            style={{ height: 600 }}
-                        />
 
-                    </div>
-
-                </div>
-            )}
+            </div>
         </div>
     );  
 };

@@ -170,3 +170,11 @@ sidebar ul li a text {
     font-size: x-large;
     font-weight: bold;
 }
+
+#adm-password-field {
+    border-color: #000;
+}
+
+.submit-adm {
+    margin: 5%;
+}
