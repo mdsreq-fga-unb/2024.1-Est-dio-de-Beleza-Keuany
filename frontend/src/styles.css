@@ -171,7 +171,7 @@ sidebar ul li a text {
     font-weight: bold;
 }
 
-#adm-password-field {
+.adm-credentials-field {
     border-color: #000;
 }
 

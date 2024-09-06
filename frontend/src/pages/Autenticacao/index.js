@@ -4,8 +4,10 @@ import { useNavigate } from 'react-router-dom';
 const Autenticacao = () => {
 
     const navigate = useNavigate();
+    
+    const [adminName, setAdminName] = useState("");
     const [password, setPassword] = useState("");
-    const [isPasswordIncorrect, setPasswordIncorrect] = useState(false);
+    const [areCredentialsIncorrect, setCredentialsIncorrect] = useState(false);
 
     function handleAuthentication() {
         // Insira o Código de autenticação
@@ -16,7 +18,7 @@ const Autenticacao = () => {
         /* if (hashEquals === true) {
             navigate("/agendamentos");
         } else {
-            setPasswordIncorrect(true);
+            setCredentialsIncorrect(true);
         } */
     }
 
@@ -35,10 +37,21 @@ const Autenticacao = () => {
                     <div className='col-12'>
                         <div className="w-100 d-flex justify-content-center flex-column">
                             <div className='m-5'>
+                                <label for='adm-name-field'>Nome:</label>
+                                <input 
+                                    id="adm-name-field"
+                                    className="form-control adm-credentials-field"
+                                    type="text"
+                                    placeholder='Insira o nome do(a) Gerente'
+                                    value={adminName}
+                                    onChange={(ev) => setAdminName(ev.target.value)}
+                                    required
+                                    >
+                                </input>
                                 <label for='adm-password-field'>Senha:</label>
                                 <input 
                                     id="adm-password-field"
-                                    className="form-control"
+                                    className="form-control adm-credentials-field"
                                     type="password"
                                     placeholder='Insira a senha de Gerente'
                                     value={password}
@@ -46,11 +59,13 @@ const Autenticacao = () => {
                                     required
                                     >
                                 </input>
-                                {isPasswordIncorrect === true ? (
-                                    <div className='text-danger'>Senha incorreta</div>
+
+                                {areCredentialsIncorrect === true ? (
+                                    <div className='text-danger'>Credenciais Incorretas</div>
                                 ) : (
                                     <div></div>
                                 )}
+                                
                             </div>
                         </div>
                     </div>
