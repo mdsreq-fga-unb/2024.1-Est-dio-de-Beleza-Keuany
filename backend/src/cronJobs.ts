@@ -5,6 +5,15 @@ import { Queue } from './types/types';
 import { formatPhoneNumber } from './utils/utils';
 import appointmentService from './services/appointment.service';
 
+function delay(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function delayedPromise(promise: () => Promise<any>, delayTime: number) {
+    await delay(delayTime); // Atraso antes de iniciar a promise
+    return promise();       // Executa a promise
+}
+
 async function getAppointmentsForNextDay() {
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
@@ -40,7 +49,7 @@ async function processAppointmentQueue(idAppointment: number) {
             ) as any[];
 
             if (appointmentStatus.length > 0 && appointmentStatus[0].status !== 1) {
-                console.log("Atendimento não foi confirmado, cancelando cliente atual.");
+                console.log(`Atendimento com id ${idAppointment} não foi confirmado, cancelando cliente atual.`);
                 await appointmentService.deleteAppointmentService(idAppointment, customerPhone);
                 await sendMessage(formattedCustomerPhone, '4 horas se passaram e seu atendimento não foi confirmado, portanto será cancelado.');
 
@@ -64,6 +73,8 @@ async function processAppointmentQueue(idAppointment: number) {
     console.log(`Verificação para agendamento ${idAppointment} encerrada.`);
 }
 
+const delayTime = 20000; // Intervalo de 20 segundos
+
 export function startCronJobs() {
     cron.schedule('0 8 * * *', async () => {
         const currentDate = new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' });
@@ -71,13 +82,17 @@ export function startCronJobs() {
 
         const appointments = await getAppointmentsForNextDay();
 
+        if (appointments.length === 0)
+            console.log("Sem agendamentos marcados para amanhã!");
+        else {
         // Mapeia e executa todas as funções em paralelo
-        const appointmentsPromises = appointments.map(appointment => 
-            processAppointmentQueue(appointment.idAppointment)
-        );
+            const appointmentsPromises = appointments.map((appointment, index) => 
+                delayedPromise(() => processAppointmentQueue(appointment.idAppointment), index * delayTime)
+            );
 
-        // Aguarda todas as promises serem resolvidas
-        await Promise.all(appointmentsPromises);
+            // Aguarda todas as promises serem resolvidas
+            await Promise.all(appointmentsPromises);
+        }
     }, {
         timezone: "America/Sao_Paulo" // Fuso UTC-3
     });

@@ -2,7 +2,15 @@ import appointmentService from "../services/appointment.service";
 import procedureService from "../services/procedure.service";
 import { Appointment, Queue, URLParams } from "../types/types";
 import { FastifyRequest, FastifyReply } from "fastify";
-import { formatDateTime, isValidDateTimeFormat, isValidPhoneNumber, convertObjDate, intStatusToString, hasSufficientSlots, isToday } from "../utils/utils";
+import { 
+    formatDateTime, 
+    isValidDateTimeFormat, 
+    isValidPhoneNumber, 
+    convertObjDate, 
+    intStatusToString, 
+    hasSufficientSlots,
+    convertToSQLDate
+} from "../utils/utils";
 
 const createAppointment = async (req: FastifyRequest<{ Params: URLParams }>, res: FastifyReply) => {
     try {
@@ -41,9 +49,23 @@ const createAppointment = async (req: FastifyRequest<{ Params: URLParams }>, res
             return res.code(400).send({
                  message: `O procedimento escolhido dura ${slotSpace} horas, porém não há horários subsequentes disponíveis para realizar tal procedimento. Tente outro horário!`
             });
-
+        
+        // Logica para definir o status do agendamento
+        // Caso o usuário marque um horário após a verificação
+        // De confirmação daquele dia já tenha se iniciado
+        // O status do atendimento já e cadastrado como confirmado
         let status: number;
-        status = isToday(date) ? 1 : 0;
+        const formattedDate = convertToSQLDate(date);
+        const now = new Date();
+        const currentDate = new Date(now.toLocaleString("en-US", { timeZone: "America/Sao_Paulo" }));
+
+        const previousDate = new Date(`${formattedDate}T00:00:00`);
+        previousDate.setDate(previousDate.getDate() - 1);
+        previousDate.setHours(8, 0, 0, 0);
+
+        const isPastConfirmationVerification = currentDate >= previousDate;
+
+        status = isPastConfirmationVerification ? 1 : 0;
         
         let appointmentBody: Appointment = {
             schedule: formatDateTime(schedule),
@@ -59,8 +81,6 @@ const createAppointment = async (req: FastifyRequest<{ Params: URLParams }>, res
 
         if (!isValidPhoneNumber(customerPhone) || customerPhone[2] !== '9')
             return res.code(400).send({ message: 'Insira um número válido (XX9XXXXXX)' });
-
-        console.log(typeof(customerPhone[2]));
 
         let queueBody: Partial<Queue> = {
             customerName,

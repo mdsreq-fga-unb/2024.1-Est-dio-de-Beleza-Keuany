@@ -39,23 +39,6 @@ export function isFutureDate(date: string): boolean {
     return providedDate >= currentUTCDate;
 }
 
-// Verifica se uma data é a data atual do sitema
-export function isToday(date: string): boolean {
-    const [day, month, year] = date.split('/').map(Number);
-    const inputDate = new Date(Date.UTC(year, month - 1, day));
-
-    const now = new Date();
-    const utc3Offset = -3 * 60;
-    
-    const localTime = new Date(now.getTime() + now.getTimezoneOffset() * 60000 + utc3Offset * 60000);
-
-    return (
-        inputDate.getUTCFullYear() === localTime.getUTCFullYear() &&
-        inputDate.getUTCMonth() === localTime.getUTCMonth() &&
-        inputDate.getUTCDate() === localTime.getUTCDate()
-    );
-}
-
 // Verifica se a data é real
 export function isValidDate(date: string): boolean {
     // Expressão regular para verificar o formato dd/mm/yyyy

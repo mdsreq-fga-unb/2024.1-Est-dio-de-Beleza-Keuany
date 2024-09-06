@@ -177,6 +177,15 @@ const listAvailableSchedulesService = async (
     try {
         const formattedDate = convertToSQLDate(date);
 
+        const now = new Date();
+        const currentDate = new Date(now.toLocaleString("en-US", { timeZone: "America/Sao_Paulo" }));
+
+        const previousDate = new Date(`${formattedDate}T00:00:00`);
+        previousDate.setDate(previousDate.getDate() - 1);
+        previousDate.setHours(8, 0, 0, 0);
+
+        const isPastConfirmationVerification = currentDate >= previousDate;
+
         const [workSchedule] = await connection.query(
             `SELECT startTime, endTime, activeDay FROM WORK_SCHEDULE WHERE dayOfWeek = ?`,
             [dayOfWeek]
@@ -251,12 +260,14 @@ const listAvailableSchedulesService = async (
             );
             
             const hasAppointmentsWithOtherProcedures = (otherAppointments as any)[0].otherAppointmentsCount > 0;
-            
+
             if (!hasAppointmentsWithOtherProcedures && appointmentStatus != 1) {
-                availableTimes.push({
-                    time: currentTime,
-                    queueCount: queueCount
-                });
+                if (!(isPastConfirmationVerification && queueCount > 0)) {
+                    availableTimes.push({
+                        time: currentTime,
+                        queueCount: queueCount
+                    });
+                }
             }
 
             const dateObj = new Date(`1970-01-01T${currentTime}`);

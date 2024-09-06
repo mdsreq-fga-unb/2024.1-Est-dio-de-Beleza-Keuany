@@ -2,14 +2,23 @@ import { FastifyInstance } from "fastify";
 import appointmentController from "../controllers/appointment.controller";
 
 async function appointmentRoutes(fastify: FastifyInstance) {
+    // Cria um agendamento
     fastify.post('/:procedureID', appointmentController.createAppointment);
-    fastify.post('/fila', appointmentController.enterQueue);
-    fastify.get('/', appointmentController.listAllAppointments);
+    // Entra na fila de um agendamento
+    fastify.post('/fila', appointmentController.enterQueue); 
+    // Lista todos os agendamentos
+    fastify.get('/', appointmentController.listAllAppointments); 
+    // Lista os agendamentos de um cliente
     fastify.get('/cliente/:customerPhone', appointmentController.listCustomerAppointments);
+    // Lista os horários disponíveis de agendamento para um determinado procedimento
     fastify.get('/:procedureID', appointmentController.listAvailableSchedules);
-    fastify.patch('/confirmar/:id', appointmentController.confirmAppointment);
-    fastify.patch('/cancelar/:id', appointmentController.adminCancelAppointment);
-    fastify.patch('/finalizar/:id', appointmentController.finishingAppointment);
+    // Confirma um agendamento
+    fastify.patch('/confirmar/:id', appointmentController.confirmAppointment); 
+    // Cancelamento do agendamento por parte do Admin
+    fastify.patch('/cancelar/:id', appointmentController.adminCancelAppointment); 
+    // Finalização de um agendamento por parte do Admin
+    fastify.patch('/finalizar/:id', appointmentController.finishingAppointment); 
+    // Cancelamento de um agendamento por parte do Cliente
     fastify.delete('/:id', appointmentController.deleteAppointment);
 }
 

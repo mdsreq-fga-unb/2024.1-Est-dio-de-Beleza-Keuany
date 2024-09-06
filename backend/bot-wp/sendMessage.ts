@@ -44,7 +44,7 @@ export async function sendMessage(number: string, message: string): Promise<void
     try {
         const client = await createClient();
         const chatId = `55${number}@c.us`;
-        console.log(number);
+        
         await client.sendMessage(chatId, message);
         console.log('Mensagem enviada!');
     } catch (err) {
