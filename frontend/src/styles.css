@@ -215,9 +215,18 @@ sidebar ul li a text {
     font-weight: bold;
 }
 
+<<<<<<< HEAD
 homeCard {
     display: flex;
     flex-direction: column;
     justify-content: flex-end; /* Alinha o conteúdo ao fundo */
     height: 100vh; /* Garante que o container ocupe toda a altura da tela */
+=======
+.adm-credentials-field {
+    border-color: #000;
+}
+
+.submit-adm {
+    margin: 5%;
+>>>>>>> dev-agendamento
 }
