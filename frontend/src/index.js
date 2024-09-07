@@ -2,15 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import Routes from './routes'; 
 import { Provider } from 'react-redux'; 
-import store from './store'; 
-
-
+import store from './store';
+import { AuthProvider } from './contexts/AuthContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
 root.render(
-  <Provider store={store}>
-    <Routes /> 
-  </Provider> 
+  <AuthProvider>
+    <Provider store={store}>
+      <Routes /> 
+    </Provider>
+  </AuthProvider> 
 );
 
 // If you want to start measuring performance in your app, pass a function

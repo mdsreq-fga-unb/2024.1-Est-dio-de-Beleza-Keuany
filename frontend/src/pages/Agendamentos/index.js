@@ -7,6 +7,8 @@ import { filterAgendamentos } from '../../store/modules/agendamento/actions';
 import { getAllAppointments } from '../../store/modules/agendamento/sagas';
 import util from '../../util'; 
 import { Link } from 'react-router-dom';
+import { sessionStatus } from '../../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 
 const localizer = momentLocalizer(moment); 
@@ -15,7 +17,7 @@ const localizer = momentLocalizer(moment);
 const Agendamentos = () => {
 
     const dispatch = useDispatch();  
-    //const { agendamentos } = useSelector((state) => state.agendamento)
+    const navigate = useNavigate();
     const [agendamentos, setAgendamentos] = useState([]);
 
     async function listAllAppointments() {
@@ -40,14 +42,7 @@ const Agendamentos = () => {
 
 
     useEffect(() => {
-
-       /* dispatch(filterAgendamentos(
-            moment().weekday(0).format('YYYY-MM-DD'), 
-            moment().weekday(6).format('YYYY-MM-DD'),
-        )); */
-        listAllAppointments();
-
-
+        sessionStatus(navigate).then(() => listAllAppointments());
     },[]);
 
 
