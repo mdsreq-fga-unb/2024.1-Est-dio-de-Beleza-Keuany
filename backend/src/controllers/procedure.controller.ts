@@ -62,9 +62,9 @@ const findAllProcedure = async (req: FastifyRequest, res: FastifyReply) => {
     }
 }
 
-const updateProcedure = async (req: FastifyRequest<{ Params: URLParams }>, res: FastifyReply) => {
+const updateProcedure = async (req: FastifyRequest, res: FastifyReply) => {
     try {
-        const id = Number(req.params.id);
+        const id = Number((req.params as URLParams).id);
         const body = req.body as Partial<Procedure>;
 
         if (isNaN(id))
@@ -99,9 +99,9 @@ const updateProcedure = async (req: FastifyRequest<{ Params: URLParams }>, res: 
     }
 }
 
-const deleteProcedure = async (req: FastifyRequest<{ Params: URLParams }>, res: FastifyReply) => {
+const deleteProcedure = async (req: FastifyRequest, res: FastifyReply) => {
     try {
-        const id = Number(req.params.id);
+        const id = Number((req.params as URLParams).id);
 
         if (isNaN(id))
             return res.code(400).send({ message: 'ID do procedimento não fornecido ou inválido!' });
