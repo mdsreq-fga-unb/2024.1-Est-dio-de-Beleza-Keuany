@@ -15,8 +15,8 @@ const Header = () => {
                         to="/" 
                         className={location.pathname === '/' ? 'active' : ''}
                         >
-                        <span className="mdi mdi-home-circle"></span>
-                        <text>Home</text>
+                        <span className="mdi mdi-home-circle">Home</span>
+                    
                     </Link>                   
                 </li>
                 <li className="mx-3">
@@ -24,8 +24,17 @@ const Header = () => {
                         to="/avaliacoes"
                         className={location.pathname === '/avaliacoes' ? 'active' : ''}
                         > 
-                        <span className="mdi mdi-star-box"></span> 
-                        <text>Avaliações</text>
+                        <span className="mdi mdi-star-box">Avaliações</span> 
+                       
+                    </Link>
+                </li>
+                <li className="mx-3">
+                    <Link 
+                        to="/escolher-procedimento"
+                        className={location.pathname === '/escolher-procedimento' ? 'active' : ''}
+                        > 
+                        <span className="mdi mdi-calendar-check">Agendamento</span> 
+                       
                     </Link>
                 </li>
                 <li className="mx-3">
@@ -33,8 +42,8 @@ const Header = () => {
                         to="/admin"
                         className={location.pathname === '/admin' ? 'active' : ''}
                         > 
-                        <span className="mdi mdi-account-multiple"></span> 
-                        <text>Login</text>
+                        <span className="mdi mdi-account-multiple">Login</span> 
+                       
                     </Link>
                 </li>
             </ul>
@@ -66,14 +75,4 @@ const Header = () => {
 export default Header; 
 
 
- /*<ul className="p-0 m-0">
-<li>
-    <Link 
-        to="/" 
-        className={location.pathname === '/' ? 'active' : ''}
-        >
-        <span className="mdi mdi-calendar-check"></span>
-        <text>Home</text>
-    </Link>                   
-</li>
-</ul>*/
+ 

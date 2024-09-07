@@ -192,7 +192,7 @@ sidebar ul li a text {
     align-items: center;
 }
 .service-card button {
-    background-color:#65558f;
+    background-color:#4CAF50;
     border-radius:100px;
     padding:0px;
     display:flex;
@@ -216,12 +216,14 @@ sidebar ul li a text {
 }
 
 
-homeCard {
+.homeCard {
     display: flex;
     flex-direction: column;
     justify-content: flex-end; /* Alinha o conteúdo ao fundo */
     height: 100vh; /* Garante que o container ocupe toda a altura da tela */
 }
+
+
 .adm-credentials-field {
     border-color: #000;
 }
@@ -230,3 +232,29 @@ homeCard {
     margin: 5%;
 
 }
+
+.custom-button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 100px;
+}
+
+.custom-button:hover {
+    background-color: #45a049;
+}
+
+
+.div-spacing {
+    margin-bottom: 20px; 
+  }
+
+
+

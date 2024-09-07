@@ -14,8 +14,8 @@ const Sidebar = () => {
                         to="/agendamentos" 
                         className={location.pathname === '/agendamentos' ? 'active' : ''}
                         >
-                        <span className="mdi mdi-calendar-check"></span>
-                        <text>Agendamentos</text>
+                        <span className="mdi mdi-calendar-check">Agendamentos</span>
+                        
                     </Link>                   
                 </li>
                 <li>
@@ -23,8 +23,8 @@ const Sidebar = () => {
                         to="/clientes"
                         className={location.pathname === '/clientes' ? 'active' : ''}
                         > 
-                        <span className="mdi mdi-account-multiple"></span> 
-                        <text>Clientes</text>
+                        <span className="mdi mdi-account-multiple">Clientes</span> 
+                       
                     </Link>
                 </li>
                
