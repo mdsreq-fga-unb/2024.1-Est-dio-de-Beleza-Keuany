@@ -1,15 +1,16 @@
 import { FastifyInstance } from "fastify";
 import procedureController from "../controllers/procedure.controller";
+import { authMiddleware } from "../middlewares/auth.middleware";
 
 async function procedureRoutes(fastify: FastifyInstance) {
     // Cadastra um procedimento
-    fastify.post('/', procedureController.createProcedure);
+    fastify.post('/', { preHandler: [authMiddleware] }, procedureController.createProcedure);
     // Lista todos os procedimentos
     fastify.get('/', procedureController.findAllProcedure);
     // Atualiza um procedimento
-    fastify.patch('/:id', procedureController.updateProcedure);
+    fastify.patch('/:id', { preHandler: [authMiddleware] }, procedureController.updateProcedure);
     // Exclui um procedimento
-    fastify.delete('/:id', procedureController.deleteProcedure);
+    fastify.delete('/:id', { preHandler: [authMiddleware] }, procedureController.deleteProcedure);
 }
 
 export default procedureRoutes;

@@ -1,26 +1,29 @@
-import { useState } from 'react'; 
+import { useEffect, useState } from 'react'; 
 import { useNavigate } from 'react-router-dom';
+import useAuth from '../../hooks/useAuth';
+import { isAuthenticated } from '../../contexts/AuthContext';
 
 const Autenticacao = () => {
-
+    const { signIn } = useAuth();
     const navigate = useNavigate();
     
     const [adminName, setAdminName] = useState("");
     const [password, setPassword] = useState("");
-    const [areCredentialsIncorrect, setCredentialsIncorrect] = useState(false);
 
-    function handleAuthentication() {
-        // Insira o Código de autenticação
+    async function handleSignIn(ev) {
+        ev.preventDefault();
 
-        // REMOVA APÓS ESCREVER A FUNÇÃO INTEIRA!
-        navigate("/agendamentos");
-        
-        /* if (hashEquals === true) {
+        const data = { username: adminName, password }
+
+        const res = await signIn(data);
+        if (res) {
             navigate("/agendamentos");
-        } else {
-            setCredentialsIncorrect(true);
-        } */
+        }
     }
+
+    useEffect(() => {
+        isAuthenticated(navigate);
+    }, []);
 
     return(
         <div className="col p-5 overflow-auto h-100">
@@ -37,7 +40,7 @@ const Autenticacao = () => {
                     <div className='col-12'>
                         <div className="w-100 d-flex justify-content-center flex-column">
                             <div className='m-5'>
-                                <label for='adm-name-field'>Nome:</label>
+                                <label htmlFor='adm-name-field'>Nome:</label>
                                 <input 
                                     id="adm-name-field"
                                     className="form-control adm-credentials-field"
@@ -48,7 +51,7 @@ const Autenticacao = () => {
                                     required
                                     >
                                 </input>
-                                <label for='adm-password-field'>Senha:</label>
+                                <label htmlFor='adm-password-field'>Senha:</label>
                                 <input 
                                     id="adm-password-field"
                                     className="form-control adm-credentials-field"
@@ -59,12 +62,12 @@ const Autenticacao = () => {
                                     required
                                     >
                                 </input>
-
+{/* 
                                 {areCredentialsIncorrect === true ? (
                                     <div className='text-danger'>Credenciais Incorretas</div>
                                 ) : (
                                     <div></div>
-                                )}
+                                )} */}
                                 
                             </div>
                         </div>
@@ -74,7 +77,7 @@ const Autenticacao = () => {
                 <div className='row'>    
                     <div className='col-12'>
                         <div className="w-100 d-flex justify-content-center">
-                            <button type="submit" className="btn btn-primary btn-lg" id='submit-adm' onClick={handleAuthentication}>
+                            <button type="submit" className="btn btn-primary btn-lg" id='submit-adm' onClick={handleSignIn}>
                                 <span>Entrar</span>
                             </button>
                         </div>

@@ -76,7 +76,7 @@ async function processAppointmentQueue(idAppointment: number) {
 const delayTime = 20000; // Intervalo de 20 segundos
 
 export function startCronJobs() {
-    cron.schedule('0 8 * * *', async () => {
+    cron.schedule('15 10 * * *', async () => {
         const currentDate = new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' });
         console.log(`CronJob iniciado às: ${currentDate}`);
 

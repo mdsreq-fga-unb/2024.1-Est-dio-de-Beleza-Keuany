@@ -7,6 +7,7 @@ import workScheduleRoutes from "./routes/workSchedule.route";
 import exceptScheduleRoutes from "./routes/exceptSchedule.route";
 import appointmentRoutes from "./routes/appointment.route";
 import reviewRoutes from "./routes/review.route";
+import authRoutes from "./routes/auth.route";
 
 // Cron Job
 import { startCronJobs } from "./cronJobs";
@@ -29,6 +30,7 @@ const start = async () => {
         fastify.register(exceptScheduleRoutes, { prefix: '/excecao' });
         fastify.register(appointmentRoutes, { prefix: '/agendamento' });
         fastify.register(reviewRoutes, { prefix: '/avaliacao' });
+        fastify.register(authRoutes, { prefix: '/auth' });
 
         // Iniciar o servidor
         await fastify.listen({ port: 3000, host: '0.0.0.0' });
