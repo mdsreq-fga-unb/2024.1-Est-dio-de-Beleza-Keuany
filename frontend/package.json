@@ -31,12 +31,8 @@
     "redux-devtools-extension": "^2.13.9",
     "redux-saga": "^1.3.0",
     "rsuite": "^5.70.0",
-<<<<<<< HEAD
     "slick-carousel": "^1.8.1",
     "styled-components": "^6.1.13",
-=======
-    "sweetalert2": "^11.13.3",
->>>>>>> ffc408aec268f4e599cd8a648b1cb050b41a9df5
     "web-vitals": "^2.1.4"
   },
   "scripts": {
