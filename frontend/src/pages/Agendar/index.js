@@ -9,7 +9,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { setHours, setMinutes } from 'date-fns';
 import Slider from 'react-slick'; // Importa o componente Slider do react-slick
 import { Modal, Button } from 'react-bootstrap';
-
+import 'react-datepicker/dist/react-datepicker.css';
 
 
 
@@ -18,22 +18,12 @@ import { Modal, Button } from 'react-bootstrap';
 
 const Agendamentos_Clientes = () => {
 
-  /*const [show, setShow] = useState(false);
-
-    // Função que controla o fechamento do modal
-    const handleClose = () => setShow(false);
-
-    // Abre o modal quando o componente é montado
-    useEffect(() => {
-        setShow(true);
-    }, []); 
-
-    const [openAgendarModal, setOpenAgendarModal] = useState(false);*/
+  
 
 
 
 
-  //const [startDate, setStartDate] = useState(new Date());
+  
   const navigate = useNavigate(); // Hook para navegação
 
   
@@ -98,36 +88,30 @@ const PrimeiroModal = ({ isOpen, onClose }) => (
 );
   
 
-  const [startDate, setStartDate] = useState(null);
+  
 
-  // Definir os horários disponíveis, por exemplo, das 9h às 17h
- /* const isTimeSelectable = (time) => {
-    const selectedHour = time.getHours();
-    return selectedHour >= 9 && selectedHour <= 17;
-  };*/
-
+  
   // Definir as datas indisponíveis
-  const isDateSelectable = (date) => {
-    const unavailableDates = ['2024-09-10', '2024-09-15'];
-    const dateString = date.toISOString().split('T')[0];
-    return !unavailableDates.includes(dateString);
+  // Estado para armazenar a data selecionada
+  const [selectedDate, setSelectedDate] = useState(null);
+
+  // Função chamada ao selecionar uma data
+  const handleDateChange = (date) => {
+    setSelectedDate(date);  // Atualiza o estado com a data escolhida
+    registrarEvento(date);  // Chama a função para registrar o evento
+  };
+
+  // Função para registrar um evento (exemplo de ação)
+  const registrarEvento = (date) => {
+    console.log('Data selecionada:', date);
+    // Aqui você pode realizar qualquer ação, como enviar a data para uma API, etc.
+    alert(`Evento registrado para a data: ${date}`);
   };
 
 
- /* function Agendar(props) {
-    const searchParams = new URLSearchParams(props.location.search);
-    const nome = searchParams.get('nome');
-    const tempo_estimado = searchParams.get('tempo_estimado');
-    const preco = searchParams.get('preco');
-  }*/
+ 
 
-  /*function paraMeusAgendamentos(servico) {
-      navigate(`/meus_agendamentos?servico=${servico}`);
-  }*/
-
-      function paraMeusAgendamentos(nome, tempo_estimado, preco, data, hora) {
-        navigate(`/meus_agendamentos?servico=${nome}&tempo=${tempo_estimado}&preco=${preco}&data=${data}&hora=${hora}`);
-    }
+     
       const [searchParams] = useSearchParams();
 
     // Extrai o valor do parâmetro "servico" da query string
@@ -161,106 +145,54 @@ const PrimeiroModal = ({ isOpen, onClose }) => (
 
   
 
-  /*const fetchButtonData = async (buttonId) => {
-    try {
-      // Simulando uma chamada de API
-      const simulatedApiResponse = {
-        name: `Nome do botão ${buttonId}`,   // Informação 1
-        value: `Valor ${Math.floor(Math.random() * 100)}`, // Informação 2
-      };
-
-      // Atualizando o estado com as informações recebidas da "API"
-      setButtonData((prevData) => ({
-        ...prevData,
-        [buttonId]: simulatedApiResponse,
-      }));
-    } catch (error) {
-      console.error('Erro ao buscar dados da API:', error);
-    }
-  };
-  const buttonIds = ['button1', 'button2', 'button3', 'button4', 'button5', 'button6', 'button7', 'button8', 'button9', 'button10', 'button11', 'button12', 'button13', 'button14', 'button15', 'button16', 'button17', 'button18', 'button19']; // Exemplo de IDs de botões
-
+  
   useEffect(() => {
-    buttonIds.forEach((id) => fetchButtonData(id));
-  }, []);
-
-  // Carregar os valores dos botões do localStorage quando o componente for montado
-  useEffect(() => {
-    const savedValues = JSON.parse(localStorage.getItem('buttonValues')) || {};
-    setButtonValues(savedValues);
-  }, []);
-
-  // Função para alternar o valor do botão
-  const toggleValue = (buttonId) => {
-    setButtonValues((prevValues) => {
-      const newValue = prevValues[buttonId] === 'true' ? 'false' : 'true';
-      const updatedValues = { ...prevValues, [buttonId]: newValue };
-      // Mudar o valor entre true e false
-      /*if (newValue === "true") {
-        const button = document.getElementById(buttonId);
-        button.style.backgroundColor = "green"; // Reseta a cor de fundo para o valor true
-    } else {
-      const button = document.getElementById(buttonId);
-      button.style.backgroundColor = "red"; // Reseta a cor de fundo para o valor false
-    }
-      // Armazenar os valores atualizados no localStorage
-      localStorage.setItem('buttonValues', JSON.stringify(updatedValues));
-      
-      return updatedValues;
-    });
-  };
-
-  // Função para definir o valor do botão com base no argumento
- 
-
-  // Lista de botões para renderizar*/
-
-  useEffect(() => {
-    
-    
-
     // Simular chamada de API para buscar dados dos botões
     const fetchButtonData = async () => {
       const simulatedApiResponse = {
-        button1: { name: '08:00', value: '0', isActive: true },
-        button2: { name: '08:30', value: '2', isActive: false },
-        button3: { name: '09:00', value: '0', isActive: true },
-        button4: { name: '09:30', value: '4', isActive: false },
-        button5: { name: '10:00', value: '5', isActive: false },
-        button6: { name: '10:30', value: '6', isActive: false },
-        button7: { name: '11:00', value: '0', isActive: true },
-        button8: { name: '11:30', value: '8', isActive: false },
-        button9: { name: '14:00', value: '0', isActive: true },
-        button10: { name: '14:30', value: '10', isActive: false },
-        button11: { name: '15:00', value: '0', isActive: true },
-        button12: { name: '15:30', value: '12', isActive: false },
-        button13: { name: '16:00', value: '0', isActive: true },
-        button14: { name: '16:30', value: '0', isActive: true },
-        button15: { name: '17:00', value: '15', isActive: false },
-        button16: { name: '17:30', value: '0', isActive: true },
-        button17: { name: '18:00', value: '17', isActive: false },
+        button1: { name: '08:00', value: '0' },
+        button2: { name: '08:30', value: '0' },
+        button3: { name: '09:00', value: '0' },
+        button4: { name: '09:30', value: '0' },
+        button5: { name: '10:00', value: '0' },
+        button6: { name: '10:30', value: '6' },
+        button7: { name: '11:00', value: '0' },
+        button8: { name: '11:30', value: '8' },
+        button9: { name: '14:00', value: '0' },
+        button10: { name: '14:30', value: '10' },
+        button11: { name: '15:00', value: '0' },
+        button12: { name: '15:30', value: '12' },
+        button13: { name: '16:00', value: '0' },
+        button14: { name: '16:30', value: '0' },
+        button15: { name: '17:00', value: '15' },
+        button16: { name: '17:30', value: '0' },
+        button17: { name: '18:00', value: '17' },
       };
-     
-
-// Atualiza os dados dos botões
-setButtonData(simulatedApiResponse);
-
-// Atualiza os valores dos botões com os dados da API ou usa os do localStorage se disponíveis
-const apiButtonValues = Object.keys(simulatedApiResponse).reduce((acc, key) => {
-  acc[key] = simulatedApiResponse[key].isActive.toString(); // Converte booleano para string
-  return acc;
-}, {});
-
-
-
-setButtonValues(apiButtonValues);
-};
-    
+  
+      // Atualizar os dados dos botões com base no 'value'
+      const updatedButtonData = Object.keys(simulatedApiResponse).reduce((acc, key) => {
+        acc[key] = {
+          ...simulatedApiResponse[key],
+          isActive: simulatedApiResponse[key].value === '0',  // Define 'true' se value for '0', senão 'false'
+        };
+        return acc;
+      }, {});
+  
+      // Atualizar o estado com os dados processados
+      setButtonData(updatedButtonData);
+  
+      // Atualizar os valores dos botões com os dados booleanos
+      const apiButtonValues = Object.keys(updatedButtonData).reduce((acc, key) => {
+        acc[key] = updatedButtonData[key].isActive.toString();  // Converter booleano para string
+        return acc;
+      }, {});
+  
+      setButtonValues(apiButtonValues);
+    };
+  
     fetchButtonData();
   }, []);
-
-
-     
+  
     
 
   // Função para alternar o valor do botão
@@ -310,18 +242,15 @@ setButtonValues(apiButtonValues);
 
          
 
-  <div className="className=mb-5 mt-0">
-  
-      <h2>Escolher Data</h2>
+        <div>
+      <h2>Escolha uma Data</h2>
       <DatePicker
-        selected={startDate}
-        onChange={(date) => setStartDate(date)}
-        
+        selected={selectedDate}
+        onChange={handleDateChange}  // Chama a função ao alterar a data
         dateFormat="MMMM d, yyyy"
-        placeholderText="Selecione data"
+        placeholderText="Selecione uma data"
       />
     </div>
-  
 
     <div className="mb-4 mt-5"></div>
     <div className="mb-4 mt-5"></div>
@@ -343,21 +272,21 @@ setButtonValues(apiButtonValues);
       {buttonIds.map((id) => (
         <div key={id} style={{ marginBottom: '10px' }}>
           <button
-            id={id}
-            onClick={() => toggleValue(id)}
-            style={{
-              backgroundColor: buttonValues[id] === 'true' ? 'green' : 'red',
-              color: 'black',
-              padding: '10px 20px',
-              border: 'none',
-              fontSize: '16px',
-              cursor: 'pointer',
-              borderRadius: '100px', // Botões com borda arredondada
-            }}
-          >
-            {/* Exibe o nome do botão (da API) e o valor armazenado */}
-            {buttonData[id] ? `${buttonData[id].name}` : 'Carregando...'}
-          </button>
+  id={id}
+  onClick={() => toggleValue(id)}
+  style={{
+    backgroundColor: buttonValues[id] === 'true' ? 'green' : 'red',  // 'true' será verde e 'false' será vermelho
+    color: 'black',
+    padding: '10px 20px',
+    border: 'none',
+    fontSize: '16px',
+    cursor: 'pointer',
+    borderRadius: '100px',
+  }}
+>
+  {buttonData[id] ? `${buttonData[id].name}` : 'Carregando...'}
+</button>
+
           <div>
             {/* Exibe as informações adicionais da API */}
             {buttonData[id] && (
@@ -373,13 +302,7 @@ setButtonValues(apiButtonValues);
        </Slider>
        <div>
      
-      {/* Modal de Agendamento */}
-     {/* <AgendarModal     
-        isOpen={openAgendarModal}
-        onClose={() => setOpenAgendarModal(false)}
-      />*/}
-
-       {/* Modal de Agendamento */}
+   
        <div>
        <AgendamentosModal
         isOpen={showModal}
