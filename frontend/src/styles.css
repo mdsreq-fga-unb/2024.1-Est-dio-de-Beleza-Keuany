@@ -254,6 +254,12 @@ sidebar ul li a text {
 
 .div-spacing {
     margin-bottom: 20px; 
-  }
+}
 
-
+.dias-da-semana {
+    background-color: #e7e7e7;
+    height: 8%;
+    border-radius: 20px;
+    align-items: center;
+    margin: 10px;
+}
