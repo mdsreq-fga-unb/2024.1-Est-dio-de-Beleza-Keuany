@@ -39,8 +39,10 @@ nav:
   - Sprints:
     - Sprint 1: sprints/sprint-1.md
     - Sprint 2: sprints/sprint-2.md
+    - Processo de Desenvolvimento Preditivo: sprints/processo-de-desenvolvimento.md
   - Lições Aprendidas: licoesAprendidas.md
   - Entregas:
     - Unidade 1: entregas/unidade01.md
     - Unidade 2: entregas/unidade02.md
     - Unidade 3: entregas/unidade03.md
+    - Unidade 4: entregas/unidade04.md

@@ -42,3 +42,17 @@ Nós também aprendemos sobre os aspectos humanos envolvidos no processo de elic
 <p align="justify">
 Já na declaração, aprendemos o que é um backlog e implementamos o backlog com o padrão SAFE, histórias de usuário, critérios de aceitação e critérios de priorização.
 </p>
+
+## Unidade 3
+<p align="justify">
+Na terceira unidade, aprendemos sobre mais sobre os passos da Engenharia de Requisitos, principalmente nas tapas de <bold>Representação</bold>.
+</p>
+
+<p align="justify">
+Foram feitos exercícios praticando os métodos Product Backlog Building (PBB) e User Story Mapping (USM) sobre situações-problema diversos.
+</p>
+
+## Unidade 4
+<p align="justify">
+Nesta unidade o foco maior foi em revisar os conceitos já vistos ao longo das unidades 1, 2 e 3. Como, por exemplo, as atividades da engenharia de requisitos, requisitos funcionais e não funcionais. 
+lém de disso, também discutimos batante sobre os conceitos de PBB e USM através de exercícios de Verificação e Validação. Por fim, foram ensinados Definition of Ready (DoR) e Definition of Done (DoD).</p>
