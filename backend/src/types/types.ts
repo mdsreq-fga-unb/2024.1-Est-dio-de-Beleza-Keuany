@@ -80,4 +80,5 @@ export interface AppointmentWithQueue extends Appointment, Procedure {
 export interface TimeSlot {
     time: string;
     queueCount: number;
+    idAppointment: number;
 }  

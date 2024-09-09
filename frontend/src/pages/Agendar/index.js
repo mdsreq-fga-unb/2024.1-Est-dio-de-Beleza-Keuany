@@ -11,14 +11,21 @@ import Slider from 'react-slick'; // Importa o componente Slider do react-slick
 import { Modal, Button } from 'react-bootstrap';
 import 'react-datepicker/dist/react-datepicker.css';
 import { getProcedureById } from "../../store/modules/procedimento/sagas";
-import { postAppointment, getAvailableSchedules } from "../../store/modules/agendamento/sagas";
+import { postAppointment, getAvailableSchedules, enterQueue } from "../../store/modules/agendamento/sagas";
 
 let formattedDate;
+let idAppointment = null;
 let appointmentData = {
   schedule: '',
   customerName: '',
   customerPhone: ''
 };
+
+let queueData = {
+  idAppointment: '',
+  customerName: '',
+  customerPhone: ''
+}
 
 const Agendamentos_Clientes = () => {
   const navigate = useNavigate(); // Hook para navegação
@@ -30,14 +37,25 @@ const Agendamentos_Clientes = () => {
   const [searchParams] = useSearchParams();
   // Extrai o valor do parâmetro "servico" da query string
   const idProcedure = searchParams.get('id');
-  /* if (schedules)
-    console.log(schedules); */
+
   // Função para redirecionar para outra página
   const handleRedirect = () => {
     navigate('/escolher-procedimento'); // Substitua '/nova-pagina' pela rota desejada
   
   };
   const FinalizarProcedimento = () => {
+    appointmentData = {
+      schedule: null,
+      customerName: null,
+      customerPhone: null
+    }
+
+    queueData = {
+      idAppointment: null,
+      customerName: null,
+      customerPhone: null
+    }
+    console.clear();
     navigate('/meus_agendamentos'); // Substitua '/nova-pagina' pela rota desejada
   
   };
@@ -60,9 +78,33 @@ const Agendamentos_Clientes = () => {
 
   // Função para cadastrar um agendamento
   async function createAppointment(id, data) {
-    const response = await postAppointment(id, data);
-
+    try {
+      const response = await postAppointment(id, data);
+  
+      if (response) {
+        if (response.status === 201) {
+          FinalizarProcedimento();
+        }
+      }
+    } catch (error) {
+      console.error('Erro ao criar agendamento');
+    }
   }
+
+  async function enterAppointmentQueue(data) {
+    try {
+      const response = await enterQueue(data);
+  
+      if (response) {
+        if (response.status === 201) {
+          FinalizarProcedimento();
+        }
+      }
+    } catch (error) {
+      console.error('Erro ao entrar na fila');
+    }
+  }
+  
  
   const handleOpenPrimeiroModal = () => setIsPrimeiroModalOpen(true);
   const handleClosePrimeiroModal = () => setIsPrimeiroModalOpen(false);
@@ -82,7 +124,7 @@ const Agendamentos_Clientes = () => {
   };
 
 
-const AgendamentosModal = ({ isOpen, onClose, modalContent }) => (
+const AgendamentosModal = ({ isOpen, onClose, onFinalizarClick, modalContent }) => (
   <Modal show={isOpen} onHide={onClose}>
     <Modal.Header closeButton>
       <Modal.Title>Bem-vindo!</Modal.Title>
@@ -97,7 +139,7 @@ const AgendamentosModal = ({ isOpen, onClose, modalContent }) => (
     <Button variant="secondary" onClick={handleRedirect}>
           Voltar para o agendamento
         </Button>
-      <Button variant="secondary" onClick={onClose}>
+      <Button variant="secondary" onClick={onFinalizarClick}>
         Entrar na fila de espera
       </Button>
     </Modal.Footer>
@@ -124,87 +166,113 @@ const PrimeiroModal = ({ isOpen, onClose, onFinalizarClick, modalData }) =>
   </Modal>
 );
 
-  
 const [isSegundoModalOpen, setIsSegundoModalOpen] = useState(false);
 const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
-const [userName, setUserName] = useState('');
-const [userPhone, setUserPhone] = useState('');
-
-
-
-// Função para capturar o valor do campo de entrada
-const handleInputChange = (e) => {
-  setUserName(e.target.value);
-};
-
-// Função para capturar o valor do campo de telefone
-const handlePhoneChange = (e) => {
-  setUserPhone(e.target.value);
-};
 
 // Função para avançar e agendar
 const handleAvancarEAgendar = () => {
   setIsPrimeiroModalOpen(false);
-  setIsSuccessModalOpen(true);
+  if (idAppointment === '0')
+    createAppointment(idProcedure, appointmentData);
+  else
+    enterAppointmentQueue(queueData);
+  console.clear();
 };
 
-const SegundoModal = ({ isOpen, onClose, modalData }) => (
-  <Modal show={isOpen} onHide={onClose}>
-    <Modal.Header closeButton>
-      <Modal.Title>Informações do usuário</Modal.Title>
-    </Modal.Header>
-    <Modal.Body>
-      <p>Nome:</p>
-      <input
-        type="text"
-        value={userName}
-        onChange={handleInputChange}
-        placeholder="Insira seu nome"
-        className="form-control"
-      />
-    </Modal.Body>
-    <Modal.Body>
-      <p>Número do WhatsApp:</p>
-      <input
-        type="tel"
-        value={userPhone}
-        onChange={handlePhoneChange}
-        placeholder="Insira seu telefone"
-        className="form-control"
-      />
-    </Modal.Body>
-    <Modal.Footer>
-      <div className="d-flex flex-column w-100">
-        <Button variant="secondary" onClick={handleAvancarEAgendar}>
-          Avançar e agendar
-        </Button>
-        <div className="mb-3 mt-2"></div>
-        <Button variant="secondary" onClick={handleRedirect}>
-          Voltar
-        </Button>
-      </div>
-    </Modal.Footer>
-  </Modal>
-);
+const SegundoModal = ({ isOpen, onClose }) => {
+  const [userName, setUserName] = useState('');
+  const [userPhone, setUserPhone] = useState('');
 
-const SuccessChecklistModal = ({ isOpen, onClose }) => (
-  <Modal show={isOpen} onHide={onClose} centered>
-    <Modal.Body>
-      <div className="text-center mb-4">
-        <i className="bi bi-check-circle" style={{ fontSize: '10rem', color: 'green' }}></i>
-        <p>Operação Realizada com Sucesso!</p>
-      </div>
-      
-      <p>Seu agendamento foi realizado com sucesso com Keyllane</p>
-    </Modal.Body>
-    <Modal.Footer>
-      <Button variant="success" onClick={FinalizarProcedimento}>
-        Fechar
-      </Button>
-    </Modal.Footer>
-  </Modal>
-);
+  // Função para capturar o valor do campo de entrada
+  const handleInputChange = (e) => {
+    const newUserName = e.target.value;
+    setUserName(newUserName);
+    if (idAppointment === '0')
+      appointmentData.customerName = newUserName;
+    else
+      queueData.customerName = newUserName;
+  };
 
+  // Função para capturar o valor do campo de telefone
+  const handlePhoneChange = (e) => {
+    const newUserPhone = e.target.value;
+    setUserPhone(newUserPhone);
+    if (idAppointment === '0') {
+      appointmentData.customerPhone = newUserPhone;
+    } else {
+      queueData.customerPhone = newUserPhone;
+    }
+  };
+
+  // Usar useEffect para lidar com mudanças no modal, se necessário
+  useEffect(() => {
+    if (!isOpen) {
+      // Limpa os campos quando o modal é fechado
+      setUserName('');
+      setUserPhone('');
+    }
+  }, [isOpen]); // Executa quando isOpen mudar
+
+  return (
+    <Modal show={isOpen} onHide={onClose}>
+      <Modal.Header closeButton>
+        <Modal.Title>Informações do usuário</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <p>Nome:</p>
+        <input
+          type="text"
+          value={userName}
+          onChange={handleInputChange}
+          placeholder="Insira seu nome"
+          className="form-control"
+        />
+      </Modal.Body>
+      <Modal.Body>
+        <p>Número do WhatsApp:</p>
+        <input
+          type="tel"
+          value={userPhone}
+          onChange={handlePhoneChange}
+          placeholder="Insira seu telefone"
+          className="form-control"
+        />
+      </Modal.Body>
+      <Modal.Footer>
+        <div className="d-flex flex-column w-100">
+          <Button variant="secondary" onClick={handleAvancarEAgendar}>
+            Avançar e agendar
+          </Button>
+          <div className="mb-3 mt-2"></div>
+          <Button variant="secondary" onClick={handleRedirect}>
+            Voltar
+          </Button>
+        </div>
+      </Modal.Footer>
+    </Modal>
+  );
+};
+
+const SuccessChecklistModal = ({ isOpen, onClose }) => {
+
+  return (
+    <Modal show={isOpen} onHide={onClose} centered>
+      <Modal.Body>
+        <div className="text-center mb-4">
+          <i className="bi bi-check-circle" style={{ fontSize: '10rem', color: 'green' }}></i>
+          <p>Operação Realizada com Sucesso!</p>
+        </div>
+        
+        <p>Seu agendamento foi realizado com sucesso com Keyllane</p>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="success" onClick={FinalizarProcedimento}>
+          Fechar
+        </Button>
+      </Modal.Footer>
+    </Modal>
+  );
+}
   
   // Definir as datas indisponíveis
   // Estado para armazenar a data selecionada
@@ -218,11 +286,8 @@ const SuccessChecklistModal = ({ isOpen, onClose }) => (
   };
 
   const [isPrimeiroModalOpen, setIsPrimeiroModalOpen] = useState(false);
-      
-    
-  
-      
-    // Estado para armazenar os valores dos botões
+       
+  // Estado para armazenar os valores dos botões
   const [buttonValues, setButtonValues] = useState({});
   const [buttonData, setButtonData] = useState({});
   const [lastClickedButton, setLastClickedButton] = useState(null); // Armazena o último botão clicado
@@ -238,57 +303,6 @@ const SuccessChecklistModal = ({ isOpen, onClose }) => (
     slidesToScroll: 7
   };
 
-  
-
-  
-  /* useEffect(() => {
-    // Simular chamada de API para buscar dados dos botões
-    const fetchButtonData = async () => {
-      const simulatedApiResponse = {
-        button1: { name: '08:00', value: '0' },
-        button2: { name: '08:30', value: '0' },
-        button3: { name: '09:00', value: '0' },
-        button4: { name: '09:30', value: '0' },
-        button5: { name: '10:00', value: '0' },
-        button6: { name: '10:30', value: '6' },
-        button7: { name: '11:00', value: '0' },
-        button8: { name: '11:30', value: '8' },
-        button9: { name: '14:00', value: '0' },
-        button10: { name: '14:30', value: '10' },
-        button11: { name: '15:00', value: '0' },
-        button12: { name: '15:30', value: '12' },
-        button13: { name: '16:00', value: '0' },
-        button14: { name: '16:30', value: '0' },
-        button15: { name: '17:00', value: '15' },
-        button16: { name: '17:30', value: '0' },
-        button17: { name: '18:00', value: '17' },
-      };
-  
-      // Atualizar os dados dos botões com base no 'value'
-      const updatedButtonData = Object.keys(simulatedApiResponse).reduce((acc, key) => {
-        acc[key] = {
-          ...simulatedApiResponse[key],
-          isActive: simulatedApiResponse[key].value === '0',  // Define 'true' se value for '0', senão 'false'
-        };
-        return acc;
-      }, {});
-  
-      // Atualizar o estado com os dados processados
-      setButtonData(updatedButtonData);
-  
-      // Atualizar os valores dos botões com os dados booleanos
-      const apiButtonValues = Object.keys(updatedButtonData).reduce((acc, key) => {
-        acc[key] = updatedButtonData[key].isActive.toString();  // Converter booleano para string
-        return acc;
-      }, {});
-  
-      setButtonValues(apiButtonValues);
-    };
-    
-    findProcedure(idProcedure);
-    fetchButtonData();
-  }, []); */
-
   useEffect(() => {
     findProcedure(idProcedure);
     if (schedules.length > 0) {  // Só roda quando schedules for atualizado
@@ -298,6 +312,7 @@ const SuccessChecklistModal = ({ isOpen, onClose }) => (
             acc[key] = {
                 name: schedule.time,
                 value: schedule.queueCount.toString(),
+                idAppointment: schedule.idAppointment,
                 isActive: schedule.queueCount === 0  // Define 'true' se queueCount for 0, senão 'false'
             };
             return acc;
@@ -314,15 +329,18 @@ const SuccessChecklistModal = ({ isOpen, onClose }) => (
 
         setButtonValues(apiButtonValues);
     }
-}, [schedules]);  // Este useEffect será ativado sempre que 'schedules' mudar
+  }, [schedules]);  // Este useEffect será ativado sempre que 'schedules' mudar
   
-    
-
   // Função para alternar o valor do botão
-  const toggleValue = (buttonId) => {
+  const toggleValue = (buttonId, e) => {
+    idAppointment = e.target.getAttribute('data-id-appointment');
+
     if (formattedDate) {
-      appointmentData.schedule = `${formattedDate} ${buttonData[buttonId].name}`;
-      console.log(appointmentData);
+      if (idAppointment === '0') {
+        appointmentData.schedule = `${formattedDate} ${buttonData[buttonId].name}`;
+      } else {
+        queueData.idAppointment = idAppointment;
+      }
     }
 
     if (buttonData[buttonId]) {
@@ -337,22 +355,6 @@ const SuccessChecklistModal = ({ isOpen, onClose }) => (
     }
 
     setIsPrimeiroModalOpen(true);
-
-  
-    /* setButtonValues((prevValues) => {
-      const newValue = prevValues[buttonId] === 'true' ? 'false' : 'true';
-      const updatedValues = { ...prevValues, [buttonId]: newValue };
-      
-      // Se houver um último botão clicado, restaura ele para 'true' se ele veio como ativo da API
-      if (lastClickedButton && buttonData[lastClickedButton]?.isActive) {
-        updatedValues[lastClickedButton] = 'true';
-      }
-  
-      // Atualiza o último botão clicado
-      setLastClickedButton(buttonId);
-  
-      return updatedValues;
-    }); */
   };
 
   return(
@@ -384,7 +386,8 @@ const SuccessChecklistModal = ({ isOpen, onClose }) => (
                           <div key={id} style={{ marginBottom: '10px' }}>
                             <button
                               id={id}
-                              onClick={() => toggleValue(id)}
+                              data-id-appointment={buttonData[id].idAppointment}
+                              onClick={(e) => toggleValue(id, e)}
                               style={{
                                 backgroundColor: buttonValues[id] === 'true' ? 'green' : 'red',  // 'true' será verde e 'false' será vermelho
                                 color: 'black',
@@ -415,6 +418,7 @@ const SuccessChecklistModal = ({ isOpen, onClose }) => (
                     <AgendamentosModal
                       isOpen={showModal}
                       onClose={() => setShowModal(false)}
+                      onFinalizarClick={handleFinalizarClick} // Passa a função aqui
                       modalContent={modalContent}
                     />
                   </div>
@@ -438,15 +442,11 @@ const SuccessChecklistModal = ({ isOpen, onClose }) => (
           <div className="mb-4 mt-5"></div>
           <div className="mb-4 mt-5"></div>
           <div className="mb-4 mt-5"></div>
-          {/* <button className="custom-button" onClick={handleOpenPrimeiroModal}>
-            <span className="mdi">Finalizar agendamento</span>
-          </button> */}
           <PrimeiroModal isOpen={isPrimeiroModalOpen} onClose={handleClosePrimeiroModal} />               
           <div>
             <div>
               <div className="p-5">
                 <div>
-                  {/* Seu conteúdo */}
                   <PrimeiroModal 
                     isOpen={isPrimeiroModalOpen} 
                     onClose={handleClosePrimeiroModal} 
@@ -458,7 +458,6 @@ const SuccessChecklistModal = ({ isOpen, onClose }) => (
                     onClose={() => setIsSegundoModalOpen(false)}
                     modalData={appointmentData}
                   />
-                  {/* Seu conteúdo */}
                 </div>    
               </div>
               <SegundoModal isOpen={isSegundoModalOpen} onClose={() => setIsSegundoModalOpen(false)} />

@@ -225,7 +225,8 @@ const listAvailableSchedulesService = async (
                 `SELECT COUNT(Q.customerPhone) AS queueCount,
                     A.idProcedure,
                     A.schedule,
-                    A.status
+                    A.status,
+                    A.idAppointment
                 FROM APPOINTMENT A 
                 LEFT JOIN \`QUEUE\` Q ON A.idAppointment = Q.idAppointment 
                 WHERE A.schedule >= ? AND A.schedule < ?
@@ -236,6 +237,7 @@ const listAvailableSchedulesService = async (
             const appointmentRow = (appointment as any)[0];
             const appointmentStatus = appointmentRow?.status;
             const queueCount = appointmentRow?.queueCount || 0;
+            const idAppointment = appointmentRow?.idAppointment || 0;
             const appointmentProcedureId = appointmentRow?.idProcedure;
 
             let slotSpace = 1;
@@ -265,7 +267,8 @@ const listAvailableSchedulesService = async (
                 if (!(isPastConfirmationVerification && queueCount > 0)) {
                     availableTimes.push({
                         time: currentTime,
-                        queueCount: queueCount
+                        queueCount: queueCount,
+                        idAppointment,
                     });
                 }
             }
