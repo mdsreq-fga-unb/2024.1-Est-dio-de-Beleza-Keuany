@@ -13,6 +13,7 @@ import Autenticacao from './pages/Autenticacao';
 import Servicos from './pages/Servico';
 import Funcionamento from './pages/Funcionamento';
 import Afastamentos from './pages/Afastamentos';
+import ServiceList from './components/CreateURL';
 
 
 
@@ -51,7 +52,8 @@ const MainContent = () => {
                     <Route path='/meus_agendamentos' exact element={<MeusAgendamentos />} />
                     <Route path='/funcionamento' exact element={<Funcionamento/>} />
                     <Route path='/afastamento' exact element={<Afastamentos/>} />
-                    <Route path='/avaliar' exact element={<CadastrarAvaliacoes/>} />
+                    <Route path='/avaliar/:id' exact element={<CadastrarAvaliacoes/>} />
+                    <Route path="/createurl" element={<ServiceList />} />
                 </Switch>
             </div>
         </div>
