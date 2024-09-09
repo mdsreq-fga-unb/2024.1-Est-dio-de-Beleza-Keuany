@@ -19,6 +19,8 @@ export default function Procedimentos() {
       preco: ''
     });
     const [isAddServiceModalOpen, setIsAddServiceModalOpen] = useState(false);
+    const [isEditServiceModalOpen, setIsEditServiceModalOpen] = useState(false);
+    const [editingService, setEditingService] = useState(null);
     const navigate = useNavigate();
     const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
     const [serviceToDelete, setServiceToDelete] = useState(null);
@@ -32,26 +34,25 @@ export default function Procedimentos() {
     const handleShowAddServiceModal = () => setIsAddServiceModalOpen(true);
     const handleCloseAddServiceModal = () => setIsAddServiceModalOpen(false);
 
-    const ServicoCard = ({ service, onDelete }) => {
-      return (
-        <div className="service-card col p-5 overflow-auto h-100">
-        <div className="row d-flex align-items-center justify-content-between">
-          <div className="col-9 d-flex align-items-center">
-              <div className="nome">{service.name}</div>
-          </div>
-          <div className="col-2 text-end">
-            {service.status !== 'Finalizado' && (
-              <button className="custom-button" onClick={() => onDelete(service.id)}>
-                  <i className="bi bi-trash" style={{ fontSize: '1.5rem', color: 'red' }}></i>
-              </button>
-            )}
-          </div>
-              <div className="tempo_estimado">Tempo: {service.tempo} minutos</div>
-              <div className="preco">Preço: R$ {service.preco}</div>
-              
-            </div>
-          </div>
-      );
+    const handleShowEditServiceModal = (service) => {
+      setEditingService(service);
+      setIsEditServiceModalOpen(true);
+    };
+
+    const handleCloseEditServiceModal = () => {
+      setIsEditServiceModalOpen(false);
+      setEditingService(null);
+    };
+
+    const handleSaveEditService = () => {
+      setButtonData((prevData) => ({
+        ...prevData,
+        [editingService.id]: editingService
+      }));
+      
+      setIsEditServiceModalOpen(false);
+      setEditingService(null);
+      
     };
 
     const handleDelete = async () => {
@@ -71,10 +72,8 @@ export default function Procedimentos() {
       }
       setIsConfirmationModalOpen(false);
       
-  // Abrir o modal de sucesso
-  setIsSuccessRemoveModalOpen(true);
-
-  
+      // Abrir o modal de sucesso
+      setIsSuccessRemoveModalOpen(true);
     };
 
     const handleAddService = () => {
@@ -97,8 +96,6 @@ export default function Procedimentos() {
       
       setIsAddServiceModalOpen(false);
       setIsSuccessModalOpen(true);
-
-     
     };
 
     const fetchButtonData = async () => {
@@ -117,6 +114,32 @@ export default function Procedimentos() {
     useEffect(() => {
       fetchButtonData();
     }, []);
+
+    const ServicoCard = ({ service, onDelete, onEdit }) => {
+      return (
+        <div className="service-card col p-5 overflow-auto h-100">
+          <div className="row d-flex align-items-center justify-content-between">
+            <div className="col-9 d-flex align-items-center">
+                <div className="nome">{service.name}</div>
+            </div>
+            <div className="col-3 text-end">
+              {service.status !== 'Finalizado' && (
+                <>
+                  <button className="custom-button"  onClick={() => onEdit(service)}>
+                    <i className="bi bi-pencil" style={{ fontSize: '1.5rem', color: 'blue' }}></i>
+                  </button>
+                  <button className="custom-button ms-2" onClick={() => onDelete(service.id)}>
+                    <i className="bi bi-trash" style={{ fontSize: '1.5rem', color: 'red' }}></i>
+                  </button>
+                </>
+              )}
+            </div>
+            <div className="tempo_estimado">Tempo: {service.tempo} minutos</div>
+            <div className="preco">Preço: R$ {service.preco}</div>
+          </div>
+        </div>
+      );
+    };
 
     return (
         <div className="col p-5 overflow-auto h-100">
@@ -138,7 +161,12 @@ export default function Procedimentos() {
                 <div className="className=mb-5 mt-0">
                     <div className="d-flex flex-column">
                         {Object.values(buttonData).map((service) => (
-                           <ServicoCard key={service.id} service={service} onDelete={handleShowConfirmationModal} />
+                           <ServicoCard
+                             key={service.id}
+                             service={service}
+                             onDelete={handleShowConfirmationModal}
+                             onEdit={handleShowEditServiceModal}
+                           />
                         ))}
                     </div>
                 </div>
@@ -146,9 +174,7 @@ export default function Procedimentos() {
                 <div className="mb-4 mt-5"></div>
           <div className="mb-4 mt-5"></div>
           <div className="mb-4 mt-5"></div>
-
-
-           
+          
             <Modal show={isConfirmationModalOpen} onHide={handleCloseConfirmationModal} centered>
                 <Modal.Header closeButton>
                     <Modal.Title>Confirmação</Modal.Title>
@@ -193,6 +219,46 @@ export default function Procedimentos() {
               </Modal.Footer>
             </Modal>
 
+            <Modal show={isEditServiceModalOpen} onHide={handleCloseEditServiceModal} centered>
+              <Modal.Header closeButton>
+                <Modal.Title>Editar Procedimento</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                {editingService && (
+                  <Form>
+                    <Form.Group controlId="formEditServiceName">
+                      <Form.Label>Nome do Procedimento</Form.Label>
+                      <Form.Control
+                        type="text"
+                        value={editingService.name}
+                        onChange={(e) => setEditingService({ ...editingService, name: e.target.value })}
+                      />
+                    </Form.Group>
+                    <Form.Group controlId="formEditServiceTime">
+                      <Form.Label>Tempo Estimado (min)</Form.Label>
+                      <Form.Control
+                        type="number"
+                        value={editingService.tempo}
+                        onChange={(e) => setEditingService({ ...editingService, tempo: e.target.value })}
+                      />
+                    </Form.Group>
+                    <Form.Group controlId="formEditServicePrice">
+                      <Form.Label>Preço (R$)</Form.Label>
+                      <Form.Control
+                        type="number"
+                        value={editingService.preco}
+                        onChange={(e) => setEditingService({ ...editingService, preco: e.target.value })}
+                      />
+                    </Form.Group>
+                  </Form>
+                )}
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={handleCloseEditServiceModal}>Cancelar</Button>
+                <Button variant="primary" onClick={handleSaveEditService}>Salvar</Button>
+              </Modal.Footer>
+            </Modal>
+
             <Modal show={isSuccessModalOpen} onHide={() => setIsSuccessModalOpen(false)} centered>
               <Modal.Header closeButton>
                 <Modal.Title>Sucesso</Modal.Title>
@@ -209,19 +275,19 @@ export default function Procedimentos() {
             </Modal>
 
             <Modal show={isSuccessRemoveModalOpen} onHide={() => setIsSuccessRemoveModalOpen(false)} centered>
-  <Modal.Header closeButton>
-    <Modal.Title>Sucesso</Modal.Title>
-  </Modal.Header>
-  <Modal.Body className="text-center">
-    <i className="bi bi-check-circle" style={{ fontSize: '3rem', color: 'green' }}></i>
-    <p className="mt-3">
-      Procedimento removido com sucesso!
-    </p>
-  </Modal.Body>
-  <Modal.Footer>
-    <Button variant="secondary" onClick={() => setIsSuccessRemoveModalOpen(false)}>Fechar</Button>
-  </Modal.Footer>
-</Modal>
+              <Modal.Header closeButton>
+                <Modal.Title>Sucesso</Modal.Title>
+              </Modal.Header>
+              <Modal.Body className="text-center">
+                <i className="bi bi-check-circle" style={{ fontSize: '3rem', color: 'green' }}></i>
+                <p className="mt-3">
+                  Procedimento removido com sucesso!
+                </p>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={() => setIsSuccessRemoveModalOpen(false)}>Fechar</Button>
+              </Modal.Footer>
+            </Modal>
 
           </div>
         </div>

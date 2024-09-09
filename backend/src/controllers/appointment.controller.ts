@@ -292,10 +292,7 @@ const confirmAppointment = async (req: FastifyRequest<{ Params: URLParams }>, re
         if (isNaN(idAppointment))
             return res.code(400).send({ message: 'ID do agendamento não fornecido ou inválido!' });
 
-        const result = await appointmentService.confirmAppointmentService(idAppointment);
-
-        if (!result)
-            return res.code(400).send({ message: 'Agendamento não encontrado!' });
+        await appointmentService.confirmAppointmentService(idAppointment);
 
         res.code(200).send({ message: 'Atendimento confirmado com sucesso!' });
     } catch (err: unknown) {

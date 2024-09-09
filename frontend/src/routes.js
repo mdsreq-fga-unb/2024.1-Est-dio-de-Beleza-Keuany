@@ -7,7 +7,7 @@ import Procedimentos from './pages/Procedimentos';
 import Avaliacoes from './pages/Avaliacoes';
 import MeusAgendamentos from './pages/MeusAgendamentos';
 import Home from './pages/Home';
-
+import CadastrarAvaliacoes from './pages/CadastrarAvaliacoes';
 import Agendamentos_Clientes from './pages/Agendar';
 import Autenticacao from './pages/Autenticacao';
 import Servicos from './pages/Servico';
@@ -51,6 +51,7 @@ const MainContent = () => {
                     <Route path='/meus_agendamentos' exact element={<MeusAgendamentos />} />
                     <Route path='/funcionamento' exact element={<Funcionamento/>} />
                     <Route path='/afastamento' exact element={<Afastamentos/>} />
+                    <Route path='/avaliar' exact element={<CadastrarAvaliacoes/>} />
                 </Switch>
             </div>
         </div>

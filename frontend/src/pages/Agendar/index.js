@@ -44,20 +44,18 @@ const Agendamentos_Clientes = () => {
   
   };
   const FinalizarProcedimento = () => {
-    appointmentData = {
-      schedule: null,
-      customerName: null,
-      customerPhone: null
-    }
+    appointmentData.schedule = null;
+    appointmentData.customerName = null;
 
-    queueData = {
-      idAppointment: null,
-      customerName: null,
-      customerPhone: null
-    }
+    queueData.idAppointment = null;
+    queueData.customerName = null;
+
     console.clear();
-    navigate('/meus_agendamentos'); // Substitua '/nova-pagina' pela rota desejada
-  
+
+    if (idAppointment === '0')
+      navigate(`/meus_agendamentos?telefone=${appointmentData.customerPhone}`); // Substitua '/nova-pagina' pela rota desejada
+    else
+      navigate(`/meus_agendamentos?telefone=${queueData.customerPhone}`);
   };
   const EditarServiço = () => {
     navigate('/escolher-procedimento'); // Substitua '/nova-pagina' pela rota desejada
