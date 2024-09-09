@@ -8,7 +8,8 @@ const Avaliacoes = () => {
 
   async function listAllReviews() {
     const response = await getAllReviews();
-    setReviews(response.data);
+    if (response)
+      setReviews(response.data);
   }
 
   useEffect(() => {

@@ -50,7 +50,8 @@ const Servicos = () => {
 
     async function listAllProcedures() {
         const response = await getAllProcedures();
-        setProcedimentos(response.data);
+        if (response)
+            setProcedimentos(response.data);
     }
 
     useEffect(() => {

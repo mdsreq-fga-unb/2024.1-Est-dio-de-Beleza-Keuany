@@ -26,6 +26,13 @@ const Sidebar = () => {
                         <span className="mdi mdi-account-multiple">Clientes</span> 
                        
                     </Link>
+                    <Link 
+                        to="/funcionamento"
+                        className={location.pathname === '/funcionamento' ? 'active' : ''}
+                        > 
+                        <span className='mdi mdi-clock-alert-outline'> Funcionamento</span> 
+                       
+                    </Link>
                 </li>
                
             </ul>
