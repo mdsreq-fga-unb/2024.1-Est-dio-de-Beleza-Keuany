@@ -3,7 +3,7 @@ import './styles.css';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import Agendamentos from './pages/Agendamentos';
-import Clientes from './pages/Clientes';
+import Procedimentos from './pages/Procedimentos';
 import Avaliacoes from './pages/Avaliacoes';
 import MeusAgendamentos from './pages/MeusAgendamentos';
 import Home from './pages/Home';
@@ -31,7 +31,7 @@ const MainContent = () => {
     const location = useLocation();
 
     // Definir quais rotas devem mostrar a Sidebar
-    const showSidebar = ['/agendamentos', '/clientes', '/funcionamento', '/afastamento'].includes(location.pathname);
+    const showSidebar = ['/agendamentos', '/procedimentos', '/funcionamento', '/afastamento'].includes(location.pathname);
 
     return (
         <div className="container-fluid h-100">
@@ -44,7 +44,7 @@ const MainContent = () => {
                     <Route path="/" exact element={<Home />} />
                     <Route path="/avaliacoes" exact element={<Avaliacoes />} />
                     <Route path="/agendamentos" exact element={<Agendamentos />} />
-                    <Route path="/clientes" exact element={<Clientes />} />
+                    <Route path="/procedimentos" exact element={<Procedimentos />} />
                     <Route path='/agendar' exact element={<Agendamentos_Clientes />} />
                     <Route path='/admin' exact element={<Autenticacao />} />
                     <Route path='/escolher-procedimento' exact element={<Servicos />} />

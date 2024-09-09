@@ -20,10 +20,10 @@ const Sidebar = () => {
                 </li>
                 <li>
                     <Link 
-                        to="/clientes"
-                        className={location.pathname === '/clientes' ? 'active' : ''}
+                        to="/procedimentos"
+                        className={location.pathname === '/procedimentos' ? 'active' : ''}
                         > 
-                        <span className="mdi mdi-account-multiple">Clientes</span> 
+                        <span className="mdi mdi-account-multiple">Procedimentos</span> 
                        
                     </Link>
                     <Link 
