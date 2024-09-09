@@ -7,6 +7,8 @@ import testa from '../../assets/testa.png'; // Imagem de sobrancelha
 
 const Home = () => {
     return (
+        <div className="col p-5 overflow-auto h-100">
+    <div className="d-flex flex-column vh-100">
         <div className="container-fluid p-5">
             {/* Header */}
             <div className="d-flex justify-content-between align-items-center">
@@ -59,6 +61,8 @@ const Home = () => {
                     </div>
                 </div>
             </div>
+        </div>
+        </div>
         </div>
     );
 };
