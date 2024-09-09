@@ -7,6 +7,8 @@ async function procedureRoutes(fastify: FastifyInstance) {
     fastify.post('/', { preHandler: [authMiddleware] }, procedureController.createProcedure);
     // Lista todos os procedimentos
     fastify.get('/', procedureController.findAllProcedure);
+    // Lista um procedimento dado seu ID
+    fastify.get('/:id', procedureController.findProcedureById);
     // Atualiza um procedimento
     fastify.patch('/:id', { preHandler: [authMiddleware] }, procedureController.updateProcedure);
     // Exclui um procedimento
