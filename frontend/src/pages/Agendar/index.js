@@ -364,55 +364,43 @@ const SuccessChecklistModal = ({ isOpen, onClose }) => {
         <div className="p-5">
           <div className="row">
             <div className="col-12">
-              <div>
-                <h2>Escolha uma Data</h2>
-                  <DatePicker
-                    selected={selectedDate}
-                    onChange={handleDateChange}  // Chama a função ao alterar a data
-                    dateFormat="dd/MM/yyyy"
-                    placeholderText="Selecione uma data"
-                  />
-              </div>
+            <div className="date-picker-container">
+  <h2 className="title">
+    Escolha uma Data</h2>
+  <DatePicker
+    selected={selectedDate}
+    onChange={handleDateChange}
+    dateFormat="dd/MM/yyyy"
+    placeholderText="Selecione uma data"
+    className="date-picker"
+  />
+</div>
+
               <div className="mb-4 mt-5"></div>
               <div className="mb-4 mt-5"></div>
                 <div className="mb-4 mt-5">
-                  <h1>Horários Disponíveis</h1>
-                  <div className="mb-4 mt-5"></div>
-                  <div className="mb-4 mt-5"></div>
-                  <div className="mb-4 mt-5"></div>     
-                  <Slider {...settings}>
-                      {Object.keys(buttonData).map((id) => (
-                        buttonData[id] && (
-                          <div key={id} style={{ marginBottom: '10px' }}>
-                            <button
-                              id={id}
-                              data-id-appointment={buttonData[id].idAppointment}
-                              onClick={(e) => toggleValue(id, e)}
-                              style={{
-                                backgroundColor: buttonValues[id] === 'true' ? 'green' : 'red',  // 'true' será verde e 'false' será vermelho
-                                color: 'black',
-                                padding: '10px 20px',
-                                border: 'none',
-                                fontSize: '16px',
-                                cursor: 'pointer',
-                                borderRadius: '100px',
-                              }}
-                            >
-                              {buttonData[id].name}
-                            </button>
-
-                            <div>
-                              {/* Exibe as informações adicionais da API */}
-                              {buttonData[id] && (
-                                <>  
-                                  <p>{buttonData[id].value} pessoas na fila</p>
-                                </>
-                              )}
-                            </div>
+                <h1 className="title">Horários Disponíveis</h1>
+                <div className="slider-container">
+                  <Slider {...settings} className="slider">
+                    {Object.keys(buttonData).map((id) => (
+                      buttonData[id] && (
+                        <div key={id} className="button-wrapper">
+                          <button
+                            id={id}
+                            data-id-appointment={buttonData[id].idAppointment}
+                            onClick={(e) => toggleValue(id, e)}
+                            className={`appointment-button ${buttonValues[id] === 'true' ? 'active' : 'inactive'}`}
+                          >
+                            {buttonData[id].name}
+                          </button>
+                          <div className="info">
+                            <p>{buttonData[id].value} pessoas na fila</p>
                           </div>
-                        )
-                      ))}
+                        </div>
+                      )
+                    ))}
                   </Slider>
+                </div>
                 <div>   
                   <div>
                     <AgendamentosModal
@@ -428,16 +416,23 @@ const SuccessChecklistModal = ({ isOpen, onClose }) => {
           <div className="mb-4 mt-5"></div>
           <div className="mb-4 mt-5"></div>
           <div className="mb-4 mt-5">
-            <h1>Agendar Serviço</h1>
-            {procedimento ? (
-              <>
-                <p>Serviço: <strong>{procedimento.name}</strong></p>
-                <p>Tempo Estimado: <strong>{procedimento.duration} minutos</strong></p>
-                <p>Preço: <strong>{parseFloat(procedimento.price).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</strong></p>
-              </>
-            ): (
-              <p>Carregando informações do procedimento...</p>
-            )}
+          <h1 className="procedimento-title">Procedimento Selecionado</h1>
+{procedimento ? (
+  <div className="procedimento-details">
+    <p className="procedimento-item">
+      Serviço: <strong>{procedimento.name}</strong>
+    </p>
+    <p className="procedimento-item">
+      Tempo Estimado: <strong>{procedimento.duration} minutos</strong>
+    </p>
+    <p className="procedimento-item">
+      Preço: <strong>{parseFloat(procedimento.price).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</strong>
+    </p>
+  </div>
+) : (
+  <p className="loading-message">Carregando informações do procedimento...</p>
+)}
+
           </div>     
           <div className="mb-4 mt-5"></div>
           <div className="mb-4 mt-5"></div>
