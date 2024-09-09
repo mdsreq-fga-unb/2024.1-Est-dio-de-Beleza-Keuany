@@ -114,8 +114,8 @@ export default function Agendamentos_Clientes() {
       // Simulação de uma resposta da API com 3 serviços
       const simulatedApiResponse = {
         service1: { id: '1', name: 'Design Facial', tempo: 30, preco: 100, data: '10/10/2024', hora: '09:00', status: 'Confirmado' },
-        service2: { id: '2', name: 'Massagem Relaxante', tempo: 60, preco: 150, data: '10/10/2024', status: 'Finalizado' },
-        service3: { id: '3', name: 'Tratamento Capilar', tempo: 45, preco: 200, data: '11/10/2024', status: 'Agendado' }
+        service2: { id: '2', name: 'Massagem Relaxante', tempo: 60, preco: 150, data: '10/10/2024', hora: '09:00',status: 'Finalizado' },
+        service3: { id: '3', name: 'Tratamento Capilar', tempo: 45, preco: 200, data: '11/10/2024', hora: '09:00', status: 'Agendado' }
       };
       setButtonData(simulatedApiResponse);
     } catch (error) {
