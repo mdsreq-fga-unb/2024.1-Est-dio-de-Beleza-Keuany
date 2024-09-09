@@ -44,6 +44,22 @@ const Agendamentos_Clientes = () => {
  
 
 
+  const handleOpenPrimeiroModal = () => setIsPrimeiroModalOpen(true);
+  const handleClosePrimeiroModal = () => setIsPrimeiroModalOpen(false);
+
+  // Função para abrir o SegundoModal
+  const handleFinalizarClick = () => {
+    setIsPrimeiroModalOpen(false); // Fecha o PrimeiroModal
+    setIsSegundoModalOpen(true);  // Abre o SegundoModal
+  };
+
+
+  const handleCloseAllModals = () => {
+    // Fechar todos os modais
+    setIsPrimeiroModalOpen(false);
+    setIsSegundoModalOpen(false);
+    setIsSuccessModalOpen(false);
+  };
 
 
 const AgendamentosModal = ({ isOpen, onClose, modalContent }) => (
@@ -68,7 +84,7 @@ const AgendamentosModal = ({ isOpen, onClose, modalContent }) => (
   </Modal>
 );
 
-const PrimeiroModal = ({ isOpen, onClose }) => (
+const PrimeiroModal = ({ isOpen, onClose, onFinalizarClick }) => (
   <Modal show={isOpen} onHide={onClose}>
     <Modal.Header closeButton>
       <Modal.Title>Serviço adicionado</Modal.Title>
@@ -77,10 +93,10 @@ const PrimeiroModal = ({ isOpen, onClose }) => (
       O que você deseja fazer agora?
     </Modal.Body>
     <Modal.Footer>
-      <Button variant="secondary" onClick={FinalizarProcedimento}>
+      <Button variant="secondary" onClick={onFinalizarClick}>
         Finalizar serviço
       </Button>
-      <Button variant="secondary" onClick={EditarServiço}>
+      <Button variant="secondary" onClick={onClose}>
         Editar serviço
       </Button>
     </Modal.Footer>
@@ -88,7 +104,85 @@ const PrimeiroModal = ({ isOpen, onClose }) => (
 );
   
 
-  
+const [isSegundoModalOpen, setIsSegundoModalOpen] = useState(false);
+const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+const [userName, setUserName] = useState('');
+const [userPhone, setUserPhone] = useState('');
+
+
+
+// Função para capturar o valor do campo de entrada
+const handleInputChange = (e) => {
+  setUserName(e.target.value);
+};
+
+// Função para capturar o valor do campo de telefone
+const handlePhoneChange = (e) => {
+  setUserPhone(e.target.value);
+};
+
+// Função para avançar e agendar
+const handleAvancarEAgendar = () => {
+  setIsPrimeiroModalOpen(false);
+  setIsSuccessModalOpen(true);
+};
+
+const SegundoModal = ({ isOpen, onClose }) => (
+  <Modal show={isOpen} onHide={onClose}>
+    <Modal.Header closeButton>
+      <Modal.Title>Informações do usuário</Modal.Title>
+    </Modal.Header>
+    <Modal.Body>
+      <p>Nome:</p>
+      <input
+        type="text"
+        value={userName}
+        onChange={handleInputChange}
+        placeholder="Insira seu nome"
+        className="form-control"
+      />
+    </Modal.Body>
+    <Modal.Body>
+      <p>Número do WhatsApp:</p>
+      <input
+        type="tel"
+        value={userPhone}
+        onChange={handlePhoneChange}
+        placeholder="Insira seu telefone"
+        className="form-control"
+      />
+    </Modal.Body>
+    <Modal.Footer>
+      <div className="d-flex flex-column w-100">
+        <Button variant="secondary" onClick={handleAvancarEAgendar}>
+          Avançar e agendar
+        </Button>
+        <div className="mb-3 mt-2"></div>
+        <Button variant="secondary" onClick={handleRedirect}>
+          Voltar
+        </Button>
+      </div>
+    </Modal.Footer>
+  </Modal>
+);
+
+const SuccessChecklistModal = ({ isOpen, onClose }) => (
+  <Modal show={isOpen} onHide={onClose} centered>
+    <Modal.Body>
+      <div className="text-center mb-4">
+        <i className="bi bi-check-circle" style={{ fontSize: '10rem', color: 'green' }}></i>
+        <p>Operação Realizada com Sucesso!</p>
+      </div>
+      
+      <p>Seu agendamento foi realizado com sucesso com Keyllane</p>
+    </Modal.Body>
+    <Modal.Footer>
+      <Button variant="success" onClick={onClose}>
+        Fechar
+      </Button>
+    </Modal.Footer>
+  </Modal>
+);
 
   
   // Definir as datas indisponíveis
@@ -123,8 +217,6 @@ const PrimeiroModal = ({ isOpen, onClose }) => (
   const [isPrimeiroModalOpen, setIsPrimeiroModalOpen] = useState(false);
       
     
-  const handleOpenPrimeiroModal = () => setIsPrimeiroModalOpen(true);
-  const handleClosePrimeiroModal = () => setIsPrimeiroModalOpen(false);
     
       
     // Estado para armazenar os valores dos botões
@@ -349,6 +441,9 @@ const PrimeiroModal = ({ isOpen, onClose }) => (
     <button className="custom-button" onClick={handleOpenPrimeiroModal}>
       <span className="mdi">Finalizar agendamento</span>
     </button>
+    <button className="custom-button" onClick={() => console.log('Outro botão clicado')}>
+            <span className="mdi">Outro Botão</span>
+          </button>
     <PrimeiroModal isOpen={isPrimeiroModalOpen} onClose={handleClosePrimeiroModal} />
     
             <div className="className=mb-5 mt-0">
@@ -364,10 +459,42 @@ const PrimeiroModal = ({ isOpen, onClose }) => (
 <div className="mb-4 mt-5"></div>
 <div className="mb-4 mt-5"></div>
                 
+<div className="col p-5 overflow-auto h-100">
+    <div className="d-flex flex-column vh-100">
+      <div className="p-5">
+       
+      <div className="col p-5 overflow-auto h-100">
+      {/* Seu conteúdo */}
 
+      <PrimeiroModal 
+        isOpen={isPrimeiroModalOpen} 
+        onClose={handleClosePrimeiroModal} 
+        onFinalizarClick={handleFinalizarClick} // Passa a função aqui
+      />
+      
+      <SegundoModal 
+        isOpen={isSegundoModalOpen} 
+        onClose={() => setIsSegundoModalOpen(false)} 
+      />
 
+      {/* Seu conteúdo */}
+    </div>
+        
+         
+        </div>
+        <SegundoModal isOpen={isSegundoModalOpen} onClose={() => setIsSegundoModalOpen(false)} />
+        <SuccessChecklistModal isOpen={isSuccessModalOpen} onClose={handleCloseAllModals}  />
 
-</div>
+        <div className="mb-4 mt-5"></div>
+        <div className="mb-4 mt-5"></div>
+        <div className="mb-4 mt-5"></div>
+        <div className="mb-4 mt-5"></div>
+      </div>
+    </div>
+  </div>
+
+  
+
         </div>
       </div>
     </div>
