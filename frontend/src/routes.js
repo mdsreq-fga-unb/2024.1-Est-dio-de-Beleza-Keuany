@@ -11,7 +11,8 @@ import Home from './pages/Home';
 import Agendamentos_Clientes from './pages/Agendar';
 import Autenticacao from './pages/Autenticacao';
 import Servicos from './pages/Servico';
-
+import Funcionamento from './pages/Funcionamento';
+import Afastamentos from './pages/Afastamentos';
 
 
 
@@ -48,6 +49,8 @@ const MainContent = () => {
                     <Route path='/admin' exact element={<Autenticacao />} />
                     <Route path='/escolher-procedimento' exact element={<Servicos />} />
                     <Route path='/meus_agendamentos' exact element={<MeusAgendamentos />} />
+                    <Route path='/funcionamento' exact element={<Funcionamento/>} />
+                    <Route path='/afastamento' exact element={<Afastamentos/>} />
                 </Switch>
             </div>
         </div>

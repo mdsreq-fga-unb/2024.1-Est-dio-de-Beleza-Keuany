@@ -254,8 +254,7 @@ sidebar ul li a text {
 
 .div-spacing {
     margin-bottom: 20px; 
-  }
-
+}
 
 .card-container {
     display: flex;
@@ -263,3 +262,10 @@ sidebar ul li a text {
     gap: 20px; /* Ajuste o valor conforme necessário para definir o espaçamento */
   }
   
+.dias-da-semana {
+    background-color: #e7e7e7;
+    height: 8%;
+    border-radius: 20px;
+    align-items: center;
+    margin: 10px;
+}

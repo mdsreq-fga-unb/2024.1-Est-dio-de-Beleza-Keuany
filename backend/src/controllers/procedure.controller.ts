@@ -62,6 +62,27 @@ const findAllProcedure = async (req: FastifyRequest, res: FastifyReply) => {
     }
 }
 
+const findProcedureById = async (req: FastifyRequest, res: FastifyReply) => {
+    try {
+        const id = Number((req.params as URLParams).id);
+
+        if (isNaN(id))
+            return res.code(400).send({ message: 'ID do procedimento não fornecido ou inválido!' });
+
+        const procedure = await procedureService.findByIdService(id);
+
+        if (!procedure)
+            return res.code(404).send({ message: 'Procedimento não encontrado' });
+
+        res.code(200).send(procedure);
+    } catch (err: unknown) {
+        if (err instanceof Error) 
+            res.code(500).send({ procedureController: err.message });    
+        else
+            res.code(500).send({ procedureController: 'Erro desconhecido!' });
+    }
+}
+
 const updateProcedure = async (req: FastifyRequest, res: FastifyReply) => {
     try {
         const id = Number((req.params as URLParams).id);
@@ -123,6 +144,7 @@ const deleteProcedure = async (req: FastifyRequest, res: FastifyReply) => {
 export default {
     createProcedure,
     findAllProcedure,
+    findProcedureById,
     updateProcedure,
     deleteProcedure
 }
