@@ -85,6 +85,7 @@ export default function Agendamentos_Clientes() {
             <div className="tempo_estimado">Tempo: {service.tempo} minutos</div>
             <div className="preco">Preço: R$ {service.preco}</div>
             <div className="preco">Data: {service.data}</div>
+            <div className="preco">Hora: {service.hora}</div>
             <div className="preco">Status: {service.status}</div>
           </div>
          
