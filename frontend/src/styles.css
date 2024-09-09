@@ -267,5 +267,6 @@ sidebar ul li a text {
     height: 8%;
     border-radius: 20px;
     align-items: center;
+    justify-content: center;
     margin: 10px;
 }

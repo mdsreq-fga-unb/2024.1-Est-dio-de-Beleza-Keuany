@@ -71,7 +71,7 @@ const Funcionamento = () => {
     function getGradeHoraria (diaAlvo) {
         for (let index = 0; index < getValues.length; index++) {
             const dia = getValues[index];
-            if (dia.dayOfWeek == diaAlvo) {
+            if (dia.dayOfWeek === diaAlvo) {
                 return [dia.startTime, dia.endTime, Boolean(dia.activeDay)];
                 // return example: ["10:00:00", "18:00:00", true]
             }
@@ -81,7 +81,7 @@ const Funcionamento = () => {
     function handleChanges(dayOfWeek, field, new_value) {
         for (let index = 0; index < getValues.length; index++) {
             const dia = getValues[index];
-            if (dia.dayOfWeek == dayOfWeek) {
+            if (dia.dayOfWeek === dayOfWeek) {
                 dia[field] = new_value;
                 console.log(dia);
             }
@@ -125,29 +125,51 @@ const Funcionamento = () => {
                     </div>
                 </div>
             </div>
+            <div className="row">
+                <div className="col-3">
+                    <div className="w-100 d-flex justify-content-center">
+                        <span className="h5">Dias da Semana</span>
+                    </div>
+                </div>
+                <div className="col-3">
+                    <div className="w-100 d-flex justify-content-center">
+                        <span className="h5">Horário de Início</span>
+                    </div>
+                </div>
+                <div className="col-3">
+                    <div className="w-100 d-flex justify-content-center">
+                        <span className="h5">Horário de Fim</span>
+                    </div>
+                </div>
+                <div className="col-3">
+                    <div className="w-100 d-flex justify-content-center">
+                        <span className="h5">Trabalhará?</span>
+                    </div>
+                </div>
+            </div>
 
-            <form className="dias-da-semana row">
+            <div className="dias-da-semana row">
                 <div className="col-3">
                     <div className="w-100 d-flex justify-content-between">
                         <span>Segunda-Feira</span>
                     </div>
                 </div>
                 <div className="col-3">
-                    <div className="w-100 d-flex justify-content-between">
+                    <div className="w-100 d-flex justify-content-center">
                         <input type="time" aria-label="time" defaultValue={getGradeHoraria("MON")[0]} onChange={(ev) => {handleChanges("MON", "startTime", String(ev.target.value))}}></input>
                     </div>
                 </div>
                 <div className="col-3">
-                    <div className="w-100 d-flex justify-content-between">
+                    <div className="w-100 d-flex justify-content-center">
                         <input type="time" aria-label="time" defaultValue={getGradeHoraria("MON")[1]} onChange={(ev) => {handleChanges("MON", "endTime", String(ev.target.value))}}></input>
                     </div>
                 </div>
                 <div className="col-3">
-                    <div className="w-100 d-flex justify-content-between">
+                    <div className="w-100 d-flex justify-content-center">
                         <input className="form-check-input" type="checkbox" defaultChecked={getGradeHoraria("MON")[2]} onChange={(ev) => {handleChanges("MON", "activeDay", String(ev.target.value))}}></input>
                     </div>
                 </div>
-            </form>
+            </div>
 
             <div className="dias-da-semana row">
                 <div className="col-3">
@@ -156,17 +178,17 @@ const Funcionamento = () => {
                     </div>
                 </div>
                 <div className="col-3">
-                    <div className="w-100 d-flex justify-content-between">
+                    <div className="w-100 d-flex justify-content-center">
                         <input type="time" aria-label="time" defaultValue={getGradeHoraria("TUE")[0]} onChange={(ev) => {handleChanges("TUE", "startTime", String(ev.target.value))}}></input>
                     </div>
                 </div>
                 <div className="col-3">
-                    <div className="w-100 d-flex justify-content-between">
+                    <div className="w-100 d-flex justify-content-center">
                         <input type="time" aria-label="time" defaultValue={getGradeHoraria("TUE")[1]} onChange={(ev) => {handleChanges("TUE", "endTime", String(ev.target.value))}}></input>
                     </div>
                 </div>
                 <div className="col-3">
-                    <div className="w-100 d-flex justify-content-between">
+                    <div className="w-100 d-flex justify-content-center">
                         <input className="form-check-input" type="checkbox" defaultChecked={getGradeHoraria("TUE")[2]} onChange={(ev) => {handleChanges("TUE", "activeDay", String(ev.target.value))}}></input>
                     </div>
                 </div>
@@ -178,17 +200,17 @@ const Funcionamento = () => {
                     </div>
                 </div>
                 <div className="col-3">
-                    <div className="w-100 d-flex justify-content-between">
+                    <div className="w-100 d-flex justify-content-center">
                         <input type="time" aria-label="time" defaultValue={getGradeHoraria("WED")[0]} onChange={(ev) => {handleChanges("WED", "startTime", String(ev.target.value))}}></input>
                     </div>
                 </div>
                 <div className="col-3">
-                    <div className="w-100 d-flex justify-content-between">
+                    <div className="w-100 d-flex justify-content-center">
                         <input type="time" aria-label="time" defaultValue={getGradeHoraria("WED")[1]} onChange={(ev) => {handleChanges("WED", "endTime", String(ev.target.value))}}></input>
                     </div>
                 </div>
                 <div className="col-3">
-                    <div className="w-100 d-flex justify-content-between">
+                    <div className="w-100 d-flex justify-content-center">
                         <input className="form-check-input" type="checkbox" defaultChecked={getGradeHoraria("WED")[2]} onChange={(ev) => {handleChanges("WED", "activeDay", String(ev.target.value))}}></input>
                     </div>
                 </div>
@@ -200,17 +222,17 @@ const Funcionamento = () => {
                     </div>
                 </div>
                 <div className="col-3">
-                    <div className="w-100 d-flex justify-content-between">
+                    <div className="w-100 d-flex justify-content-center">
                         <input type="time" aria-label="time" defaultValue={getGradeHoraria("THU")[0]} onChange={(ev) => {handleChanges("THU", "startTime", String(ev.target.value))}}></input>
                     </div>
                 </div>
                 <div className="col-3">
-                    <div className="w-100 d-flex justify-content-between">
+                    <div className="w-100 d-flex justify-content-center">
                         <input type="time" aria-label="time" defaultValue={getGradeHoraria("THU")[1]} onChange={(ev) => {handleChanges("THU", "endTime", String(ev.target.value))}}></input>
                     </div>
                 </div>
                 <div className="col-3">
-                    <div className="w-100 d-flex justify-content-between">
+                    <div className="w-100 d-flex justify-content-center">
                         <input className="form-check-input" type="checkbox" defaultChecked={getGradeHoraria("THU")[2]} onChange={(ev) => {handleChanges("THU", "activeDay", String(ev.target.value))}}></input>
                     </div>
                 </div>
@@ -222,17 +244,17 @@ const Funcionamento = () => {
                     </div>
                 </div>
                 <div className="col-3">
-                    <div className="w-100 d-flex justify-content-between">
+                    <div className="w-100 d-flex justify-content-center">
                         <input type="time" aria-label="time" defaultValue={getGradeHoraria("FRI")[0]} onChange={(ev) => {handleChanges("FRI", "startTime", String(ev.target.value))}}></input>
                     </div>
                 </div>
                 <div className="col-3">
-                    <div className="w-100 d-flex justify-content-between">
+                    <div className="w-100 d-flex justify-content-center">
                         <input type="time" aria-label="time" defaultValue={getGradeHoraria("FRI")[0]} onChange={(ev) => {handleChanges("FRI", "endTime", String(ev.target.value))}}></input>
                     </div>
                 </div>
                 <div className="col-3">
-                    <div className="w-100 d-flex justify-content-between">
+                    <div className="w-100 d-flex justify-content-center">
                         <input className="form-check-input" type="checkbox" defaultChecked={getGradeHoraria("FRI")[2]} onChange={(ev) => {handleChanges("FRI", "activeDay", String(ev.target.value))}}></input>
                     </div>
                 </div>
@@ -244,17 +266,17 @@ const Funcionamento = () => {
                     </div>
                 </div>
                 <div className="col-3">
-                    <div className="w-100 d-flex justify-content-between">
+                    <div className="w-100 d-flex justify-content-center">
                         <input type="time" aria-label="time" defaultValue={getGradeHoraria("SAT")[0]} onChange={(ev) => {handleChanges("SAT", "startTime", String(ev.target.value))}}></input>
                     </div>
                 </div>
                 <div className="col-3">
-                    <div className="w-100 d-flex justify-content-between">
+                    <div className="w-100 d-flex justify-content-center">
                         <input type="time" aria-label="time" defaultValue={getGradeHoraria("SAT")[1]} onChange={(ev) => {handleChanges("SAT", "endTime", String(ev.target.value))}}></input>
                     </div>
                 </div>
                 <div className="col-3">
-                    <div className="w-100 d-flex justify-content-between">
+                    <div className="w-100 d-flex justify-content-center">
                         <input className="form-check-input" type="checkbox" defaultChecked={getGradeHoraria("SAT")[2]} onChange={(ev) => {handleChanges("SAT", "activeDay", String(ev.target.value))}}></input>
                     </div>
                 </div>
@@ -266,17 +288,17 @@ const Funcionamento = () => {
                     </div>
                 </div>
                 <div className="col-3">
-                    <div className="w-100 d-flex justify-content-between">
+                    <div className="w-100 d-flex justify-content-center">
                         <input type="time" aria-label="time" defaultValue={getGradeHoraria("SUN")[0]} onChange={(ev) => {handleChanges("SUN", "startTime", String(ev.target.value))}}></input>
                     </div>
                 </div>
                 <div className="col-3">
-                    <div className="w-100 d-flex justify-content-between">
+                    <div className="w-100 d-flex justify-content-center">
                         <input type="time" aria-label="time" defaultValue={getGradeHoraria("SUN")[1]} onChange={(ev) => {handleChanges("SUN", "endTime", String(ev.target.value))}}></input>
                     </div>
                 </div>
                 <div className="col-3">
-                    <div className="w-100 d-flex justify-content-between">
+                    <div className="w-100 d-flex justify-content-center">
                         <input className="form-check-input" type="checkbox" defaultChecked={getGradeHoraria("SUN")[2]} onChange={(ev) => {handleChanges("SUN", "activeDay", String(ev.target.value))}}></input>
                     </div>
                 </div>
