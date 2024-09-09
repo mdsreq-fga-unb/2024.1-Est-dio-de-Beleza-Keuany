@@ -44,7 +44,7 @@ const Servicos = () => {
                                 key={procedimento.idProcedure}
                                 nome={procedimento.name} 
                                 tempo_estimado={procedimento.duration} 
-                                preco={procedimento.price} 
+                                preco={parseFloat(procedimento.price).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })} 
                                 changePage={() => paraAgendar(procedimento.idProcedure)} 
                             />
                         ))};
