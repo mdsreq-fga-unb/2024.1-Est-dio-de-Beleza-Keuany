@@ -31,7 +31,7 @@ const MainContent = () => {
     const location = useLocation();
 
     // Definir quais rotas devem mostrar a Sidebar
-    const showSidebar = ['/agendamentos', '/clientes'].includes(location.pathname);
+    const showSidebar = ['/agendamentos', '/clientes', '/funcionamento', '/afastamento'].includes(location.pathname);
 
     return (
         <div className="container-fluid h-100">
