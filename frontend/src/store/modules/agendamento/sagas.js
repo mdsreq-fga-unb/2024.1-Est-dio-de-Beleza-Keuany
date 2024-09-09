@@ -12,19 +12,32 @@ export function getAllAppointments() {
     return response;
 }
 
-export function postAppointment(id, data) {
-    const response = api.post(`/agendamento/${id}`, data)
-    .then(async () => {
-        await Swal.fire("Sucesso!", "Atendimento cadastrado com sucesso!", "success");
-    })
-    .catch(async (err) => {
+export async function postAppointment(id, data) {
+    try {
+      const response = await api.post(`/agendamento/${id}`, data);
+      await Swal.fire("Sucesso!", "Atendimento cadastrado com sucesso!", "success");
+      return response; // Retorna a resposta para ser usada pela função que chamou
+    } catch (err) {
+      if (err.response) {
+        await Swal.fire("Erro!", err.response.data.message, "error");
+      }
+      throw err; // Lança o erro para que a função que chamou possa tratá-lo
+    }
+}
+
+export async function enterQueue(data) {
+    try {
+        const response = await api.post(`/agendamento/fila`, data);
+        await Swal.fire("Sucesso!", "Entrada na fila feita com sucesso!", "success");
+        return response;
+    } catch (err) {
         if (err.response) {
             await Swal.fire("Erro!", err.response.data.message, "error");
         }
-    });
-
-    return response;
+        throw err;
+    }
 }
+  
 
 export function getAvailableSchedules(id, schedule) {
     const response = api.get(`/agendamento/${id}`, { params: { schedule } })
