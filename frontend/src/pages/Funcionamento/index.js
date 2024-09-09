@@ -93,6 +93,8 @@ const Funcionamento = () => {
     }
 
     return(
+        <div className="col p-5 overflow-auto h-100">
+    <div className="d-flex flex-column vh-100">
         <div className="col m-5 overflow-auto h-100">
             <div className="row">
                 <div className="col-12">
@@ -307,6 +309,8 @@ const Funcionamento = () => {
                 <input type="submit" className="btn btn-primary" value="Confirmar Alterações" onClick={submitChanges}></input>
             </div>
 
+        </div>
+        </div>
         </div>
     ); 
 };
