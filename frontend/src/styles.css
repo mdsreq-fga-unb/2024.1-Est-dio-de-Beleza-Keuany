@@ -1,8 +1,8 @@
 :root {
-    --primary: #9d4edd; 
+    --primary: #F0A500; 
     --dark: #21232f; 
     --danger: #d62828; 
-    --sucess: #06d6a0; 
+    --success: #06d6a0; 
     --white: #f5f6f7; 
 }
 
@@ -17,6 +17,30 @@ header {
     background-color: var(--primary); 
 }
 
+.custom-font-h1 {
+    font-family: 'Georgia', serif; /* Fontes mais elegantes */
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+.custom-font-h2 {
+    font-family: 'Arial', sans-serif; /* Fonte mais leve */
+    font-size: 1.5rem;
+    font-weight: normal;
+}
+
+.container-fluid {
+    max-width: 1920px;
+    margin: 0 auto;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+
+
 header > div {
     cursor: pointer; 
     transition: 0.5s; 
@@ -24,10 +48,6 @@ header > div {
     text-align: right; 
 }
 
-header > div:hover {
-    background-color: rgba(0, 0, 0, 0.2); 
-    transition: 0.5s; 
-}
 
 header img {
     width: 50px; 
@@ -73,13 +93,13 @@ header ul li a {
 
 header ul li a.active{
     opacity: 1; 
-    background-color: rgba(6, 247, 247, 0.6); 
+    background-color: #CF7500; 
     
    
 }
 
 header ul li a.active .mdi {
-    color: var(--primary); 
+    color: var(--white); 
 }
 
 header ul li a:visited, 
@@ -89,7 +109,7 @@ header ul li a:focus {
 
 header ul li a:hover {
     opacity: 1; 
-    background-color: rgba(6, 247, 247, 0.6); 
+    background-color: #CF7500; 
 }
 
 
