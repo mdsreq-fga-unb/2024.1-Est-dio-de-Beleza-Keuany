@@ -1,245 +1,174 @@
-//import AgendarCard from "../../components/AgendarURLQuerry/index"; 
-//import { useSearchParams } from 'react-router-dom';
-//import AgendamentosModal from "../MeusAgendamentos/agendamentosModal";
-//import { useEffect } from "react";
-//import ServicoCard from "../../components/ServicoCard";
-import { Link, useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Modal, Button } from 'react-bootstrap';
-import 'bootstrap-icons/font/bootstrap-icons.css'; // Importa ícones do Bootstrap
-
-
+import { useLocation } from 'react-router-dom';
+import axios from 'axios'; // Importa o axios
+//import MeusAgendamentosCard from '../../components/MeusAgendamentosCard'; // Componente para exibir os serviços
+import 'bootstrap-icons/font/bootstrap-icons.css';
+//import { Card } from 'react-bootstrap';
 
 
 
 
 export default function Agendamentos_Clientes() {
+  const [isPrimeiroModalOpen, setIsPrimeiroModalOpen] = useState(false);
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+  const [userName, setUserName] = useState('');
+  const [userPhone, setUserPhone] = useState('');
+  const [buttonData, setButtonData] = useState({});
+  const navigate = useNavigate();
+  const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
+  const [serviceToDelete, setServiceToDelete] = useState(null); // Novo estado
+  const location = useLocation();
 
-    const [isPrimeiroModalOpen, setIsPrimeiroModalOpen] = useState(false);
-    const [userName, setUserName] = useState(''); // Estado para armazenar o nome do usuário
-    const [userPhone, setUserPhone] = useState(''); // Estado para armazenar o número de telefone
-    const handleOpenPrimeiroModal = () => setIsPrimeiroModalOpen(true);
-    const handleClosePrimeiroModal = () => setIsPrimeiroModalOpen(false);
-   
-  
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    const telefone = queryParams.get('telefone');
+    console.log("Telefone recebido:", telefone);  // Exibe o telefone no console
+  }, [location.search]); // Dependência para garantir que o telefone seja atualizado quando a URL mudar
 
-    const navigate = useNavigate(); // Hook para navegação
 
-  
-
-  // Função para redirecionar para outra página
-  const handleRedirect = () => {
-    navigate('/escolher-procedimento'); // Substitua '/nova-pagina' pela rota desejada
-  
-  };
-
-  // Função para capturar o valor do campo de entrada
-  const handleInputChange = (e) => {
-    setUserName(e.target.value); // Atualiza o estado com o valor digitado
-  };
-
-     // Função para capturar o valor do campo de telefone
-  const handlePhoneChange = (e) => {
-    setUserPhone(e.target.value); // Atualiza o estado com o número de telefone digitado
+  const handleCloseConfirmationModal = () => setIsConfirmationModalOpen(false);
+  const handleShowConfirmationModal = (id) => {
+    setServiceToDelete(id); // Define o serviço a ser deletado
+    setIsConfirmationModalOpen(true); // Abre o modal de confirmação
   };
 
 
 
-  const PrimeiroModal = ({ isOpen, onClose }) => (
-    <Modal show={isOpen} onHide={onClose}>
-      <Modal.Header closeButton>
-        <Modal.Title>Informações do usuário</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <p>Nome:</p>
-        <input 
-          type="text" 
-          value={userName} 
-          onChange={handleInputChange} 
-          placeholder="Insira seu nome" 
-          className="form-control"
-        />
-      </Modal.Body>
-      <Modal.Body>
-        <p>Número do WhattsApp:</p>
-        <input 
-          type="tel" 
-          value={userPhone} 
-          onChange={handlePhoneChange} 
-          placeholder="Insira seu telefone" 
-          className="form-control"
-        />
-      </Modal.Body>
-      <Modal.Footer>
-      <div className="d-flex flex-column w-100">
-        <Button variant="secondary" onClick={handleRedirect}>
-          Avançar e agendar
-        </Button>
-        <div className="mb-3 mt-2"></div>
-        <Button variant="secondary" onClick={handleRedirect}>
-          Voltar
-        </Button>
-        </div>
-      </Modal.Footer>
-    </Modal>
-  );
-    
-  const SuccessChecklistModal = ({ isOpen, onClose }) => {
+  const ServicoCard = ({ service, onDelete }) => {
+    const getStatusButtonVariant = (status) => {
+      switch (status) {
+        case 'Confirmado':
+          return 'success'; // Cor verde
+        case 'Agendado':
+          return 'primary'; // Cor azul
+        case 'Cancelado':
+          return 'danger';  // Cor vermelha
+        case 'Finalizado':
+          return 'secondary'; // Cor cinza
+        default:
+          return 'info';     // Cor azul clara
+      }
+    };
+  
     return (
-      <Modal show={isOpen} onHide={onClose} centered>
-        <Modal.Header>
-        <Modal.Body>
-          <div className="text-center mb-4">
-          {/* Ícone de sucesso principal */}
-          <i className="bi bi-check-circle" style={{ fontSize: '10rem', color: 'green' }}></i>
-       <p>Operação Realizada com Sucesso!</p>
-       </div> </Modal.Body>
-        </Modal.Header>
-        <Modal.Body>
-        <p>Seu agendamento foi realizado com sucesso com Keyllane </p>
-        </Modal.Body>
-        
-        {Object.keys(buttonData).map((buttonId) => (
-          <div key={buttonId} className="text-center mb-4">
-            <h2>{buttonData[buttonId].name}</h2>
-            <p>Tempo Estimado: {buttonData[buttonId].tempo} minutos</p>
-            <p>Preço: R$ {buttonData[buttonId].preco}</p>
-            <p>Data: {buttonData[buttonId].data}</p>
-            <p>Hora: {buttonData[buttonId].hora}</p>
-          </div>
-        ))}
-               
-        <Modal.Body>
-        <p></p>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="success" onClick={onClose}>
-            Fechar
+      <div className="service-card col p-5 overflow-auto h-100">
+      <div className="row d-flex align-items-center justify-content-between">
+        <div className="col-9 d-flex align-items-center">
+            <div className="nome">{service.name}</div>
+            {/* Botão ao lado do nome do serviço exibindo o status */}
+            <Button 
+            variant={getStatusButtonVariant(service.status)} // Define a cor com base no status
+            className="ms-3" 
+            disabled
+            style={{ 
+              fontSize: '0.8rem',        
+              padding: '0.2rem 0.4rem',  
+              minWidth: '80px',          
+              maxWidth: '100px',         
+              whiteSpace: 'nowrap',      
+              overflow: 'hidden',        
+              textOverflow: 'ellipsis'  
+            }}>
+            {service.status}
           </Button>
-          <SuccessChecklistModal isOpen={isModalOpen} onClose={handleCloseModal} />
-        </Modal.Footer>
-      </Modal>
+        </div>
+        <div className="col-2 text-end">
+          {/* Condiciona a exibição do botão de exclusão com base no status */}
+          {service.status !== 'Finalizado' && (
+            <button className="custom-button" onClick={() => onDelete(service.id)}>
+                <i className="bi bi-trash" style={{ fontSize: '1.5rem', color: 'red' }}></i>
+              </button>
+          )}
+        </div>
+            <div className="tempo_estimado">Tempo: {service.tempo} minutos</div>
+            <div className="preco">Preço: R$ {service.preco}</div>
+            <div className="preco">Data: {service.data}</div>
+            <div className="preco">Status: {service.status}</div>
+          </div>
+         
+        </div>
+      
     );
   };
   
-    const [isModalOpen, setIsModalOpen] = useState(false);
-
-    const handleShowModal = () => setIsModalOpen(true);
-    const handleCloseModal = () => setIsModalOpen(false);
-    const [buttonValues, setButtonValues] = useState({});
-    const [buttonData, setButtonData] = useState({});
+  
 
   
-    useEffect(() => {
-    
-    
+  // Função para deletar item
+  const handleDelete = () => {
+    console.log(`Item com id ${serviceToDelete} removido`);
+    setButtonData((prevData) => {
+      const updatedData = { ...prevData };
+      delete updatedData[serviceToDelete]; // Remove o serviço
+      return updatedData;
+    });
+    setIsConfirmationModalOpen(false); // Fecha o modal após a exclusão
+  };
+  
 
-        // Simular chamada de API para buscar dados dos botões
-        const fetchButtonData = async () => {
-          const simulatedApiResponse = {
-            button1: { name: 'Design', tempo: 20, preco: 35, data: "06/05/2024", hora: "14:00" },
-          };
-         
-    
-    // Atualiza os dados dos botões
-    setButtonData(simulatedApiResponse);
-    
-    
-    
-    
-    
-    //setButtonValues(apiButtonValues);
-    };
-        
-        fetchButtonData();
-      }, []);
-    
-    
-         
-   
+  // Função para buscar dados dos serviços
+  const fetchButtonData = async () => {
+    try {
+      // Simulação de uma resposta da API com 3 serviços
+      const simulatedApiResponse = {
+        service1: { id: '1', name: 'Design Facial', tempo: 30, preco: 100, data: '10/10/2024', hora: '09:00', status: 'Confirmado' },
+        service2: { id: '2', name: 'Massagem Relaxante', tempo: 60, preco: 150, data: '10/10/2024', status: 'Finalizado' },
+        service3: { id: '3', name: 'Tratamento Capilar', tempo: 45, preco: 200, data: '11/10/2024', status: 'Agendado' }
+      };
+      setButtonData(simulatedApiResponse);
+    } catch (error) {
+      console.error('Erro ao buscar dados dos serviços:', error);
+    }
+  };
 
-    return(
-     
-            
-        
-        <div className="col p-5 overflow-auto h-100">
-  <div className="d-flex flex-column vh-100">
-    {/* Título ou outro conteúdo acima do card */}
-    <div className="p-5">
-      <div className="row">
-        <div className="col-12">
-            
-          <h2 className="mb-5 mt-0">Agendamentos</h2> {/* Espaço maior aqui */}
-         
+  useEffect(() => {
+    fetchButtonData();
+  }, []);
+
+  
+
+  return (
+    <div className="col p-5 overflow-auto h-100">
+      <div className="d-flex flex-column vh-100">
+        <div className="p-5">
+          <h2 className="mb-5 mt-0">Agendamentos</h2>
+          <div className="row">
+                <div className="className=mb-5 mt-0">
+                    <div className="d-flex flex-column">
+              {/* Aqui está o mapeamento de serviços para renderizar cada um em um card */}
+              {Object.values(buttonData).map((service) => (
+                 <ServicoCard key={service.id} service={service} onDelete={handleShowConfirmationModal} />
+              ))}
+            </div>
           </div>
-
          
-    <div className="mb-4 mt-5"></div>
-
-        
-        <div className="d-flex justify-content-center align-items-start vh-100">
-            <div className="service-card p-5 overflow-auto h-99 w-100" style={{ marginBottom: '100px' }}>
-            
-            <div className="d-flex align-items-center">
-
-
-    {Object.keys(buttonData).map((buttonId) => (
-          <div key={buttonId} className="mb-4">
-            <h2>{buttonData[buttonId].name}</h2>
-            <p>Tempo Estimado: {buttonData[buttonId].tempo} minutos</p>
-            <p>Preço: R$ {buttonData[buttonId].preco}</p>
-            <p>Data: {buttonData[buttonId].data}</p>
-            <p>Hora: {buttonData[buttonId].hora}</p>
-          </div>
-        ))}
-
-</div>
-</div>
-</div>
-
-    
-            <div className="className=mb-5 mt-0">
-   
-
-            
-   
-
-    <button className="custom-button" onClick={handleOpenPrimeiroModal}>
-      <span className="mdi">Finalizar agendamento</span>
-    </button>
-    <PrimeiroModal isOpen={isPrimeiroModalOpen} onClose={handleClosePrimeiroModal} />  
-    
-    <div className="mb-4 mt-5"></div>
-    <div className="mb-4 mt-5"></div>
-
-    <div className="container mt-5">
-      <Button onClick={handleShowModal} variant="primary">
-        Realizar Operação
-      </Button>
-
-      <SuccessChecklistModal isOpen={isModalOpen} onClose={handleCloseModal} />
-    </div>
-   
-    <div className="mb-4 mt-5"></div>
-        <div className="mb-4 mt-5"></div>
-        <div className="mb-4 mt-5"></div>
-        <div className="mb-4 mt-5"></div>
-
-
-    </div>
-</div>
-</div>
+          <div className="mb-4 mt-5"></div>
+          <div className="mb-4 mt-5"></div>
+          <div className="mb-4 mt-5"></div>
+          <Modal show={isConfirmationModalOpen} onHide={handleCloseConfirmationModal} centered>
+  <Modal.Header closeButton>
+    <Modal.Title>Confirmação</Modal.Title>
+  </Modal.Header>
+  <Modal.Body className="text-center">
+    {/* Ícone de perigo */}
+    <i className="bi bi-exclamation-triangle" style={{ fontSize: '3rem', color: 'red' }}></i>
+    <p className="mt-3">
+      Tem certeza de que deseja desmarcar este agendamento?
+    </p>
+  </Modal.Body>
+  <Modal.Footer>
+    <Button variant="secondary" onClick={handleCloseConfirmationModal}>Cancelar</Button>
+    <Button variant="danger" onClick={handleDelete}>Deletar</Button>
+  </Modal.Footer>
+</Modal>
 
 
         </div>
-        
       </div>
-    
-     
-     
-     
-    
-   
-    );  
-};
-
+    </div>
+    </div>
+                
+  );
+}

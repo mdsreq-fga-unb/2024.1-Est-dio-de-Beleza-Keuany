@@ -194,7 +194,7 @@ sidebar ul li a text {
 .service-card button {
     background-color:#4CAF50;
     border-radius:100px;
-    padding:0px;
+    padding:15px 32px;
     display:flex;
     width: 75%;
     flex-direction:column;
@@ -256,6 +256,23 @@ sidebar ul li a text {
     margin-bottom: 20px; 
 }
 
+
+.card-container {
+    background-color: #F9ECD4;
+    border-radius: 50px;
+    padding: 5px;
+    margin: 10px 10px;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.card-container .row {
+    width: 100%;
+}
+
 .card-container {
     display: flex;
     flex-direction: column; /* Se você deseja empilhar os cartões verticalmente */
@@ -268,4 +285,9 @@ sidebar ul li a text {
     border-radius: 20px;
     align-items: center;
     margin: 10px;
+}
+
+.card-container .name{
+    font-size: x-large;
+    font-weight: bold;
 }
