@@ -51,7 +51,7 @@ export function getAvailableSchedules(id, schedule) {
 }
 
 export function getAppointmentsFromCustomer(customerPhone) {
-    const response = api.get(`/agendamento/cliente`, { params: { customerPhone } })
+    const response = api.get(`/agendamento/cliente/`, { params: { customerPhone } })
     .catch(async (err) => {
         if (err.response) {
             await Swal.fire("Erro!", err.response.data.message, "error");
@@ -59,4 +59,17 @@ export function getAppointmentsFromCustomer(customerPhone) {
     });
 
     return response;
+}
+
+export async function cancelAppointmentCustomer(id, customerPhone) {
+    try {
+        const response = await api.delete(`/agendamento/${id}`, { params: { customerPhone } });
+        await Swal.fire("Sucesso!", "Agendamento cancelado com sucesso!", "success");
+        return response;
+    } catch (err) {
+        if (err.response) {
+            await Swal.fire("Erro!", err.response.data.message, "error");
+        }
+        throw err;
+    }
 }

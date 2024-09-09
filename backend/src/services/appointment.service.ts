@@ -1,7 +1,7 @@
 import dbPool from "../database/connection";
 import mysql from "mysql2/promise";
 import { Appointment, Queue, CustomerAppointment, AppointmentWithQueue, TimeSlot } from "../types/types";
-import { convertToSQLDate } from "../utils/utils";
+import { convertToSQLDate, formatPhoneNumber } from "../utils/utils";
 import { sendMessage } from "../../bot-wp/sendMessage";
 
 const createAppointmentAndQueueService = async (appointmentBody: Appointment, queueBody: Partial<Queue>): Promise<number | undefined> => {
@@ -152,8 +152,8 @@ const finishingAppointmentService = async (id: number): Promise<number> => {
 
         const rows = appointment as Partial<Appointment[]>;
         const appointmentStatus = rows[0]?.status;
-
-        if (!appointmentStatus)
+    
+        if (appointmentStatus === undefined)
             throw new Error("Agendamento não encontrado!");
         else if (appointmentStatus != 1)
             throw new Error("Para um agendamento ser finalizado ele deve ter sido confirmado!");
@@ -289,26 +289,63 @@ const confirmAppointmentService = async (id: number): Promise<boolean> => {
     try {
         await connection.beginTransaction();
 
+        const [appointment] = await connection.query("SELECT status FROM APPOINTMENT WHERE idAppointment = ?", [id]);
+
+        const rows = appointment as Partial<Appointment[]>;
+        const appointmentStatus = rows[0]?.status;
+        
+        if (appointmentStatus === undefined)
+            throw new Error("Agendamento não encontrado!");
+
+        const customerQuery = `
+            SELECT customerPhone
+                FROM APPOINTMENT A
+                    JOIN \`QUEUE\` Q ON A.idAppointment = Q.idAppointment
+                WHERE A.idAppointment = ? AND Q.position = 1
+        `;
+
+        const [customer] = await connection.query(customerQuery, [id]);
+        const customerRows = customer as Partial<Queue[]>;
+        const customerPhone = customerRows[0]?.customerPhone;
+        let formattedPhone = null;
+
+        await connection.query(
+            "UPDATE APPOINTMENT SET status = 1 WHERE idAppointment = ?",
+            [id]
+        );
+
         await connection.query(
             "DELETE FROM `QUEUE` WHERE idAppointment = ? AND position > 1",
             [id]
         );
 
         const [result] = await connection.query(
-            "UPDATE APPOINTMENT SET status = 1 WHERE idAppointment = ?",
-            [id]
+            "SELECT ROW_COUNT() as affectedRows"
         );
 
         const okPacket = result as mysql.OkPacketParams;
 
         const appointmentConfirmed = okPacket.affectedRows && okPacket.affectedRows > 0;
+        console.log(result);
 
         if (appointmentConfirmed) {
-            const message = `Seu agendamento com ID ${id} foi confirmado com sucesso!`;
-            await sendMessage("6182896001", message);
+            if (customerPhone) {
+                formattedPhone = formatPhoneNumber(customerPhone);
+                const message = `Seu agendamento com ID ${id} foi confirmado com sucesso!`;
+                await sendMessage(formattedPhone, message);
+            } else {
+                throw new Error("Erro no envio de mensagem ao WhatsApp");
+            }
+        } else {
+            throw new Error("Esse agendamento já foi confirmado!");
         }
 
-        return okPacket.affectedRows && okPacket.affectedRows > 0 ? true : false;
+        if (appointmentConfirmed) {
+            await connection.commit();
+            return true;
+        }
+
+        return false;
     } catch (err) {
         await connection.rollback();
         throw err;

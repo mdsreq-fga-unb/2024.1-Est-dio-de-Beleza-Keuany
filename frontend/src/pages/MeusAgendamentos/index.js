@@ -6,6 +6,7 @@ import axios from 'axios'; // Importa o axios
 //import MeusAgendamentosCard from '../../components/MeusAgendamentosCard'; // Componente para exibir os serviços
 import 'bootstrap-icons/font/bootstrap-icons.css';
 //import { Card } from 'react-bootstrap';
+import { getAppointmentsFromCustomer, cancelAppointmentCustomer } from '../../store/modules/agendamento/sagas';
 
 
 
@@ -13,6 +14,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 export default function Agendamentos_Clientes() {
   const [isPrimeiroModalOpen, setIsPrimeiroModalOpen] = useState(false);
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+  const [agendamentos, setAgendamentos] = useState([]);
   const [userName, setUserName] = useState('');
   const [userPhone, setUserPhone] = useState('');
   const [buttonData, setButtonData] = useState({});
@@ -20,12 +22,33 @@ export default function Agendamentos_Clientes() {
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
   const [serviceToDelete, setServiceToDelete] = useState(null); // Novo estado
   const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const telefone = queryParams.get('telefone');
 
+  async function listAllCustomerAppointments(customerPhone) {
+    const response = await getAppointmentsFromCustomer(customerPhone);
+
+    if (response)
+      setAgendamentos(response.data);
+  }
+
+  async function cancelAppointmentFromCustomer(id, customerPhone) {
+    try {
+      const response = await cancelAppointmentCustomer(id, customerPhone);
+
+      if (response) {
+        if (response.status === 200) {
+          window.location.reload();
+        }
+      }
+    } catch (error) {
+      console.error('Erro ao cancelar agendamento');
+    }
+  }
+  
   useEffect(() => {
-    const queryParams = new URLSearchParams(location.search);
-    const telefone = queryParams.get('telefone');
-    console.log("Telefone recebido:", telefone);  // Exibe o telefone no console
-  }, [location.search]); // Dependência para garantir que o telefone seja atualizado quando a URL mudar
+    listAllCustomerAppointments(telefone);
+  }, []); // Dependência para garantir que o telefone seja atualizado quando a URL mudar
 
 
   const handleCloseConfirmationModal = () => setIsConfirmationModalOpen(false);
@@ -54,81 +77,58 @@ export default function Agendamentos_Clientes() {
   
     return (
       <div className="service-card col p-5 overflow-auto h-100">
-      <div className="row d-flex align-items-center justify-content-between">
-        <div className="col-9 d-flex align-items-center">
-            <div className="nome">{service.name}</div>
-            {/* Botão ao lado do nome do serviço exibindo o status */}
-            <Button 
-            variant={getStatusButtonVariant(service.status)} // Define a cor com base no status
-            className="ms-3" 
-            disabled
-            style={{ 
-              fontSize: '0.8rem',        
-              padding: '0.2rem 0.4rem',  
-              minWidth: '80px',          
-              maxWidth: '100px',         
-              whiteSpace: 'nowrap',      
-              overflow: 'hidden',        
-              textOverflow: 'ellipsis'  
-            }}>
-            {service.status}
-          </Button>
-        </div>
-        <div className="col-2 text-end">
-          {/* Condiciona a exibição do botão de exclusão com base no status */}
-          {service.status !== 'Finalizado' && (
-            <button className="custom-button" onClick={() => onDelete(service.id)}>
-                <i className="bi bi-trash" style={{ fontSize: '1.5rem', color: 'red' }}></i>
-              </button>
-          )}
-        </div>
-            <div className="tempo_estimado">Tempo: {service.tempo} minutos</div>
-            <div className="preco">Preço: R$ {service.preco}</div>
-            <div className="preco">Data: {service.data}</div>
-            <div className="preco">Hora: {service.hora}</div>
-            <div className="preco">Status: {service.status}</div>
-          </div>
-         
-        </div>
+  <div className="row d-flex align-items-center justify-content-between">
+    <div className="col-9 d-flex align-items-center">
+      <div className="nome">{service.procedureName}</div>
+      {/* Botão ao lado do nome do serviço exibindo o status */}
+      <Button 
+        variant={getStatusButtonVariant(service.appointmentStatus)} // Define a cor com base no status
+        className="ms-3" 
+        disabled
+        style={{ 
+          fontSize: '0.8rem',        
+          padding: '0.2rem 0.4rem',  
+          minWidth: '80px',          
+          maxWidth: '100px',         
+          whiteSpace: 'nowrap',      
+          overflow: 'hidden',        
+          textOverflow: 'ellipsis'  
+        }}
+      >
+        {service.appointmentStatus}
+      </Button>
+    </div>
+
+    <div className="col-2 text-end">
+      {/* Aqui usamos o CSS visibility */}
+      <button 
+        className="custom-button" 
+        onClick={() => onDelete(service.appointmentId)}
+        style={{
+          visibility: service.appointmentStatus !== 'Finalizado' && service.appointmentStatus !== 'Cancelado' 
+            ? 'visible' 
+            : 'hidden'  // Apenas esconde o botão mantendo o espaço
+        }}
+      >
+        <i className="bi bi-trash" style={{ fontSize: '1.5rem', color: 'red' }}></i>
+      </button>
+    </div>
+
+    <div className="preco"><strong>{service.appointmentSchedule} horas</strong></div>
+    <div className="tempo_estimado">Tempo Estimado: {service.procedureDuration} minutos</div>
+    <div className="preco">Preço: {parseFloat(service.procedurePrice).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</div>
+  </div>
+</div>
       
     );
   };
   
-  
-
-  
   // Função para deletar item
   const handleDelete = () => {
-    console.log(`Item com id ${serviceToDelete} removido`);
-    setButtonData((prevData) => {
-      const updatedData = { ...prevData };
-      delete updatedData[serviceToDelete]; // Remove o serviço
-      return updatedData;
-    });
+    cancelAppointmentFromCustomer(serviceToDelete, telefone);
+
     setIsConfirmationModalOpen(false); // Fecha o modal após a exclusão
-  };
-  
-
-  // Função para buscar dados dos serviços
-  const fetchButtonData = async () => {
-    try {
-      // Simulação de uma resposta da API com 3 serviços
-      const simulatedApiResponse = {
-        service1: { id: '1', name: 'Design Facial', tempo: 30, preco: 100, data: '10/10/2024', hora: '09:00', status: 'Confirmado' },
-        service2: { id: '2', name: 'Massagem Relaxante', tempo: 60, preco: 150, data: '10/10/2024', hora: '09:00',status: 'Finalizado' },
-        service3: { id: '3', name: 'Tratamento Capilar', tempo: 45, preco: 200, data: '11/10/2024', hora: '09:00', status: 'Agendado' }
-      };
-      setButtonData(simulatedApiResponse);
-    } catch (error) {
-      console.error('Erro ao buscar dados dos serviços:', error);
-    }
-  };
-
-  useEffect(() => {
-    fetchButtonData();
-  }, []);
-
-  
+  };  
 
   return (
     <div className="col p-5 overflow-auto h-100">
@@ -139,8 +139,12 @@ export default function Agendamentos_Clientes() {
                 <div className="className=mb-5 mt-0">
                     <div className="d-flex flex-column">
               {/* Aqui está o mapeamento de serviços para renderizar cada um em um card */}
-              {Object.values(buttonData).map((service) => (
-                 <ServicoCard key={service.id} service={service} onDelete={handleShowConfirmationModal} />
+              {Object.values(agendamentos).map((agendamento) => (
+                 <ServicoCard 
+                    key={agendamento.appointmentId} 
+                    service={agendamento} 
+                    onDelete={handleShowConfirmationModal} 
+                 />
               ))}
             </div>
           </div>
