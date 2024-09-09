@@ -1,8 +1,8 @@
-import AgendarCard from "../../components/AgendarURLQuerry/index"; 
-import { useSearchParams } from 'react-router-dom';
-import AgendamentosModal from "../MeusAgendamentos/agendamentosModal";
+//import AgendarCard from "../../components/AgendarURLQuerry/index"; 
+//import { useSearchParams } from 'react-router-dom';
+//import AgendamentosModal from "../MeusAgendamentos/agendamentosModal";
 //import { useEffect } from "react";
-import ServicoCard from "../../components/ServicoCard";
+//import ServicoCard from "../../components/ServicoCard";
 import { Link, useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from 'react';
 import { Modal, Button } from 'react-bootstrap';
@@ -15,11 +15,17 @@ import 'bootstrap-icons/font/bootstrap-icons.css'; // Importa ícones do Bootstr
 
 export default function Agendamentos_Clientes() {
 
-  const [isPrimeiroModalOpen, setIsPrimeiroModalOpen] = useState(false);
-  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
-  const [userName, setUserName] = useState('');
-  const [userPhone, setUserPhone] = useState('');
-  const navigate = useNavigate();
+    const [isPrimeiroModalOpen, setIsPrimeiroModalOpen] = useState(false);
+    const [userName, setUserName] = useState(''); // Estado para armazenar o nome do usuário
+    const [userPhone, setUserPhone] = useState(''); // Estado para armazenar o número de telefone
+    const handleOpenPrimeiroModal = () => setIsPrimeiroModalOpen(true);
+    const handleClosePrimeiroModal = () => setIsPrimeiroModalOpen(false);
+   
+  
+
+    const navigate = useNavigate(); // Hook para navegação
+
+  
 
   // Função para redirecionar para outra página
   const handleRedirect = () => {
@@ -37,10 +43,6 @@ export default function Agendamentos_Clientes() {
     setUserPhone(e.target.value); // Atualiza o estado com o número de telefone digitado
   };
 
-  const handleAvancarEAgendar = () => {
-    setIsPrimeiroModalOpen(false); // Fecha o PrimeiroModal
-    setIsSuccessModalOpen(true);   // Abre o SuccessChecklistModal
-  };
 
 
   const PrimeiroModal = ({ isOpen, onClose }) => (
@@ -59,7 +61,7 @@ export default function Agendamentos_Clientes() {
         />
       </Modal.Body>
       <Modal.Body>
-        <p>Número do WhatsApp:</p>
+        <p>Número do WhattsApp:</p>
         <input 
           type="tel" 
           value={userPhone} 
@@ -69,26 +71,34 @@ export default function Agendamentos_Clientes() {
         />
       </Modal.Body>
       <Modal.Footer>
-        <div className="d-flex flex-column w-100">
-          <Button variant="secondary" onClick={handleAvancarEAgendar}>
-            Avançar e agendar
-          </Button>
-          <div className="mb-3 mt-2"></div>
-          <Button variant="secondary" onClick={handleRedirect}>
-            Voltar
-          </Button>
+      <div className="d-flex flex-column w-100">
+        <Button variant="secondary" onClick={handleRedirect}>
+          Avançar e agendar
+        </Button>
+        <div className="mb-3 mt-2"></div>
+        <Button variant="secondary" onClick={handleRedirect}>
+          Voltar
+        </Button>
         </div>
       </Modal.Footer>
     </Modal>
   );
-
-  const SuccessChecklistModal = ({ isOpen, onClose }) => (
-    <Modal show={isOpen} onHide={onClose} centered>
-      <Modal.Body>
-        <div className="text-center mb-4">
+    
+  const SuccessChecklistModal = ({ isOpen, onClose }) => {
+    return (
+      <Modal show={isOpen} onHide={onClose} centered>
+        <Modal.Header>
+        <Modal.Body>
+          <div className="text-center mb-4">
+          {/* Ícone de sucesso principal */}
           <i className="bi bi-check-circle" style={{ fontSize: '10rem', color: 'green' }}></i>
-          <p>Operação Realizada com Sucesso!</p>
-        </div>
+       <p>Operação Realizada com Sucesso!</p>
+       </div> </Modal.Body>
+        </Modal.Header>
+        <Modal.Body>
+        <p>Seu agendamento foi realizado com sucesso com Keyllane </p>
+        </Modal.Body>
+        
         {Object.keys(buttonData).map((buttonId) => (
           <div key={buttonId} className="text-center mb-4">
             <h2>{buttonData[buttonId].name}</h2>
@@ -98,21 +108,25 @@ export default function Agendamentos_Clientes() {
             <p>Hora: {buttonData[buttonId].hora}</p>
           </div>
         ))}
-        <p>Seu agendamento foi realizado com sucesso com Keyllane</p>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button variant="success" onClick={onClose}>
-          Fechar
-        </Button>
-      </Modal.Footer>
-    </Modal>
-  );
-
+               
+        <Modal.Body>
+        <p></p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="success" onClick={onClose}>
+            Fechar
+          </Button>
+          <SuccessChecklistModal isOpen={isModalOpen} onClose={handleCloseModal} />
+        </Modal.Footer>
+      </Modal>
+    );
+  };
+  
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleShowModal = () => setIsModalOpen(true);
     const handleCloseModal = () => setIsModalOpen(false);
-    
+    const [buttonValues, setButtonValues] = useState({});
     const [buttonData, setButtonData] = useState({});
 
   
@@ -148,36 +162,84 @@ export default function Agendamentos_Clientes() {
      
             
         
-      <div className="col p-5 overflow-auto h-100">
-      <div className="d-flex flex-column vh-100">
-        <div className="p-5">
-          <h2 className="mb-5 mt-0">Agendamentos</h2>
-          <div className="d-flex justify-content-center align-items-start vh-100">
-            <div className="service-card p-5 overflow-auto h-99 w-100" style={{ marginBottom: '100px' }}>
-              {Object.keys(buttonData).map((buttonId) => (
-                <div key={buttonId} className="mb-4">
-                  <h2>{buttonData[buttonId].name}</h2>
-                  <p>Tempo Estimado: {buttonData[buttonId].tempo} minutos</p>
-                  <p>Preço: R$ {buttonData[buttonId].preco}</p>
-                  <p>Data: {buttonData[buttonId].data}</p>
-                  <p>Hora: {buttonData[buttonId].hora}</p>
-                </div>
-              ))}
-            </div>
+        <div className="col p-5 overflow-auto h-100">
+  <div className="d-flex flex-column vh-100">
+    {/* Título ou outro conteúdo acima do card */}
+    <div className="p-5">
+      <div className="row">
+        <div className="col-12">
+            
+          <h2 className="mb-5 mt-0">Agendamentos</h2> {/* Espaço maior aqui */}
+         
           </div>
-          <button className="custom-button" onClick={() => setIsPrimeiroModalOpen(true)}>
-            <span className="mdi">Finalizar agendamento</span>
-          </button>
-          <PrimeiroModal isOpen={isPrimeiroModalOpen} onClose={() => setIsPrimeiroModalOpen(false)} />
-          <SuccessChecklistModal isOpen={isSuccessModalOpen} onClose={() => setIsSuccessModalOpen(false)} />
+
+         
+    <div className="mb-4 mt-5"></div>
+
         
-          <div className="mb-4 mt-5"></div>
-        <div className="mb-4 mt-5"></div>
-        <div className="mb-4 mt-5"></div>
-        <div className="mb-4 mt-5"></div>
-        
-        </div>
-      </div>
+        <div className="d-flex justify-content-center align-items-start vh-100">
+            <div className="service-card p-5 overflow-auto h-99 w-100" style={{ marginBottom: '100px' }}>
+            
+            <div className="d-flex align-items-center">
+
+
+    {Object.keys(buttonData).map((buttonId) => (
+          <div key={buttonId} className="mb-4">
+            <h2>{buttonData[buttonId].name}</h2>
+            <p>Tempo Estimado: {buttonData[buttonId].tempo} minutos</p>
+            <p>Preço: R$ {buttonData[buttonId].preco}</p>
+            <p>Data: {buttonData[buttonId].data}</p>
+            <p>Hora: {buttonData[buttonId].hora}</p>
+          </div>
+        ))}
+
+</div>
+</div>
+</div>
+
+    
+            <div className="className=mb-5 mt-0">
+   
+
+            
+   
+
+    <button className="custom-button" onClick={handleOpenPrimeiroModal}>
+      <span className="mdi">Finalizar agendamento</span>
+    </button>
+    <PrimeiroModal isOpen={isPrimeiroModalOpen} onClose={handleClosePrimeiroModal} />  
+    
+    <div className="mb-4 mt-5"></div>
+    <div className="mb-4 mt-5"></div>
+
+    <div className="container mt-5">
+      <Button onClick={handleShowModal} variant="primary">
+        Realizar Operação
+      </Button>
+
+      <SuccessChecklistModal isOpen={isModalOpen} onClose={handleCloseModal} />
     </div>
-  );
-}
+   
+    <div className="mb-4 mt-5"></div>
+        <div className="mb-4 mt-5"></div>
+        <div className="mb-4 mt-5"></div>
+        <div className="mb-4 mt-5"></div>
+
+
+    </div>
+</div>
+</div>
+
+
+        </div>
+        
+      </div>
+    
+     
+     
+     
+    
+   
+    );  
+};
+

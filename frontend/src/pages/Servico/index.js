@@ -1,15 +1,28 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ServicoCard from "../../components/ServicoCard";
-import { Link, useNavigate } from "react-router-dom";
- 
-    
+import { useNavigate } from "react-router-dom";
+import { getAllProcedures } from "../../store/modules/procedimento/sagas";
+
 const Servicos = () => {
-
     const navigate = useNavigate();
+    const [procedimentos, setProcedimentos] = useState([]);
 
-    function paraAgendar(nome, tempo_estimado, preco) {
-        navigate(`/agendar?servico=${nome}&tempo=${tempo_estimado}&preco=${preco}`);
+    /* function paraAgendar(nome, tempo_estimado, preco, id) {
+        navigate(`/agendar?id=${id}&servico=${nome}&tempo=${tempo_estimado}&preco=${preco}`);
+    } */
+
+    function paraAgendar(id) {
+        navigate(`/agendar?id=${id}`);
     }
+
+    async function listAllProcedures() {
+        const response = await getAllProcedures();
+        setProcedimentos(response.data);
+    }
+
+    useEffect(() => {
+        listAllProcedures();
+    }, []);
     
     return(
         <div className="col p-5 overflow-auto h-100">
@@ -24,33 +37,21 @@ const Servicos = () => {
                 </div>
             </div>
             <div className="row">
-            <div className="className=mb-5 mt-0">
-    <ServicoCard 
-        nome={"Design Simples"} 
-        tempo_estimado={20} 
-        preco={35} 
-        changePage={() => paraAgendar("Design Simples", 20, 35)} 
-    />
-</div>
-
+                <div className="className=mb-5 mt-0">
+                    <div className="d-flex flex-column">
+                        {procedimentos.map((procedimento) => (
+                            <ServicoCard
+                                key={procedimento.idProcedure}
+                                nome={procedimento.name} 
+                                tempo_estimado={procedimento.duration} 
+                                preco={parseFloat(procedimento.price).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })} 
+                                changePage={() => paraAgendar(procedimento.idProcedure)} 
+                            />
+                        ))};
+                    </div>
+                </div>
             </div>
-
-            <div className="row">
-            <div className="mb-4 mt-5">
-    <ServicoCard 
-        nome={"Design Simples"} 
-        tempo_estimado={20} 
-        preco={35} 
-        changePage={() => paraAgendar("Design Simples", 20, 35)} 
-    />
-</div>
-
-            </div>
-            
-            {/* Adicionar mais caso queira. */}
-
         </div>
     );
-
 }
 export default Servicos;  

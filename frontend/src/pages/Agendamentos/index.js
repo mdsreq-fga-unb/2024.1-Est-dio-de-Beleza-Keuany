@@ -1,22 +1,14 @@
 import { useEffect, useState } from 'react'; 
 import { Calendar, momentLocalizer } from 'react-big-calendar'; 
 import 'react-big-calendar/lib/css/react-big-calendar.css'; 
-import moment from 'moment'; 
-import { useDispatch, useSelector } from 'react-redux'; 
-import { filterAgendamentos } from '../../store/modules/agendamento/actions'; 
+import moment from 'moment';
 import { getAllAppointments } from '../../store/modules/agendamento/sagas';
-import util from '../../util'; 
-import { Link } from 'react-router-dom';
 import { sessionStatus } from '../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
-
 const localizer = momentLocalizer(moment); 
 
-
 const Agendamentos = () => {
-
-    const dispatch = useDispatch();  
     const navigate = useNavigate();
     const [agendamentos, setAgendamentos] = useState([]);
 
