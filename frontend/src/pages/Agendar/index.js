@@ -177,7 +177,7 @@ const SuccessChecklistModal = ({ isOpen, onClose }) => (
       <p>Seu agendamento foi realizado com sucesso com Keyllane</p>
     </Modal.Body>
     <Modal.Footer>
-      <Button variant="success" onClick={onClose}>
+      <Button variant="success" onClick={FinalizarProcedimento}>
         Fechar
       </Button>
     </Modal.Footer>
@@ -441,29 +441,16 @@ const SuccessChecklistModal = ({ isOpen, onClose }) => (
     <button className="custom-button" onClick={handleOpenPrimeiroModal}>
       <span className="mdi">Finalizar agendamento</span>
     </button>
-    <button className="custom-button" onClick={() => console.log('Outro botão clicado')}>
-            <span className="mdi">Outro Botão</span>
-          </button>
+    
     <PrimeiroModal isOpen={isPrimeiroModalOpen} onClose={handleClosePrimeiroModal} />
     
-            <div className="className=mb-5 mt-0">
-   
 
-<div className="mb-4 mt-5"></div>
-<div className="mb-4 mt-5"></div>
-
-
-
-
-
-<div className="mb-4 mt-5"></div>
-<div className="mb-4 mt-5"></div>
                 
-<div className="col p-5 overflow-auto h-100">
-    <div className="d-flex flex-column vh-100">
+<div>
+    <div>
       <div className="p-5">
        
-      <div className="col p-5 overflow-auto h-100">
+      <div>
       {/* Seu conteúdo */}
 
       <PrimeiroModal 
@@ -485,10 +472,6 @@ const SuccessChecklistModal = ({ isOpen, onClose }) => (
         <SegundoModal isOpen={isSegundoModalOpen} onClose={() => setIsSegundoModalOpen(false)} />
         <SuccessChecklistModal isOpen={isSuccessModalOpen} onClose={handleCloseAllModals}  />
 
-        <div className="mb-4 mt-5"></div>
-        <div className="mb-4 mt-5"></div>
-        <div className="mb-4 mt-5"></div>
-        <div className="mb-4 mt-5"></div>
       </div>
     </div>
   </div>
@@ -499,7 +482,7 @@ const SuccessChecklistModal = ({ isOpen, onClose }) => (
         </div>
       </div>
     </div>
-    </div>
+    
     
 
         

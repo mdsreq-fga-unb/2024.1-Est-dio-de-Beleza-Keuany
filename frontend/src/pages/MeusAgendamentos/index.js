@@ -1,8 +1,8 @@
-import AgendarCard from "../../components/AgendarURLQuerry/index"; 
-import { useSearchParams } from 'react-router-dom';
-import AgendamentosModal from "../MeusAgendamentos/agendamentosModal";
+//import AgendarCard from "../../components/AgendarURLQuerry/index"; 
+//import { useSearchParams } from 'react-router-dom';
+//import AgendamentosModal from "../MeusAgendamentos/agendamentosModal";
 //import { useEffect } from "react";
-import ServicoCard from "../../components/ServicoCard";
+//import ServicoCard from "../../components/ServicoCard";
 import { Link, useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from 'react';
 import { Modal, Button } from 'react-bootstrap';
