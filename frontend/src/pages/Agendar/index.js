@@ -43,7 +43,7 @@ const Agendamentos_Clientes = () => {
   };
  
 
-
+  
   const handleOpenPrimeiroModal = () => setIsPrimeiroModalOpen(true);
   const handleClosePrimeiroModal = () => setIsPrimeiroModalOpen(false);
 
@@ -102,8 +102,8 @@ const PrimeiroModal = ({ isOpen, onClose, onFinalizarClick }) => (
     </Modal.Footer>
   </Modal>
 );
-  
 
+  
 const [isSegundoModalOpen, setIsSegundoModalOpen] = useState(false);
 const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
 const [userName, setUserName] = useState('');
@@ -217,7 +217,7 @@ const SuccessChecklistModal = ({ isOpen, onClose }) => (
   const [isPrimeiroModalOpen, setIsPrimeiroModalOpen] = useState(false);
       
     
-    
+  
       
     // Estado para armazenar os valores dos botões
   const [buttonValues, setButtonValues] = useState({});
@@ -495,12 +495,12 @@ const SuccessChecklistModal = ({ isOpen, onClose }) => (
 
   
 
+</div>
         </div>
       </div>
     </div>
     </div>
-    </div>
-   
+    
 
         
     
