@@ -71,20 +71,21 @@ const Servicos = () => {
                 </div>
             </div>
             <div className="row">
-                <div className="className=mb-5 mt-0">
-                    <div className="d-flex flex-column">
-                        {procedimentos.map((procedimento) => (
-                            <ServicoCard
-                                key={procedimento.idProcedure}
-                                nome={procedimento.name} 
-                                tempo_estimado={procedimento.duration} 
-                                preco={parseFloat(procedimento.price).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })} 
-                                changePage={() => paraAgendar(procedimento.idProcedure)} 
-                            />
-                        ))};
-                    </div>
-                </div>
-            </div>
+    <div className="container-limite mb-5 mt-0">
+        <div className="d-flex flex-column">
+            {procedimentos.map((procedimento) => (
+                <ServicoCard
+                    key={procedimento.idProcedure}
+                    nome={procedimento.name} 
+                    tempo_estimado={procedimento.duration} 
+                    preco={parseFloat(procedimento.price).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })} 
+                    changePage={() => paraAgendar(procedimento.idProcedure)} 
+                />
+            ))}
+        </div>
+    </div>
+</div>
+
 
              {/* Modal para solicitar o número de telefone */}
              <Modal show={showModal} onHide={handleCloseModal} centered>

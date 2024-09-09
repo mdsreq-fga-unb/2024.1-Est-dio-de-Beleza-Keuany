@@ -10,7 +10,26 @@ const ServicoCard = ({nome, tempo_estimado, preco, changePage}) =>{
                     <div className="preco">Preço: {preco}</div>
                 </div>
                 <div className="col-6 botao_reservar">
-                    <button className="p-3 h-8 text-white" onClick={() => changePage(nome)}>Reservar</button>
+                <button 
+                    style={{
+                        width: '150px',
+                        padding: '0.5rem',
+                        fontSize: '1rem',
+                        borderRadius: '1rem',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        marginLeft: 'auto',
+                        marginRight: '0'
+                    }}
+                    className="text-white"
+                    onClick={() => changePage(nome)}
+                    >
+                        Reservar
+                </button>
+
+
+
                 </div>
             </div>
         </div>

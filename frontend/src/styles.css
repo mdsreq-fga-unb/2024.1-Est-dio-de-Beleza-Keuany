@@ -18,13 +18,13 @@ header {
 }
 
 .custom-font-h1 {
-    font-family: 'Georgia', serif; /* Fontes mais elegantes */
+    font-family: 'Georgia', serif; 
     font-size: 2.5rem;
     font-weight: bold;
 }
 
 .custom-font-h2 {
-    font-family: 'Arial', sans-serif; /* Fonte mais leve */
+    font-family: 'Arial', sans-serif; 
     font-size: 1.5rem;
     font-weight: normal;
 }
@@ -190,6 +190,39 @@ sidebar ul li a text {
     font-size: 16px;
   }
 
+  /* Estilos para o título do procedimento */
+.procedimento-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  /* Estilos para os detalhes do procedimento */
+  .procedimento-details {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  /* Estilos para cada item de procedimento */
+  .procedimento-item {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #555;
+  }
+  
+  /* Estilo para a mensagem de carregamento */
+  .loading-message {
+    font-size: 18px;
+    color: #888;
+    text-align: center;
+  }
+  
 .service-card {
     background-color: #F9ECD4;
     border-radius: 50px;
@@ -205,6 +238,106 @@ sidebar ul li a text {
 .service-card .row {
     width: 100%;
 }
+
+.container-limite {
+    max-width: 1000px; /* Ajuste para a largura desejada */
+    margin: 0 auto; /* Centraliza a div horizontalmente */
+}
+
+.date-picker-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f4f4f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(220, 188, 29, 0.1);
+  }
+  
+  .title {
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .date-picker {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 16px;
+    width: 100%;
+    max-width: 250px;
+    text-align: center;
+  }
+
+  /* Estilos Gerais */
+.title {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  /* Container do Slider */
+  .slider-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    max-width: 90%;
+  }
+  
+  /* Slider */
+  .slider {
+    width: 100%;
+  }
+  
+  /* Wrapper dos Botões */
+  .button-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 10px;
+  }
+  
+  /* Botão de Agendamento */
+  .appointment-button {
+    background-color: #F0A500;  /* Cor padrão para inativo */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 50px;
+    transition: background-color 0.3s ease;
+    width: 150px;
+    text-align: center;
+  }
+  
+  .appointment-button.active {
+    background-color: #4CAF50; /* Cor para ativo */
+  }
+  
+  /* Informações Adicionais */
+  .info {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #555;
+    padding-left: 25px; /* Ajuste o valor conforme necessário */
+  }
+  
+  
+  
+  
+  
+  .date-picker:hover {
+    border-color: #007bff;
+    transition: border-color 0.3s ease;
+  }
+  
+  .date-picker:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(38, 143, 255, 0.2);
+  }
+  
 
 .service-card .col-6.botao_reservar {
     display: flex;
