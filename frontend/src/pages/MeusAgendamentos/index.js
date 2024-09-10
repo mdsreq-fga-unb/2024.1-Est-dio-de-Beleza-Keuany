@@ -83,7 +83,7 @@ export default function Agendamentos_Clientes() {
       {/* Botão ao lado do nome do serviço exibindo o status */}
       <Button 
         variant={getStatusButtonVariant(service.appointmentStatus)} // Define a cor com base no status
-        className="ms-3" 
+        className="ms-3 text-center" // Adicione a classe para centralizar o texto
         disabled
         style={{ 
           fontSize: '0.8rem',        
@@ -92,27 +92,32 @@ export default function Agendamentos_Clientes() {
           maxWidth: '100px',         
           whiteSpace: 'nowrap',      
           overflow: 'hidden',        
-          textOverflow: 'ellipsis'  
+          textOverflow: 'ellipsis',
+          display: 'flex',           // Flexbox para centralizar o conteúdo
+          alignItems: 'center',      // Centraliza verticalmente
+          justifyContent: 'center'   // Centraliza horizontalmente  
         }}
       >
         {service.appointmentStatus}
       </Button>
     </div>
 
-    <div className="col-2 text-end">
-      {/* Aqui usamos o CSS visibility */}
-      <button 
-        className="custom-button" 
-        onClick={() => onDelete(service.appointmentId)}
-        style={{
-          visibility: service.appointmentStatus !== 'Finalizado' && service.appointmentStatus !== 'Cancelado' 
-            ? 'visible' 
-            : 'hidden'  // Apenas esconde o botão mantendo o espaço
-        }}
-      >
-        <i className="bi bi-trash" style={{ fontSize: '1.5rem', color: 'red' }}></i>
-      </button>
-    </div>
+    <div className="col-3 text-end">
+  <button 
+    className="excluir" 
+    onClick={() => onDelete(service.appointmentId)}
+    style={{
+      visibility: service.appointmentStatus !== 'Finalizado' && service.appointmentStatus !== 'Cancelado' 
+        ? 'visible' 
+        : 'hidden'  // Apenas esconde o botão mantendo o espaço
+    }}
+  >
+    <i className="bi bi-trash"></i>
+  </button>
+</div>
+
+
+
 
     <div className="preco"><strong>{service.appointmentSchedule} horas</strong></div>
     <div className="tempo_estimado">Tempo Estimado: {service.procedureDuration} minutos</div>

@@ -6,7 +6,7 @@ const ServicoCard = ({nome, tempo_estimado, preco, changePage}) =>{
                 <div className="col-6">
                     <div className="nome">{nome}</div>
                     {/*Em minutos*/}
-                    <div className="tempo_estimado">Tempo Estimado: {tempo_estimado}</div>
+                    <div className="tempo_estimado">Tempo Estimado: {tempo_estimado} minutos</div>
                     <div className="preco">Preço: {preco}</div>
                 </div>
                 <div className="col-6 botao_reservar">
@@ -26,7 +26,7 @@ const ServicoCard = ({nome, tempo_estimado, preco, changePage}) =>{
                     onClick={() => changePage(nome)}
                     >
                         Reservar
-                </button>
+    </button>
 
 
 

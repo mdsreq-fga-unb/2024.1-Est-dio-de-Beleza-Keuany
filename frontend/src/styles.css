@@ -223,18 +223,62 @@ sidebar ul li a text {
     text-align: center;
   }
   
-.service-card {
+  .service-card {
     background-color: #F9ECD4;
     border-radius: 50px;
     padding: 5px;
-    margin: 10px 10px;
+    margin: 10px auto; 
     font-family: Arial, sans-serif;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
+    width: 1300px; 
 }
 
+div.col-3 button.excluir {
+    width: 50px;
+    height: 50px;
+    padding: 0;
+    border: none;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+div.col-3 button.excluir:hover {
+    background-color: rgba(255, 0, 0, 0.1);
+    transform: scale(1.2);
+}
+
+div.col-3 button.excluir:active {
+    transform: scale(0.95);
+}
+
+div.col-3 button.excluir i {
+    color: red;
+    font-size: 2rem;
+}
+
+  
+
+.col-2 {
+    height: 100px; /* Ajuste conforme necessário para garantir que haja espaço suficiente */
+}
+
+.col-3 {
+    display: flex;
+    justify-content: flex-end; /* Garante que o conteúdo esteja alinhado à direita */
+    align-items: flex-end; /* Garante que o conteúdo esteja alinhado ao fundo do contêiner */
+    height: 100px; /* Ajuste conforme necessário para garantir que haja espaço suficiente */
+}
+
+
+    
 .service-card .row {
     width: 100%;
 }
@@ -355,6 +399,11 @@ sidebar ul li a text {
     border-style:hidden;
     outline:none;
     font-size: larger;
+    transition: background-color 0.3s, transform 0.3s; /* Transição suave para efeitos */
+}
+
+.service-card button:hover {
+    background-color: #26930d;
 }
 
 @media screen and (min-width: 1200px) {
