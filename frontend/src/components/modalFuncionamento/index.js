@@ -8,6 +8,8 @@ import Checkbox from "@mui/material/Checkbox";
 import { useState, useEffect } from "react";
 import { patchWorkSchedule } from "../../store/modules/grade/sagas";
 
+let formData;
+
 const FuncionamentoModal = ({ isOpen, onClose, data, onSave }) => {
     const [editData, setEditData] = useState(data);
 
@@ -31,10 +33,12 @@ const FuncionamentoModal = ({ isOpen, onClose, data, onSave }) => {
 
     function handleSaveChanges() {
         // Apenas simula a atualização de dados
-        console.log("Changes saved:", editData);
-        if (onSave) {
-            onSave(editData); // Chama a função onSave para notificar o componente pai
-        }
+        formData = { ...editData }
+        let { idWorkSchedule, ...rest } = formData;
+        rest.activeDay = Number(editData.activeDay).toString();
+        
+        updateWorkSchedule(idWorkSchedule, rest);
+
         onClose(); // Fecha o modal após salvar
     }
 

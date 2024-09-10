@@ -20,7 +20,7 @@ const createProcedure = async (req: FastifyRequest, res: FastifyReply) => {
         if (!price)
             return res.code(400).send({ message: 'Informe o valor do procedimento em R$!' });
 
-        if (price <= 0 || price > 2000)
+        if (price <= 0 || price >= 1000)
             return res.code(400).send({ message: 'Preço inválido!' });
 
         const procedure = await procedureService.createService(body);
@@ -102,7 +102,7 @@ const updateProcedure = async (req: FastifyRequest, res: FastifyReply) => {
         }
 
         if (price) {
-            if (price <= 0 || price > 2000)
+            if (price <= 0 || price >= 1000)
                 return res.code(400).send({ message: 'Preço inválido!' });
         }
 
