@@ -57,10 +57,6 @@ const Header = () => {
                     <span className="d-block m-0 p-0 text-white">Estúdio Keuanny</span>
                 </div>
                 <img src={logo} alt="" />
-                <span className="mdi mdi-chevron-down text-white"></span>
-                <div>
-                   
-                </div>
                 
             </div>
             

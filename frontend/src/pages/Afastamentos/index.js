@@ -5,9 +5,17 @@ import { getAllExceptions } from "../../store/modules/excecao/sagas";
 import { sessionStatus } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
+import MenuItem from "@mui/material/MenuItem";
+import Button from "@mui/material/Button";
+import Menu from "@mui/material/Menu";
 
 const Afastamentos = () => {
     const navigate = useNavigate();
+
+    const navigatePressDiasDeFuncionamnto = "/funcionamento";
+    const navigatePressDiasdeAfastamento = "/afastamento";
+
+    const [isMenuOpened, setMenuOpened] = useState(null);
     const [date, setDate] = useState(new Date());
     const [isModalOpened, setModalOpened] = useState(false);
     const [isEditDeleteModalOpened, setEditDeleteModalOpened] = useState(false);
@@ -76,6 +84,37 @@ const Afastamentos = () => {
 
     return (
         <div className="col p-5 overflow-auto h-100">
+            <div className="row">
+                <div className="col-12">
+                    <div className="w-100 d-flex ">
+                        <Button
+                            className="menu-funcionamento"
+                            aria-controls="simple-menu"
+                            aria-haspopup="true"
+                            onClick={(event) => {setMenuOpened(event.currentTarget)}}>
+                            <span className="mdi mdi-chevron-down">Dias de Afastamento</span> 
+                        </Button>
+                        <Menu
+                            keepMounted
+                            anchorEl={isMenuOpened}
+                            onClose={() => {setMenuOpened(null);}}
+                            open={Boolean(isMenuOpened)}>
+                            <MenuItem onClick={() => {
+                                setMenuOpened(null);
+                                navigate(navigatePressDiasdeAfastamento);
+                                }}>
+                                Dias de Afastamento
+                            </MenuItem>
+                            <MenuItem onClick={() => {
+                                setMenuOpened(null);
+                                navigate(navigatePressDiasDeFuncionamnto);
+                                }}>
+                                Dias de Funcionamento
+                            </MenuItem>
+                        </Menu>
+                    </div>
+                </div>
+            </div>
             <div className="row">
                 <div className="col-12">
                     <div className="m-2 d-flex align-items-center flex-column">
