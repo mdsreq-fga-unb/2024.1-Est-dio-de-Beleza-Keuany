@@ -308,13 +308,17 @@ const confirmAppointmentService = async (id: number): Promise<boolean> => {
     try {
         await connection.beginTransaction();
 
-        const [appointment] = await connection.query("SELECT status FROM APPOINTMENT WHERE idAppointment = ?", [id]);
+        const [appointment] = await connection.query("SELECT status, schedule FROM APPOINTMENT WHERE idAppointment = ?", [id]);
 
         const rows = appointment as Partial<Appointment[]>;
         const appointmentStatus = rows[0]?.status;
+        const appointmentSchedule = rows[0]?.schedule;
         
         if (appointmentStatus === undefined)
             throw new Error("Agendamento não encontrado!");
+
+        if (appointmentStatus === 1)
+            throw new Error("Esse agendamento já foi confirmado!");
 
         const customerQuery = `
             SELECT customerPhone
@@ -338,33 +342,23 @@ const confirmAppointmentService = async (id: number): Promise<boolean> => {
             [id]
         );
 
-        const [result] = await connection.query(
-            "SELECT ROW_COUNT() as affectedRows"
-        );
+        if (customerPhone) {
+            let dateObj: any;
+            if (appointmentSchedule) dateObj = new Date(appointmentSchedule);
+            const formattedDate = `${dateObj.getDate().toString().padStart(2, '0')}/${
+                (dateObj.getMonth() + 1).toString().padStart(2, '0')
+              }/${dateObj.getFullYear()} ${dateObj.getHours().toString().padStart(2, '0')}:${dateObj.getMinutes().toString().padStart(2, '0')}`;
 
-        const okPacket = result as mysql.OkPacketParams;
-
-        const appointmentConfirmed = okPacket.affectedRows && okPacket.affectedRows > 0;
-        console.log(result);
-
-        if (appointmentConfirmed) {
-            if (customerPhone) {
-                formattedPhone = formatPhoneNumber(customerPhone);
-                const message = `Seu agendamento, de ID ${id}, foi confirmado com sucesso!`;
-                await sendMessage(formattedPhone, message);
-            } else {
-                throw new Error("Erro no envio de mensagem ao WhatsApp");
-            }
+            formattedPhone = formatPhoneNumber(customerPhone);
+            const message = `Seu agendamento, marcado para as ${formattedDate}, foi confirmado com sucesso!`;
+            
+            await sendMessage(formattedPhone, message);
         } else {
-            throw new Error("Esse agendamento já foi confirmado!");
+            throw new Error("Erro no envio de mensagem ao WhatsApp");
         }
 
-        if (appointmentConfirmed) {
-            await connection.commit();
-            return true;
-        }
-
-        return false;
+        await connection.commit();
+        return true;
     } catch (err) {
         await connection.rollback();
         throw err;

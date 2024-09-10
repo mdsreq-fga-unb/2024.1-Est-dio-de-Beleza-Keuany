@@ -1,15 +1,36 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Button } from 'react-bootstrap'; // Assegure-se de importar o Button se necessário
+import { confirmAppointment, getAppointmentById } from '../../store/modules/agendamento/sagas';
+import { useNavigate } from 'react-router-dom';
 
 const ConfirmacaoAgendamento = () => {
   const { id } = useParams(); // Obtém a ID do parâmetro da URL
+  const [appointment, setAppointment] = useState();
+  const navigate = useNavigate();
 
   const services = [
     { id: 1, name: "Design Simples" },
     { id: 2, name: "Micropigmentação" },
     { id: 3, name: "Desenho de Sobrancelha" },
   ];
+
+  async function findAppointmentById(id) {
+    const response = await getAppointmentById(id);
+
+    if (response) {
+      setAppointment(response.data);
+    }
+  }
+
+  async function confirmCustomerAppointment(id) {
+    try {
+      const response = await confirmAppointment(id);
+  
+    } catch (error) {
+      console.error('Erro ao confirmar agendamento');
+    }
+  }
 
   const selectedService = services.find(service => service.id === parseInt(id));
 
@@ -42,6 +63,33 @@ const ConfirmacaoAgendamento = () => {
 
   const selectedAgendamento = agendamentos.find(agendamento => agendamento.appointmentId === parseInt(id));
 
+  const intStatusToString = (status) => {
+    switch (status) {
+      case 0:
+        return "Agendado";
+      case 1:
+        return "Confirmado";
+      case 2:
+        return "Finalizado";
+      case 3:
+        return "Cancelado";
+      default:
+        return "info"
+    }
+  }
+
+  const formattedDateToBR = (dateString) => {
+    // Extrai a data e a hora diretamente da string ISO
+    const [datePart, timePart] = dateString.split('T');
+    const [year, month, day] = datePart.split('-');
+    const [hour, minute] = timePart.split(':');
+  
+    // Formata para o padrão brasileiro
+    const formattedDate = `${day}/${month}/${year} ${hour}:${minute}`;
+  
+    return formattedDate;
+  }
+
   const getStatusButtonVariant = (status) => {
     switch (status) {
       case "Confirmado":
@@ -62,9 +110,9 @@ const ConfirmacaoAgendamento = () => {
     
       <div className="row d-flex align-items-center justify-content-between">
         <div className="col-9 d-flex align-items-center">
-          <div className="nome">{service.procedureName}</div>
+          <div className="nome">{appointment.name}</div>
           <Button
-            variant={getStatusButtonVariant(service.appointmentStatus)}
+            variant={getStatusButtonVariant(intStatusToString(appointment.status))}
             className="ms-3 text-center"
             disabled
             style={{
@@ -80,18 +128,18 @@ const ConfirmacaoAgendamento = () => {
               justifyContent: "center",
             }}
           >
-            {service.appointmentStatus}
+            {intStatusToString(appointment.status)}
           </Button>
         </div>
 
         <div className="preco">
-          <strong>{service.appointmentSchedule} horas</strong>
+          <strong>{formattedDateToBR(appointment.schedule)} horas</strong>
         </div>
         <div className="tempo_estimado">
-          Tempo Estimado: {service.procedureDuration} minutos
+          Tempo Estimado: {appointment.duration} minutos
         </div>
         <div className="preco">
-          Preço: {parseFloat(service.procedurePrice).toLocaleString("pt-BR", {
+          Preço: {parseFloat(appointment.price).toLocaleString("pt-BR", {
             style: "currency",
             currency: "BRL",
           })}
@@ -103,17 +151,25 @@ const ConfirmacaoAgendamento = () => {
 
   const handleConfirm = () => {
     // Adicione a lógica para confirmar o agendamento aqui
-    alert("Agendamento confirmado!");
+    confirmCustomerAppointment(appointment.idAppointment);
+
+    //alert("Agendamento confirmado!");
+    window.location.reload();
+    navigate(`/meus_agendamentos?telefone=${appointment.customerPhone}`);
   };
+
+  useEffect(() => {
+    findAppointmentById(id);
+  }, []);
 
   return (
     <div className="col p-5 overflow-auto h-100">
       <div className="d-flex flex-column vh-100">
         <div className="p-5">
           <h2 className="mb-5 mt-0">Detalhes do Agendamento</h2>
-          {selectedAgendamento ? (
+          {appointment ? (
             <>
-              <ServicoCard service={selectedAgendamento} />
+              <ServicoCard service={appointment} />
               <div className="mt-4 text-center">
                 <Button
                   variant="success"

@@ -110,3 +110,16 @@ export async function finishAppointmentAdmin(id) {
         throw err;
     }
 }
+
+export async function confirmAppointment(id) {
+    try {
+        const response = await api.patch(`/agendamento/confirmar/${id}`);
+        await Swal.fire("Sucesso!", "Agendamento confirmado com sucesso!", "success");
+        return response;
+    } catch (err) {
+        if (err.response) {
+            await Swal.fire("Erro!", err.response.data.message, "error");
+        }
+        throw err;
+    }
+}
