@@ -21,7 +21,7 @@ const Funcionamento = () => {
     async function listAllWorkSchedule() {
         const response = await getAllWorkSchedule();
 
-        if (response.data)
+        if (response)
             setWorkSchedules(response.data);
     }
     
