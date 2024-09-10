@@ -17,7 +17,7 @@ export default function Agendamentos () {
 
     async function listAllAppointments() {
         const response = await getAllAppointments();
-        if (response.data)
+        if (response)
             setAgendamentos(response.data);
     }
 
