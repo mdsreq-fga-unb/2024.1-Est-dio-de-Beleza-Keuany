@@ -57,6 +57,25 @@ const listCustomerAppointmentsService = async (customerPhone: string) => {
     return result as CustomerAppointment[];
 }
 
+const findByIdService = async (id: number) => {
+    const query = `
+        SELECT *
+            FROM APPOINTMENT A
+                JOIN \`QUEUE\` Q ON A.idAppointment = Q.idAppointment
+                JOIN \`PROCEDURE\` P ON A.idProcedure = P.idProcedure
+            WHERE A.idAppointment = ? AND Q.position = 1
+    `;
+
+    const [result] = await dbPool.query(query, [id]);
+
+    const rows = result as Appointment[];
+
+    if (rows.length > 0)
+        return rows[0];
+
+    return null;
+}
+
 const listAllAppointmentsService = async (): Promise<AppointmentWithQueue[]> => {
     const allAppointmentsQuery = `SELECT P.name AS procedureName, P.duration AS procedureDuration,
                                          P.price AS procedurePrice, A.idAppointment, 
@@ -358,6 +377,7 @@ export default {
     createAppointmentAndQueueService,
     enterQueueService,
     listCustomerAppointmentsService,
+    findByIdService,
     listAllAppointmentsService,
     deleteAppointmentService,
     adminCancelAppointmentService,

@@ -12,6 +12,17 @@ export function getAllAppointments() {
     return response;
 }
 
+export function getAppointmentById(id) {
+    const response = api.get(`/agendamento/buscar/${id}`)
+    .catch(async (err) => {
+        if (err.response) {
+            await Swal.fire("Erro!", err.response.data.message, "error");
+        }
+    });
+
+    return response;
+}
+
 export async function postAppointment(id, data) {
     try {
       const response = await api.post(`/agendamento/${id}`, data);
