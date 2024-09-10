@@ -69,6 +69,20 @@ const AfastamentosModal = (props) => {
         }));
     };
 
+    // Função para gerar horários com intervalo de 1 hora
+    const generateTimeOptions = () => {
+        const startHour = 8; // Começa às 8:00
+        const endHour = 20; // Termina às 20:00
+        const times = [];
+        for (let hour = startHour; hour <= endHour; hour++) {
+            const time = `${hour.toString().padStart(2, '0')}:00`;
+            times.push(time);
+        }
+        return times;
+    };
+
+    const timeOptions = generateTimeOptions();
+
     if (props.modalPage === "horário") {
         return (
             <Modal show={props.isOpen} onHide={props.onClose}>
@@ -98,22 +112,34 @@ const AfastamentosModal = (props) => {
                     </Menu>
                     <div className="m-2 d-flex flex-row justify-content-center">
                         <div className="p-4 d-flex flex-column align-items-center">
-                            <input
-                                type="time"
+                            <label>Início</label>
+                            <select
                                 name="startTime"
                                 value={formData.startTime}
                                 onChange={handleInputChange}
-                            />
-                            <label>Início</label>
+                                className="form-control"
+                            >
+                                {timeOptions.map(time => (
+                                    <option key={time} value={time}>
+                                        {time}
+                                    </option>
+                                ))}
+                            </select>
                         </div>
                         <div className="p-4 d-flex flex-column align-items-center">
-                            <input
-                                type="time"
+                            <label>Fim</label>
+                            <select
                                 name="endTime"
                                 value={formData.endTime}
                                 onChange={handleInputChange}
-                            />
-                            <label>Fim</label>
+                                className="form-control"
+                            >
+                                {timeOptions.map(time => (
+                                    <option key={time} value={time}>
+                                        {time}
+                                    </option>
+                                ))}
+                            </select>
                         </div>
                     </div>
                     <div className="m-2 d-flex align-items-center flex-column">
@@ -180,7 +206,7 @@ const AfastamentosModal = (props) => {
         return (
             <Modal show={props.isOpen} onHide={props.onClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Dia {props.selectedDate.toLocaleDateString('pt-BR')} selecionado</Modal.Title>
+                    <Modal.Title>Dia {props.selectedDate.toLocaleDateString('pt-BR')} selecionado</Modal.Title>  
                 </Modal.Header>
                 <Modal.Body>
                     <div className="m-2 d-flex align-items-center flex-column">
