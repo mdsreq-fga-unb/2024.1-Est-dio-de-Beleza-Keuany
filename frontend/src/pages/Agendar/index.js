@@ -363,16 +363,17 @@ const SuccessChecklistModal = ({ isOpen, onClose }) => {
           <div className="row">
             <div className="col-12">
             <div className="date-picker-container">
-  <h2 className="title">
-    Escolha uma Data</h2>
+  <h2 className="title">Escolha uma Data</h2>
   <DatePicker
     selected={selectedDate}
     onChange={handleDateChange}
     dateFormat="dd/MM/yyyy"
     placeholderText="Selecione uma data"
     className="date-picker"
+    minDate={new Date()}  // Adicione esta linha para impedir a seleção de datas passadas
   />
 </div>
+
 
               <div className="mb-4 mt-5"></div>
               <div className="mb-4 mt-5"></div>
