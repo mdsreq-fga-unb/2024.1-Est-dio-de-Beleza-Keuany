@@ -5,8 +5,9 @@
 | **Data** | **Versão** | **Descrição** | **Autor** |
 | :--------: | :--------: | :--------:  | :--------: | 
 | 16/04/2024 | 1.0 | Criação do Documento  | Mateus, Raphael, Ana Karoliny, Gustavo Melo |
-| 17/04/2024 | 1.01 | Adição das tecnologias utilizadas  | Raphael, Gustavo Melo |
-| 23/04/2024 | 1.02 | Atualização nome do projeto  | Mateus, Raphael, Ana Karoliny, Gustavo Melo, Gustavo Alves |
+| 17/04/2024 | 1.1 | Adição das tecnologias utilizadas  | Raphael, Gustavo Melo |
+| 23/04/2024 | 1.2 | Atualização nome do projeto  | Mateus, Raphael, Ana Karoliny, Gustavo Melo, Gustavo Alves |
+| 09/09/2024 | 1.3 | Atualização nome do projeto  | Mateus, Raphael, Ana Karoliny, Gustavo Melo, Gustavo Alves |
 
 ##  Problema
 
@@ -57,8 +58,8 @@
 
 | Atividade | Tecnologia |
 | :--------: |  :--------: |
-| **Front-end** | TypeScript (ReactJS) |
+| **Front-end** | Javascript (ReactJS, Bootstrap) |
 | **Back-end** | TypeScript (NodeJS) |
-| **Banco de Dados** | MongoDB |
-| **Reuniões** | Discord |
+| **Banco de Dados** | MySQL |
+| **Reuniões** | Discord, Google Meets |
 | **Prototipagem** | Figma |

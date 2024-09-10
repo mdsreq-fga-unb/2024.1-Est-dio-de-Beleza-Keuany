@@ -7,6 +7,7 @@
 | 16/04/2024 | 1.0 | Criação do Documento  | Mateus, Raphael, Ana Karoliny, Gustavo Melo |
 | 17/04/2024 | 1.01 | Adicionando critérios de replanejamento  | João, Raphael, Gustavo Melo |
 | 23/04/2024 | 1.02 | Adicionando papéis referentes a Engenharia de Requisitos  | Raphael, Gustavo Melo |
+| 10/09/2024 | 1.03 | Adicionando as ferramentas  | Raphael |
 
 ##  Organização do Projeto
 

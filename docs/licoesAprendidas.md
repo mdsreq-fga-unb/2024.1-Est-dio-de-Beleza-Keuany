@@ -6,6 +6,7 @@
 | :--------: | :--------: | :------------------: | :------------------------: |
 | 16/04/2024 |    1.0     | Criação do Documento |        Ana Karoliny        |
 | 31/07/2024 |    1.1     | Adição da Unidade 2  | Raphael Mendes, João Pedro |
+| 10/09/2024 |    1.2     | Adição da Unidade 2  | Raphael e Ana |
 
 
 ## Unidade 1

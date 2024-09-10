@@ -58,7 +58,6 @@
                 <td>
                     - O sistema deve permitir que o cliente agende um atendimento em um horário disponível;<br>
                     - Os horários de atendimento disponíveis no sistema devem ser das 8h até às 18h;<br>
-                    - Os dias de atendimento disponíveis no sistema devem ser de segunda a sábado;<br>
                     - O sistema deverá negar uma tentativa de agendamento, caso o horário já esteja preenchido.
                 </td>
             </tr>
@@ -66,7 +65,6 @@
                 <td>[US04] Eu, como cliente, quero cancelar meu horário de atendimento para prevenir possíveis faltas inesperadas.</td>
                 <td>
                     - O sistema deve permitir o cancelamento de agendamentos;<br>
-                    - O sistema deve verificar se o usuário cancelando o horário é de fato o usuário referente àquele horário ao pedir que o usuário insira o número como confirmação;<br>
                     - A fila deve ser atualizada com o cancelamento de um agendamento.
                 </td>
             </tr>
@@ -74,7 +72,7 @@
                 <td>[US05] Eu, como usuário, quero ter acesso às informações de horários livres e agendamentos para me planejar.</td>
                 <td>
                     - O sistema deve exibir um calendário com os horários disponíveis;<br>
-                    - O usuário deve poder aplicar filtros como intervalo de tempo (manhã, tarde, noite) e duração do compromisso;<br>
+                    - O usuário deve poder aplicar filtros como intervalo de tempo (dia, semana, mês e ano) e duração do compromisso;<br>
                     - Se não houver horários disponíveis no dia selecionado o sistema deve exibir uma mensagem informativa ao usuário;<br>
                     - Devem ser exibidas as pessoas na fila de cada horário.
                 </td>
@@ -83,7 +81,7 @@
                 <td>[US06] Eu, como cliente, quero entrar na fila de um horário que tenho interesse para garantir meu lugar caso o cliente anterior cancele o atendimento.</td>
                 <td>
                     - O sistema deve permitir ao cliente entrar em uma fila de espera por um horário ocupado;<br>
-                    - O sistema deve rejeitar mais do que 5 pessoas num horário;<br>
+                    - O sistema deve rejeitar mais do que 3 pessoas num horário;<br>
                     - O usuário deve ser notificado quando se mover da fila para a vaga.
                 </td>
             </tr>
@@ -92,7 +90,6 @@
                 <td>
                     - O sistema deve permitir ao administrador cancelar os horários dos clientes independente da vontade dos clientes, para manter a agenda fiel às mudanças externas;<br>
                     - O sistema deve permitir ao administrador marcar os horários dos clientes independente da vontade dos clientes, para manter a agenda fiel às mudanças externas;<br>
-                    - O sistema deve notificar o cliente quando o administrador remarcar o seu horário.
                 </td>
             </tr>
             <tr>
@@ -148,10 +145,10 @@
 </body>
 </html>
 
-## DOR
+## DoR
 
-<iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSDPYvUoHfku_t9SoYmj_9UjdwslmHRxAxPulH2QtKyYYpNF44b-CkZeDaV3QFlOwCxp-SBywwRgV_1/pubhtml?gid=186001220&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
+<iframe style="width: 100%; height: 710px; overflow: auto;"src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSDPYvUoHfku_t9SoYmj_9UjdwslmHRxAxPulH2QtKyYYpNF44b-CkZeDaV3QFlOwCxp-SBywwRgV_1/pubhtml?gid=186001220&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
 
-## DOD
+## DoD
 
-<iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSDPYvUoHfku_t9SoYmj_9UjdwslmHRxAxPulH2QtKyYYpNF44b-CkZeDaV3QFlOwCxp-SBywwRgV_1/pubhtml?gid=325401973&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
+<iframe style="width: 100%; height: 710px; overflow: auto;" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSDPYvUoHfku_t9SoYmj_9UjdwslmHRxAxPulH2QtKyYYpNF44b-CkZeDaV3QFlOwCxp-SBywwRgV_1/pubhtml?gid=325401973&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
