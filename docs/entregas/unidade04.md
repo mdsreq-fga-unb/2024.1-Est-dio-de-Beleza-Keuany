@@ -20,10 +20,18 @@ As atualizações do MVP foram devidamente incluídas na aba MVP. Entre essas al
 
 ## Entrega do Produto Final
 
-O produto final pode ser acessado através do link http://34.72.133.92/.
+O produto final pode ser acessado através do link <a href="http://34.72.133.92/">http://34.72.133.92/</a>.
 
 ## Vídeo de Validação
 
 O aúdio de uma das nossas integrantes foi comprometido no início da gravação e portanto o vídeo só começa a ter áudio a partir dos 30 segundos.
 
+<a href="https://youtu.be/zCTa_vZyaaQ">https://youtu.be/zCTa_vZyaaQ</a>
+
 <iframe width="800" height="400" src="https://youtu.be/zCTa_vZyaaQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+## Vídeo da Entrega da Unidade 04
+
+[https://youtu.be/gKta9sR7xmM](https://youtu.be/gKta9sR7xmM)
+
+<iframe width="800" height="400" src="https://youtu.be/gKta9sR7xmM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>

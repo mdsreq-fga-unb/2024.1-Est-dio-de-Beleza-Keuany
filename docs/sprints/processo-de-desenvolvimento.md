@@ -6,8 +6,6 @@
 | :--------: | :--------: | :------------------: | :--------------------------------------------: |
 | 10/09/2024 |    1.0     | Criação do Documento | Raphael Mendes Silva e Ana Karoliny |
 
-## Retrospectiva
-
 Ao início do projeto, o time optou por um processo de desenvolvimento ágil, utlizando Scrum/XP.
 Todavia, devido a intercorrências que não foram planejadas e o tempo disposto para o desenvolvimento total do projeto, os caminhos levaram a equipe a adotar um ciclo de vida hibrido, com características do ciclo de vida preditivo (maior parte) e ágil (menor parte).
 

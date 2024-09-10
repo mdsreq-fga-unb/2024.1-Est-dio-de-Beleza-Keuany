@@ -6,6 +6,7 @@
 | :--------: | :--------: | :--------:  | :--------: | 
 | 17/04/2024 | 1.0 | Criação do Documento  | Raphael, Gustavo Melo |
 | 23/04/2024 | 1.01 | Definição das aplicações dos processos de ER | Gustavo Melo, Raphael |
+| 10/09/2024 | 1.02 | Definição das aplicações dos processos de ER | Gustavo Melo, Raphael |
 
 Critérios propostos por GUPTA para escolher o processo de desenvolvimento, com base nas características dos Requisitos, da equipe de desenvolvimento, do envolvimento do usuário e do tipo de projeto e risco associado, respectivamente:
 
@@ -26,7 +27,11 @@ O resultado foi:
 - Espiral: 6
 - RAD: 11 
 
-Com base no framework GUPTA, o processo escolhido para o desenvolvimento será o Scrum/XP, que tem um ciclo de vida iterativo incremental. As fases do fluxo de trabalho de desenvolvimento são extraídas do Scrum, sendo:
+Com base no framework GUPTA, o processo escolhido para o desenvolvimento será o Scrum/XP, que tem um ciclo de vida iterativo incremental.
+
+**Observação: apesar do resultado do GUPTA, durante o desenvolvimento do software do produto, utilizou-se a metodologia preditiva cascata.**
+
+As fases do fluxo de trabalho de desenvolvimento são extraídas do Scrum, sendo:
 
 - **Backlog Planning**: nessa fase serão decididos e declarados os requisitos do projeto. Eles podem ser atualizados, adicionados ou removidos em outras etapas.
 - **Sprint Planning**: nessa fase será planejado as atividades que serão executadas durante a sprint. Para que ocorra de maneira correta, a equipe se reúne para realizar esse planejamento em conjunto.  
@@ -86,4 +91,3 @@ Sobre as facetas da ER **escolhemos o processo participativo**, este é um proce
 |Representação|Documentação no backlog|Mkdocs |Backlog do produto|
 |Verificação & Validação|Testes de Software|Testes Unitários|Integração Contínua no Github Actions|
 Organização e Atualização|Product Planning<br>Sprint Planning|Votação democrática|Product Backlog<br>Sprint Backlog|
-
