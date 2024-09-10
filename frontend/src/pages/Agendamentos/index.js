@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar'; 
 import 'react-big-calendar/lib/css/react-big-calendar.css'; 
 import moment from 'moment';
-import { getAllAppointments } from '../../store/modules/agendamento/sagas';
+import { getAllAppointments, finishAppointmentAdmin, cancelAppointmentAdmin } from '../../store/modules/agendamento/sagas';
 import { sessionStatus } from '../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { Modal, Button, Form } from 'react-bootstrap'; // Importa os componentes do react-bootstrap
@@ -21,9 +21,36 @@ export default function Agendamentos () {
        
     }
 
-  
+    async function markAppointmentAsCanceled(id) {
+        try {
+          const response = await cancelAppointmentAdmin(id);
+    
+          if (response) {
+            if (response.status === 200) {
+              window.location.reload();
+            }
+          }
+        } catch (error) {
+          console.error('Erro ao cancelar agendamento');
+        }
+    }
+
+    async function markAppointmentAsFinished(id) {
+        try {
+          const response = await finishAppointmentAdmin(id);
+    
+          if (response) {
+            if (response.status === 200) {
+              window.location.reload();
+            }
+          }
+        } catch (error) {
+          console.error('Erro ao finalizar agendamento');
+        }
+    }
 
     const formatEventos = agendamentos.map(agendamento => ({
+        id: agendamento.idAppointment,
         title: agendamento.procedureName,  
         start: moment(agendamento.appointmentSchedule)
                 .utcOffset(0)
@@ -37,17 +64,8 @@ export default function Agendamentos () {
         status: agendamento.appointmentStatus 
     }));
 
-    if (formatEventos){
-        console.log(formatEventos); 
-    }
-
-
-   
-
-  
     const eventPropGetter = (event) => {
         let backgroundColor = '';
-        console.log(event); 
         switch (event.status) {
             case 1:
                 backgroundColor = 'green';
@@ -56,14 +74,12 @@ export default function Agendamentos () {
                 backgroundColor = 'gray';
                 break;
             case 3:
-                backgroundColor = 'blue';
+                backgroundColor = 'red';
                 break;
             case 0:
-                backgroundColor = 'red';
-                console.log('teste1'); 
+                backgroundColor = 'blue';
                 break;
             default:
-                console.log(event.appointmentStatus); 
                 return 'info'; 
             
         }
@@ -83,6 +99,14 @@ export default function Agendamentos () {
         setModalIsOpen(false); // Fecha o modal
         setSelectedEvent(null); // Limpa o evento selecionado
     };
+
+    const cancelAppointment = () => {
+        markAppointmentAsCanceled(selectedEvent.id);
+    }
+
+    const finishAppointment = () => {
+        markAppointmentAsFinished(selectedEvent.id);
+    }
 
     useEffect(() => {
         sessionStatus(navigate).then(() => listAllAppointments());
@@ -136,10 +160,10 @@ export default function Agendamentos () {
             </Modal.Body>
             <Modal.Footer>
                 {/* Botão de excluir */}
-                <Button variant="danger">
+                <Button variant="danger" onClick={cancelAppointment}>
                     Cancelar
                 </Button>
-                <Button style={{ backgroundColor: 'green', borderColor: 'green' }} onClick={closeModal}>
+                <Button style={{ backgroundColor: 'green', borderColor: 'green' }} onClick={finishAppointment}>
   Finalizar
 </Button>
 

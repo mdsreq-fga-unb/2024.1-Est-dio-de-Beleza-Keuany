@@ -33,6 +33,8 @@ const Sidebar = () => {
                         <span className='mdi mdi-clock-alert-outline'> Funcionamento</span> 
                        
                     </Link>
+                   
+                    
                 </li>
                
             </ul>

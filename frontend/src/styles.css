@@ -494,3 +494,12 @@ div.col-3 button.excluir i {
     font-size: x-large;
     font-weight: bold;
 }
+
+.details {
+    text-align: justify;
+}
+
+.content-section {
+    background-color: #F8EFD4;
+    border-radius: 15px;
+}

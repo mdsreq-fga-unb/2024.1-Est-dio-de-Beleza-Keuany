@@ -1,22 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Modal, Button, Form } from 'react-bootstrap';
-import axios from 'axios'; // Importa o axios
+import { getAllProcedures, postProcedure, patchProcedure, deleteProcedure } from '../../store/modules/procedimento/sagas';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+
+let procedureData = {
+  name: '',
+  duration: '',
+  price: ''
+}
 
 export default function Procedimentos() {
     const [isPrimeiroModalOpen, setIsPrimeiroModalOpen] = useState(false);
     const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
     const [isSuccessRemoveModalOpen, setIsSuccessRemoveModalOpen] = useState(false);
 
+    const [procedimentos, setProcedimentos] = useState([]);
     const [userName, setUserName] = useState('');
     const [userPhone, setUserPhone] = useState('');
     const [buttonData, setButtonData] = useState({});
     const [newService, setNewService] = useState({
-      id: '',
       name: '',
-      tempo: '',
-      preco: ''
+      duration: '',
+      price: ''
     });
     const [isAddServiceModalOpen, setIsAddServiceModalOpen] = useState(false);
     const [isEditServiceModalOpen, setIsEditServiceModalOpen] = useState(false);
@@ -24,18 +30,68 @@ export default function Procedimentos() {
     const navigate = useNavigate();
     const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
     const [serviceToDelete, setServiceToDelete] = useState(null);
+
+    async function listAllProcedures() {
+      const response = await getAllProcedures();
+      if (response)
+          setProcedimentos(response.data);
+    }
+
+    async function createProcedure(data) {
+      try {
+        const response = await postProcedure(data);
+    
+        if (response) {
+          if (response.status === 201) {
+            window.location.reload();
+          }
+        }
+      } catch (error) {
+        console.error('Erro ao criar procedimento');
+      }
+    }
+
+    async function updateProcedure(id, data) {
+      try {
+        const response = await patchProcedure(id, data);
+    
+        if (response) {
+          if (response.status === 200) {
+            window.location.reload();
+          }
+        }
+      } catch (error) {
+        console.error('Erro ao atualizar procedimento');
+      }
+    }
+
+    async function removeProcedure(id) {
+      try {
+        const response = await deleteProcedure(id);
+    
+        if (response) {
+          if (response.status === 200) {
+            window.location.reload();
+          }
+        }
+      } catch (error) {
+        console.error('Erro ao remover procedimento');
+      }
+    }
+
    
     const handleCloseConfirmationModal = () => setIsConfirmationModalOpen(false);
     const handleShowConfirmationModal = (id) => {
       setServiceToDelete(id);
       setIsConfirmationModalOpen(true);
-    };
+    };  
 
     const handleShowAddServiceModal = () => setIsAddServiceModalOpen(true);
     const handleCloseAddServiceModal = () => setIsAddServiceModalOpen(false);
 
     const handleShowEditServiceModal = (service) => {
       setEditingService(service);
+     
       setIsEditServiceModalOpen(true);
     };
 
@@ -45,57 +101,32 @@ export default function Procedimentos() {
     };
 
     const handleSaveEditService = () => {
-      setButtonData((prevData) => ({
-        ...prevData,
-        [editingService.id]: editingService
-      }));
-      
+      procedureData.duration = editingService.duration;
+      procedureData.name = editingService.name;
+      procedureData.price = editingService.price;
+      const idProcedure = editingService.idProcedure;
+      console.log(procedureData);
+      console.log(idProcedure);
+
+      updateProcedure(idProcedure, procedureData);
+
       setIsEditServiceModalOpen(false);
       setEditingService(null);
-      
     };
 
     const handleDelete = async () => {
-      // Simula a exclusão na base de dados ou backend
-      try {
-        // Se estiver usando um backend real, descomente e ajuste a URL
-        // await axios.delete(`/api/services/${serviceToDelete}`);
-
-        // Atualiza o estado local
-        setButtonData((prevData) => {
-          const updatedData = { ...prevData };
-          delete updatedData[serviceToDelete];
-          return updatedData;
-        });
-      } catch (error) {
-        console.error('Erro ao deletar o serviço:', error);
-      }
+      console.log(serviceToDelete);
+      removeProcedure(serviceToDelete);
       setIsConfirmationModalOpen(false);
       
       // Abrir o modal de sucesso
-      setIsSuccessRemoveModalOpen(true);
+      //setIsSuccessRemoveModalOpen(true);
     };
 
     const handleAddService = () => {
-      setButtonData((prevData) => ({
-        ...prevData,
-        [`service${Object.keys(prevData).length + 1}`]: {
-          ...newService,
-          id: `${Object.keys(prevData).length + 1}`,
-          data: new Date().toLocaleDateString(),
-          hora: new Date().toLocaleTimeString()
-        }
-      }));
-      
-      setNewService({
-        id: '',
-        name: '',
-        tempo: '',
-        preco: ''
-      });
+      createProcedure(newService);
       
       setIsAddServiceModalOpen(false);
-      setIsSuccessModalOpen(true);
     };
 
     const fetchButtonData = async () => {
@@ -112,7 +143,8 @@ export default function Procedimentos() {
     };
 
     useEffect(() => {
-      fetchButtonData();
+      listAllProcedures();
+      //fetchButtonData();
     }, []);
 
     const ServicoCard = ({ service, onDelete, onEdit }) => {
@@ -120,26 +152,26 @@ export default function Procedimentos() {
         <div className="service-card col p-5 overflow-auto h-100">
           <div className="row d-flex align-items-center justify-content-between">
             <div className="col-9 d-flex align-items-center">
-                <div className="nome">{service.name}</div>
+              <div className="nome">{service.name}</div>
             </div>
-            <div className="col-3 text-end">
-              {service.status !== 'Finalizado' && (
-                <>
-                  <button className="custom-button"  onClick={() => onEdit(service)}>
-                    <i className="bi bi-pencil" style={{ fontSize: '1.5rem', color: 'blue' }}></i>
-                  </button>
-                  <button className="custom-button ms-2" onClick={() => onDelete(service.id)}>
-                    <i className="bi bi-trash" style={{ fontSize: '1.5rem', color: 'red' }}></i>
-                  </button>
-                </>
-              )}
+    
+            {/* Div atualizada para garantir que os botões fiquem lado a lado */}
+            <div className="col-3 text-end d-flex justify-content-end align-items-center">
+              <button className="custom-button me-2" onClick={() => onEdit(service)}>
+                <i className="bi bi-pencil" style={{ fontSize: '1.5rem', color: 'blue' }}></i>
+              </button>
+              <button className="custom-button" onClick={() => onDelete(service.idProcedure)}>
+                <i className="bi bi-trash" style={{ fontSize: '1.5rem', color: 'red' }}></i>
+              </button>
             </div>
-            <div className="tempo_estimado">Tempo: {service.tempo} minutos</div>
-            <div className="preco">Preço: R$ {service.preco}</div>
+    
+            <div className="tempo_estimado">Tempo: {service.duration} minutos</div>
+            <div className="preco">Preço: R$ {service.price}</div>
           </div>
         </div>
       );
     };
+    
 
     return (
         <div className="col p-5 overflow-auto h-100">
@@ -160,9 +192,9 @@ export default function Procedimentos() {
             <div className="row">
                 <div className="className=mb-5 mt-0">
                     <div className="d-flex flex-column">
-                        {Object.values(buttonData).map((service) => (
+                        {Object.values(procedimentos).map((service) => (
                            <ServicoCard
-                             key={service.id}
+                             key={service.idProcedure}
                              service={service}
                              onDelete={handleShowConfirmationModal}
                              onEdit={handleShowEditServiceModal}
@@ -204,11 +236,11 @@ export default function Procedimentos() {
                   </Form.Group>
                   <Form.Group controlId="formServiceTime">
                     <Form.Label>Tempo Estimado (min)</Form.Label>
-                    <Form.Control type="number" value={newService.tempo} onChange={(e) => setNewService({ ...newService, tempo: e.target.value })} />
+                    <Form.Control type="number" value={newService.duration} onChange={(e) => setNewService({ ...newService, duration: e.target.value })} />
                   </Form.Group>
                   <Form.Group controlId="formServicePrice">
                     <Form.Label>Preço (R$)</Form.Label>
-                    <Form.Control type="number" value={newService.preco} onChange={(e) => setNewService({ ...newService, preco: e.target.value })} />
+                    <Form.Control type="number" value={newService.price} onChange={(e) => setNewService({ ...newService, price: e.target.value })} />
                   </Form.Group>
                   
                 </Form>
@@ -238,16 +270,16 @@ export default function Procedimentos() {
                       <Form.Label>Tempo Estimado (min)</Form.Label>
                       <Form.Control
                         type="number"
-                        value={editingService.tempo}
-                        onChange={(e) => setEditingService({ ...editingService, tempo: e.target.value })}
+                        value={editingService.duration}
+                        onChange={(e) => setEditingService({ ...editingService, duration: e.target.value })}
                       />
                     </Form.Group>
                     <Form.Group controlId="formEditServicePrice">
                       <Form.Label>Preço (R$)</Form.Label>
                       <Form.Control
                         type="number"
-                        value={editingService.preco}
-                        onChange={(e) => setEditingService({ ...editingService, preco: e.target.value })}
+                        value={editingService.price}
+                        onChange={(e) => setEditingService({ ...editingService, price: e.target.value })}
                       />
                     </Form.Group>
                   </Form>

@@ -7,7 +7,7 @@ import testa from '../../assets/testa.png'; // Imagem de sobrancelha
 
 const Home = () => {
     return (
-        <div className="col p-5 overflow-auto h-100">
+    <div className="col p-5 overflow-auto h-100">
     <div className="d-flex flex-column vh-100">
         <div className="container-fluid p-5">
             {/* Header */}
@@ -36,10 +36,10 @@ const Home = () => {
             </div>
 
             {/* Content Section */}
-            <div className="mt-5 p-4 rounded shadow-sm" style={{ backgroundColor: '#F8EFD4', borderRadius: '15px' }}>
-                <div className="d-flex justify-content-between">
-                    <div className="col-8">
-                        <p>O estúdio de design de sobrancelhas Keuany é um
+            <div className="content-section mt-5 p-4 rounded shadow-sm">
+                <div className="d-flex justify-content-between m-2">
+                    <div className="col-7">
+                        <p className='details'>O estúdio de design de sobrancelhas Keuany é um
                             espaço especializado em cuidar e realçar a 
                             beleza do olhar através da modelagem e 
                             manutenção das sobrancelhas. Neste ambiente,

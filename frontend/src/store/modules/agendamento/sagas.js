@@ -73,3 +73,29 @@ export async function cancelAppointmentCustomer(id, customerPhone) {
         throw err;
     }
 }
+
+export async function cancelAppointmentAdmin(id) {
+    try {
+        const response = await api.patch(`/agendamento/cancelar/${id}`);
+        await Swal.fire("Sucesso!", "Agendamento cancelado com sucesso!", "success");
+        return response;
+    } catch (err) {
+        if (err.response) {
+            await Swal.fire("Erro!", err.response.data.message, "error");
+        }
+        throw err;
+    }
+}
+
+export async function finishAppointmentAdmin(id) {
+    try {
+        const response = await api.patch(`/agendamento/finalizar/${id}`);
+        await Swal.fire("Sucesso!", "Agendamento finalizado com sucesso!", "success");
+        return response;
+    } catch (err) {
+        if (err.response) {
+            await Swal.fire("Erro!", err.response.data.message, "error");
+        }
+        throw err;
+    }
+}
