@@ -14,6 +14,7 @@ import Servicos from './pages/Servico';
 import Funcionamento from './pages/Funcionamento';
 import Afastamentos from './pages/Afastamentos';
 import ServiceList from './components/CreateURL';
+import ConfirmacaoAgendamento from './pages/ConfirmarAgendamento';
 
 
 
@@ -54,6 +55,7 @@ const MainContent = () => {
                     <Route path='/afastamento' exact element={<Afastamentos/>} />
                     <Route path='/avaliar/:id' exact element={<CadastrarAvaliacoes/>} />
                     <Route path="/createurl" element={<ServiceList />} />
+                    <Route path="/confirmacao_agendamento/:id" element={<ConfirmacaoAgendamento/>} />
                 </Switch>
             </div>
         </div>

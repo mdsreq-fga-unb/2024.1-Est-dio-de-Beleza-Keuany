@@ -1,35 +1,46 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 const ServiceList = () => {
+  // Dados dos serviços existentes
   const services = [
-    { id: 1, name: "Design Simples" },
-    { id: 2, name: "Micropigmentação" },
-    { id: 3, name: "Desenho de Sombrancelha" },
+    { id: 1, name: "Corte de Cabelo" },
+    { id: 2, name: "Massagem Relaxante" },
+    { id: 3, name: "Manicure" },
   ];
 
-  const baseUrl = window.location.origin; // Obtém a URL base do site
+  // Dados dos novos serviços
+  const newServices = [
+    { id: 4, name: "Design de Sobrancelhas" },
+    { id: 5, name: "Depilação" },
+    { id: 6, name: "Limpeza de Pele" },
+  ];
+
+  // Combina todos os serviços em uma única lista
+  const allServices = [...services, ...newServices];
 
   return (
     <div className="container mt-5">
       <h2>Lista de Serviços</h2>
       <div className="row">
-        {services.map(service => (
+        {allServices.map(service => (
           <div key={service.id} className="col-md-4 mb-4">
             <div className="card p-3">
               <h4>{service.name}</h4>
-              <p>
-                <Link to={`/avaliar/${service.id}`} className="btn btn-primary">
-                  Avaliar Serviço
-                </Link>
-              </p>
-              <p>
-                <strong>Link para Avaliação:</strong>
-                <br />
-                <a href={`${baseUrl}/avaliar/${service.id}`} target="_blank" rel="noopener noreferrer">
-                  {`${baseUrl}/avaliar/${service.id}`}
-                </a>
-              </p>
+              {service.id <= 3 ? (
+                // Para serviços com ID 1, 2 e 3, exibe apenas o link para confirmação
+                <p>
+                  <a href={`/confirmacao_agendamento/${service.id}`} className="btn btn-link" target="_blank" rel="noopener noreferrer">
+                    Link para Confirmação
+                  </a>
+                </p>
+              ) : (
+                // Para serviços com ID 4, 5 e 6, exibe apenas o link para avaliação
+                <p>
+                  <a href={`/avaliar/${service.id}`} className="btn btn-link" target="_blank" rel="noopener noreferrer">
+                    Link para Avaliação
+                  </a>
+                </p>
+              )}
             </div>
           </div>
         ))}
