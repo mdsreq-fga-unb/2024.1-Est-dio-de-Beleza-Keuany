@@ -25,7 +25,7 @@ const Afastamentos = () => {
         startTime: "08:00:00",
         endTime: "16:00:00",
         isAvailable: 1,
-        idExceptionSchedule: null, // Adicionei o idEsceptionSchedule
+        idExceptionSchedule: null // Adicionei o idEsceptionSchedule
     });
 
     const handleDaySelection = (dateSelected) => {
@@ -59,7 +59,8 @@ const Afastamentos = () => {
 
     async function listAllExceptions() {
         const response = await getAllExceptions();
-        setExceptions(response.data);
+        if (response.data)
+            setExceptions(response.data);
     }
 
     useEffect(() => {

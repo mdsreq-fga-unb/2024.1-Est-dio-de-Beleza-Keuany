@@ -17,8 +17,8 @@ export default function Agendamentos () {
 
     async function listAllAppointments() {
         const response = await getAllAppointments();
-        setAgendamentos(response.data);
-       
+        if (response.data)
+            setAgendamentos(response.data);
     }
 
     async function markAppointmentAsCanceled(id) {
