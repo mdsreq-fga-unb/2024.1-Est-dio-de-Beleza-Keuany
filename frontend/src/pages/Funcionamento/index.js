@@ -1,9 +1,11 @@
 import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import FuncionamentoCard from "../../components/FuncionamentoCard";
+import { getAllWorkSchedule, patchWorkSchedule } from "../../store/modules/grade/sagas";
+import { sessionStatus } from "../../contexts/AuthContext";
 
 
 const Funcionamento = () => {
@@ -14,6 +16,13 @@ const Funcionamento = () => {
     const navigatePressDiasdeAfastamento = "/afastamento";
 
     const [isMenuOpened, setMenuOpened] = useState(null);
+    const [workSchedules, setWorkSchedules] = useState([]);
+
+    async function listAllWorkSchedule() {
+        const response = await getAllWorkSchedule();
+
+        setWorkSchedules(response.data);
+    }
     
     // Esse valor é de exemplo. Use-a para guardar os valores de retorno do GET.
     const valuesExample = [
@@ -112,6 +121,11 @@ const Funcionamento = () => {
         // ADICIONAR O HTTP POST
     }
 
+    useEffect(() => {
+        sessionStatus(navigate)
+        .then(() => listAllWorkSchedule());
+    }, []);
+
     return(
         <div className="col m-5 overflow-auto h-100">
             <div className="row">
@@ -172,49 +186,15 @@ const Funcionamento = () => {
                     </div>
                 </div>
             </div>
-
-            <FuncionamentoCard
-                diaDaSemana={translationTable["MON"]}
-                startTime={getValue(valuesExample, "MON", "startTime")}
-                endTime={getValue(valuesExample, "MON", "endTime")}
-                isActive={getValue(valuesExample, "MON", "activeDay")}
-            />
-            <FuncionamentoCard
-                diaDaSemana={translationTable["TUE"]}
-                startTime={getValue(valuesExample, "TUE", "startTime")}
-                endTime={getValue(valuesExample, "TUE", "endTime")}
-                isActive={getValue(valuesExample, "TUE", "activeDay")}
-            />
-            <FuncionamentoCard
-                diaDaSemana={translationTable["WED"]}
-                startTime={getValue(valuesExample, "WED", "startTime")}
-                endTime={getValue(valuesExample, "WED", "endTime")}
-                isActive={getValue(valuesExample, "WED", "activeDay")}
-            />
-            <FuncionamentoCard
-                diaDaSemana={translationTable["THU"]}
-                startTime={getValue(valuesExample, "THU", "startTime")}
-                endTime={getValue(valuesExample, "THU", "endTime")}
-                isActive={getValue(valuesExample, "THU", "activeDay")}
-            />
-            <FuncionamentoCard
-                diaDaSemana={translationTable["FRI"]}
-                startTime={getValue(valuesExample, "FRI", "startTime")}
-                endTime={getValue(valuesExample, "FRI", "endTime")}
-                isActive={getValue(valuesExample, "FRI", "activeDay")}
-            />
-            <FuncionamentoCard
-                diaDaSemana={translationTable["SAT"]}
-                startTime={getValue(valuesExample, "SAT", "startTime")}
-                endTime={getValue(valuesExample, "SAT", "endTime")}
-                isActive={getValue(valuesExample, "SAT", "activeDay")}
-            />
-            <FuncionamentoCard
-                diaDaSemana={translationTable["SUN"]}
-                startTime={getValue(valuesExample, "SUN", "startTime")}
-                endTime={getValue(valuesExample, "SUN", "endTime")}
-                isActive={getValue(valuesExample, "SUN", "activeDay")}
-            />       
+            {workSchedules.map((workSchedule) => (
+                <FuncionamentoCard
+                    key={workSchedule.idWorkSchedule}
+                    diaDaSemana={translationTable[workSchedule.dayOfWeek]}
+                    startTime={workSchedule.startTime}
+                    endTime={workSchedule.endTime}
+                    isActive={workSchedule.activeDay}
+                />
+            ))}; 
         </div>
     ); 
 };

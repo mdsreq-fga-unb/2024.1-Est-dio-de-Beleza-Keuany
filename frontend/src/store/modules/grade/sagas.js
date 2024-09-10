@@ -8,6 +8,17 @@ if (token) {
     api.defaults.headers['Authorization'] = `Bearer ${token}`;
 }
 
+export async function getAllWorkSchedule() {
+    const response = api.get(`/grade`)
+    .catch(async (err) => {
+        if (err.response) {
+            await Swal.fire("Erro!", err.response.data.message, "error");
+        }
+    });
+
+    return response;
+}
+
 export async function patchWorkSchedule(id, data) {
     try {
         const response = await api.patch(`/grade/${id}`, data);
