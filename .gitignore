@@ -1,4 +1,4 @@
 /backend/node_modules
-/backend/bot-wp/creds
+
 /backend/.wwebjs_cache
 .env
