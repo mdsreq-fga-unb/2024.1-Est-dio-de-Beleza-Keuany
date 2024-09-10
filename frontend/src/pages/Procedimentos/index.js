@@ -149,28 +149,28 @@ export default function Procedimentos() {
 
     const ServicoCard = ({ service, onDelete, onEdit }) => {
       return (
-        <div className="service-card col p-5 overflow-auto h-100">
-          <div className="row d-flex align-items-center justify-content-between">
-            <div className="col-9 d-flex align-items-center">
-              <div className="nome">{service.name}</div>
-            </div>
-    
-            {/* Div atualizada para garantir que os botões fiquem lado a lado */}
-            <div className="col-3 text-end d-flex justify-content-end align-items-center">
-              <button className="custom-button me-2" onClick={() => onEdit(service)}>
-                <i className="bi bi-pencil" style={{ fontSize: '1.5rem', color: 'blue' }}></i>
-              </button>
-              <button className="custom-button" onClick={() => onDelete(service.idProcedure)}>
-                <i className="bi bi-trash" style={{ fontSize: '1.5rem', color: 'red' }}></i>
-              </button>
-            </div>
-    
-            <div className="tempo_estimado">Tempo: {service.duration} minutos</div>
-            <div className="preco">Preço: R$ {service.price}</div>
+          <div className="servico-card-container col p-5 overflow-auto h-100">
+              <div className="row d-flex align-items-center justify-content-between">
+                  <div className="col-9 d-flex align-items-center">
+                      <div className="nome">{service.name}</div>
+                  </div>
+  
+                  <div className="col-3 botoes-container">
+                      <button className="botao-editar me-2" onClick={() => onEdit(service)}>
+                          <i className="bi bi-pencil"></i>
+                      </button>
+                      <button className="botao-excluir" onClick={() => onDelete(service.idProcedure)}>
+                          <i className="bi bi-trash"></i>
+                      </button>
+                  </div>
+  
+                  <div className="tempo_estimado">Tempo: {service.duration} minutos</div>
+                  <div className="preco">Preço: R$ {service.price}</div>
+              </div>
           </div>
-        </div>
       );
-    };
+  };
+  
     
 
     return (
