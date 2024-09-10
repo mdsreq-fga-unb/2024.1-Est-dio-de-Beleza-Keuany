@@ -25,12 +25,16 @@ const Home = () => {
                         <span>Itapoã, DF</span>
                     </div>
                     <div className="d-flex align-items-center mb-2">
-                        <img src={whatsappIcon} alt="WhatsApp" style={{ width: '20px', marginRight: '10px' }} />
-                        <span>(89) 98150-4285</span>
+                    <a href="https://wa.me/89981504285/" target='_blank' style={{textDecoration: 'none', color: 'inherit'}}>
+                            <img src={whatsappIcon} alt="WhatsApp" style={{ width: '20px', marginRight: '10px' }} />
+                            <span>(89) 98150-4285</span>
+                        </a>
                     </div>
                     <div className="d-flex align-items-center">
-                        <img src={instagramIcon} alt="Instagram" style={{ width: '20px', marginRight: '10px' }} />
-                        <span>@keuanygomes</span>
+                        <a href="https://www.instagram.com/keuanygomes/" target='_blank'  style={{textDecoration: 'none', color: 'inherit'}}>
+                            <img src={instagramIcon} alt="Instagram" style={{ width: '20px', marginRight: '10px' }} />
+                            <span>@keuanygomes</span>
+                        </a>
                     </div>
                 </div>
             </div>

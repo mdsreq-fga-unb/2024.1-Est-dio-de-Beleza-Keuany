@@ -164,8 +164,9 @@ sidebar ul li a text {
 }
 
 .review-card {
-    background-color: #cda7ed;
-    border-radius: 10px;
+    background-color: #F9ECD4;
+    border-radius: 20px;
+    border-color: #000;
     padding: 20px;
     margin: 20px 0;
     width: 1200px;
