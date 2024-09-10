@@ -33,13 +33,7 @@ const Sidebar = () => {
                         <span className='mdi mdi-clock-alert-outline'> Funcionamento</span> 
                        
                     </Link>
-                    <Link 
-                        to="/createurl"
-                        className={location.pathname === '/createurl' ? 'active' : ''}
-                        > 
-                        <span className='mdi mdi-star-box'> Avaliar Serviço</span> 
-                       
-                    </Link>
+                   
                     
                 </li>
                
