@@ -18,7 +18,7 @@ const start = async () => {
     try {
         // CORS
         fastify.register(fastifyCors, {
-            origin: 'http://localhost:8080',
+            origin: '*',
             methods: ['GET', 'PATCH', 'POST', 'DELETE'],
             allowedHeaders: ['Content-Type', 'Authorization'],
             credentials: true
