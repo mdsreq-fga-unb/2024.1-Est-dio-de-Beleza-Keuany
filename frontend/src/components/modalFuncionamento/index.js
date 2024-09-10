@@ -53,7 +53,7 @@ const FuncionamentoModal = ({ isOpen, onClose, data, onSave }) => {
     // Função para gerar horários com intervalo de 1 hora
     const generateTimeOptions = () => {
         const startHour = 8;
-        const endHour = 20; // 8 PM
+        const endHour = 18;
         const times = [];
         for (let hour = startHour; hour <= endHour; hour++) {
             const time = `${hour.toString().padStart(2, '0')}:00`;

@@ -18,7 +18,7 @@ const createReview = async (req: FastifyRequest<{ Params: URLParams }>, res: Fas
         if (rating < 1 || rating > 5)
             return res.code(400).send({ message: 'A nota só pode ser de 1 a 5!' });
 
-        if (!anonymous)
+        if (anonymous === undefined)
             return res.code(400).send({ message: 'Informe se a avaliação será anônima ou não' });
 
         let reviewBody: Review = {

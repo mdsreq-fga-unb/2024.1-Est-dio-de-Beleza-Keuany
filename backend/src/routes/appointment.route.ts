@@ -7,7 +7,9 @@ async function appointmentRoutes(fastify: FastifyInstance) {
     // Entra na fila de um agendamento
     fastify.post('/fila', appointmentController.enterQueue); 
     // Lista todos os agendamentos
-    fastify.get('/', appointmentController.listAllAppointments); 
+    fastify.get('/', appointmentController.listAllAppointments);
+    // Busca um agendamento pelo ID
+    fastify.get('/buscar/:id', appointmentController.findById);
     // Lista os agendamentos de um cliente
     fastify.get('/cliente/:customerPhone', appointmentController.listCustomerAppointments);
     // Lista os horários disponíveis de agendamento para um determinado procedimento

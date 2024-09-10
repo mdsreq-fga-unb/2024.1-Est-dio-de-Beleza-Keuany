@@ -1,10 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Rating from 'react-rating-stars-component';
+import { getProcedureById } from '../../store/modules/procedimento/sagas';
+import { getAppointmentById } from '../../store/modules/agendamento/sagas';
+import { postReview } from '../../store/modules/avaliacao/sagas';
 
 const AvaliacaoServicos = () => {
   const [reviews, setReviews] = useState([]);
+  const [appointment, setAppointment] = useState();
   const { id } = useParams(); // Obtém a ID do parâmetro da URL
+
+  async function findAppointmentById(id) {
+    const response = await getAppointmentById(id);
+
+    if (response)
+      setAppointment(response.data);
+  }
+
+  async function createReview(idAppointment, data) {
+    try {
+      const response = await postReview(idAppointment, data);
+  
+      /* if (response) {
+        if (response.status === 201) {
+          FinalizarProcedimento();
+        }
+      } */
+    } catch (error) {
+      console.error('Erro ao cadastrar avaliação');
+    }
+  }
 
   // Serviços simulados
   const services = [
@@ -27,9 +52,16 @@ const AvaliacaoServicos = () => {
   const handleSaveReview = () => {
     setReviews((prevReviews) => [
       ...prevReviews,
-      { ...avaliacao, serviceId: selectedService.id, serviceName: selectedService.name },
+      { ...avaliacao, serviceId: appointment.idProcedure, serviceName: appointment.name },
     ]);
-    alert("Avaliação salva com sucesso!"); // Simula a ação de salvar
+    //alert("Avaliação salva com sucesso!"); // Simula a ação de salvar
+    let reviewData = { ...avaliacao };
+    if (reviewData.anonymous)
+      reviewData.anonymous = "1";
+    else
+      reviewData.anonymous = "0";
+    console.log(reviewData);
+    createReview(appointment.idAppointment, avaliacao);
   };
 
   // Função para alterar a nota da avaliação
@@ -56,13 +88,17 @@ const AvaliacaoServicos = () => {
     }));
   };
 
+  useEffect(() => {
+    findAppointmentById(id);
+  }, []);
+
   return (
     <div className="col p-5 overflow-auto h-100">
       <div className="d-flex flex-column vh-100">
         <div className="container mt-5">
-          {selectedService ? (
+          {appointment ? (
             <>
-              <h2>Avalie o Serviço: {selectedService.name}</h2>
+              <h2>Avalie o Serviço: {appointment.name}</h2>
               <div className="card p-3">
                 <p>Deixe sua avaliação:</p>
                 <Rating
@@ -105,7 +141,7 @@ const AvaliacaoServicos = () => {
           {/* Exibe avaliações salvas */}
           <div className="mt-5">
             <h3>Avaliações Salvas</h3>
-            {reviews.length > 0 ? (
+            {reviews !== 0 ? (
               reviews.map((review, index) => (
                 <div key={index} className="card mt-3 p-3">
                   <h5>{review.serviceName}</h5>

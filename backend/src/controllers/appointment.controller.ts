@@ -168,6 +168,27 @@ const listCustomerAppointments = async (req: FastifyRequest, res: FastifyReply) 
     }
 }
 
+const findById = async (req: FastifyRequest, res: FastifyReply) => {
+    try {
+        const id = Number((req.params as URLParams).id);
+
+        if (isNaN(id))
+            return res.code(400).send({ message: 'ID do agendamento não fornecido ou inválido!' });
+
+        const appointment = await appointmentService.findByIdService(id);
+
+        if (!appointment) 
+            return res.code(404).send({ message: 'Agendamento não encontrado' });
+
+        res.code(200).send(appointment);
+    } catch (err: unknown) {
+        if (err instanceof Error) 
+            res.code(500).send({ appointmentController: err.message });    
+        else
+            res.code(500).send({ appointmentController: 'Erro desconhecido!' });
+    }
+}
+
 const listAllAppointments = async (req: FastifyRequest, res: FastifyReply) => {
     try {
         const appointments = await appointmentService.listAllAppointmentsService();
@@ -307,6 +328,7 @@ export default {
     createAppointment,
     enterQueue,
     listCustomerAppointments,
+    findById,
     listAllAppointments,
     deleteAppointment,
     adminCancelAppointment,
