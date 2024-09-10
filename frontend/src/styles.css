@@ -393,7 +393,6 @@ div.col-3 button.excluir i {
     border-radius:100px;
     padding:15px 32px;
     display:flex;
-    width: 75%;
     flex-direction:column;
     gap:8px;
     border-style:hidden;
@@ -502,4 +501,70 @@ div.col-3 button.excluir i {
 .content-section {
     background-color: #F8EFD4;
     border-radius: 15px;
+}
+
+/* Classe específica para o card de serviço */
+.servico-card-container {
+    background-color: #F9ECD4;
+    border-radius: 20px;
+    padding: 20px;
+    margin: 20px auto;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+    width: 100%;
+}
+
+.servico-card-container .row {
+    width: 100%;
+}
+
+.servico-card-container .nome {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.servico-card-container .tempo_estimado, 
+.servico-card-container .preco {
+    font-size: 1.2rem;
+    color: #666;
+}
+
+.servico-card-container .botoes-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.servico-card-container .botao-editar,
+.servico-card-container .botao-excluir {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+.servico-card-container .botao-editar i {
+    font-size: 1.5rem;
+    color: blue;
+}
+
+.servico-card-container .botao-excluir i {
+    font-size: 1.5rem;
+    color: red;
+}
+
+.servico-card-container .botao-editar:hover,
+.servico-card-container .botao-excluir:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    transform: scale(1.2);
+}
+
+.servico-card-container .botao-editar:active,
+.servico-card-container .botao-excluir:active {
+    transform: scale(0.95);
 }

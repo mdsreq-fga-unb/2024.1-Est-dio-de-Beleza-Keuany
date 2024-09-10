@@ -8,9 +8,9 @@ const AvaliacaoServicos = () => {
 
   // Serviços simulados
   const services = [
-    { id: 1, name: "Design Simples" },
-    { id: 2, name: "Micropigmentação" },
-    { id: 3, name: "Desenho de Sombrancelha" },
+    { id: 4, name: "Design Simples" },
+    { id: 5, name: "Micropigmentação" },
+    { id: 6, name: "Desenho de Sombrancelha" },
   ];
 
   // Filtra o serviço com base na ID extraída da URL
