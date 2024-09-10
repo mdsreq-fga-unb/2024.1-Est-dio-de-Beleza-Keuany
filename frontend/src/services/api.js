@@ -4,7 +4,7 @@ import axios from 'axios';
 // backendURL = 'http://localhost:3000/';
 
 const api = axios.create({
-    baseURL: 'http://34.122.134.9/',
+    baseURL: 'http://localhost:3000/',
 });
 
 /* if (token) {
