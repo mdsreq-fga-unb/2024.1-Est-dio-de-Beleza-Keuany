@@ -25,7 +25,7 @@ const Afastamentos = () => {
         startTime: "08:00:00",
         endTime: "16:00:00",
         isAvailable: 1,
-        idExceptionSchedule: null, // Adicionei o idEsceptionSchedule
+        idExceptionSchedule: null // Adicionei o idEsceptionSchedule
     });
 
     const handleDaySelection = (dateSelected) => {
@@ -39,8 +39,8 @@ const Afastamentos = () => {
 
         if (selectedException) {
             setSelectedExceptionData({
-                startTime: selectedException.startTime,
-                endTime: selectedException.endTime,
+                startTime: selectedException.startTime.substring(0,5),
+                endTime: selectedException.endTime.substring(0,5),
                 isAvailable: selectedException.isAvailable,
                 idExceptionSchedule: selectedException.idExceptionSchedule // Passando o id da exceção
             });

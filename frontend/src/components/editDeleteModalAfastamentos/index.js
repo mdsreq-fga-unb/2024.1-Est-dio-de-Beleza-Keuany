@@ -12,20 +12,6 @@ const EditDeleteAfastamentoModal = (props) => {
         idExceptionSchedule: selectedExceptionData.idExceptionSchedule || null,
     });
 
-    // Função para gerar horários com intervalo de 1 hora
-    const generateTimeOptions = () => {
-        const startHour = 8; // Começa às 8:00
-        const endHour = 20; // Termina às 20:00
-        const times = [];
-        for (let hour = startHour; hour <= endHour; hour++) {
-            const time = `${hour.toString().padStart(2, '0')}:00`;
-            times.push(time);
-        }
-        return times;
-    };
-
-    const timeOptions = generateTimeOptions();
-
     async function updateException(id, data) {
         try {
             const response = await patchException(id, data);
@@ -91,6 +77,20 @@ const EditDeleteAfastamentoModal = (props) => {
         removeException(selectedExceptionData.idExceptionSchedule);
     };
 
+    // Função para gerar horários com intervalo de 1 hora
+    const generateTimeOptions = () => {
+        const startHour = 8; // Começa às 8:00
+        const endHour = 20; // Termina às 20:00
+        const times = [];
+        for (let hour = startHour; hour <= endHour; hour++) {
+            const time = `${hour.toString().padStart(2, '0')}:00`;
+            times.push(time);
+        }
+        return times;
+    };
+
+    const timeOptions = generateTimeOptions();
+
     return (
         <Modal show={props.isOpen} onHide={onClose}>
             <Modal.Header closeButton>
@@ -114,7 +114,7 @@ const EditDeleteAfastamentoModal = (props) => {
                         </select>
                     </div>
                     <div className="p-4 d-flex flex-column align-items-center">
-                        <label>Fim</label>
+                        <label>Início</label>
                         <select
                             name="endTime"
                             value={formData.endTime}
