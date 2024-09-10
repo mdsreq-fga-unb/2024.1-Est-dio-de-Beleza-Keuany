@@ -331,7 +331,7 @@ const confirmAppointmentService = async (id: number): Promise<boolean> => {
         if (appointmentConfirmed) {
             if (customerPhone) {
                 formattedPhone = formatPhoneNumber(customerPhone);
-                const message = `Seu agendamento com ID ${id} foi confirmado com sucesso!`;
+                const message = `Seu agendamento, de ID ${id}, foi confirmado com sucesso!`;
                 await sendMessage(formattedPhone, message);
             } else {
                 throw new Error("Erro no envio de mensagem ao WhatsApp");
