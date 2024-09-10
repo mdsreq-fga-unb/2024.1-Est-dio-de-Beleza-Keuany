@@ -116,6 +116,11 @@ const updateExceptionSchedule = async (req: FastifyRequest, res: FastifyReply) =
         if (!exceptionDate && !startTime && !endTime && !isAvailable)
             return res.code(400).send({ message: 'Preencha pelo menos um campo para atualização!' });
 
+        if (startTime && endTime) {
+            if (startTime >= endTime)
+                return res.code(400).send({ message: 'A data de início não pode ser igual ou superior a de fim' });
+        }
+        
         if (exceptionDate) {
             if (!isValidDate(exceptionDate))
                 return res.code(400).send({ message: 'Insira uma data válida no formato (DD/MM/YYYY)' });
