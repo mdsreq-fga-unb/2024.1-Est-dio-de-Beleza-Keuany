@@ -12,6 +12,9 @@ const createExceptionSchedule = async (req: FastifyRequest, res: FastifyReply) =
         if (!exceptionDate || !startTime || !endTime || !isAvailable)
             return res.code(400).send({ message: 'Preencha todos os campos necessários' });
 
+        if (startTime >= endTime)
+            return res.code(400).send({ message: 'A data de início não pode ser igual ou superior a de fim' });
+
         if (!isValidDate(exceptionDate))
             return res.code(400).send({ message: 'Insira uma data válida no formato (DD/MM/YYYY)' });
 

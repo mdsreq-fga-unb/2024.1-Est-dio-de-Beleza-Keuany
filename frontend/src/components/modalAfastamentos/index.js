@@ -2,50 +2,78 @@ import { Modal } from "react-bootstrap";
 import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { postException, patchException, deleteException } from "../../store/modules/excecao/sagas";
 
 const AfastamentosModal = (props) => {
-    let startTime, endTime;
+    const { startTime, endTime, isAvailable } = props.selectedExceptionData;
     const selectedDate = props.selectedDate;
 
     const [modalMenuOpened, setModalMenuOpened] = useState(null);
+    const [formData, setFormData] = useState({
+        startTime: startTime || "08:00",
+        endTime: endTime || "16:00",
+        isAvailable: isAvailable || 1
+    });
 
+    // Atualize os campos de horário quando o `selectedExceptionData` mudar
+    useEffect(() => {
+        setFormData({
+            startTime: props.selectedExceptionData.startTime || "08:00",  // Atualize startTime
+            endTime: props.selectedExceptionData.endTime || "16:00",      // Atualize endTime
+            isAvailable: props.selectedExceptionData.isAvailable || 1     // Atualize isAvailable
+        });
+    }, [props.selectedExceptionData]);
+
+    async function createException(data) {
+        try {
+            const response = await postException(data);
+            if (response) {
+                if (response.status === 201) {
+                    window.location.reload();
+                }
+            }
+        } catch (error) {
+            console.error('Erro ao cadastrar exceção');
+        }
+    }
 
     const handleModalPageChange = (modalPage) => {
         setModalMenuOpened(null);
         props.setModalPage(modalPage);
-    }
+    };
 
     const openModalMenu = (ev) => {
         setModalMenuOpened(ev.currentTarget);
-        // o elemento vindo é o certo, mas por algum motivo o react não aceita.
-    }
-    const isModalMenuOpened = () => {
-        if (modalMenuOpened === null) {
-            return false;
-        }
-        else {
-            return true;
-        }
-    }
+    };
 
-    const submitDayUpdate = (activeDay, startTime, endTime) => {
-        if (activeDay === true) {
-            // POST request, probably
-            props.setModalPage("confirmação");
-        } else {
-            // POST request, probably
+    const isModalMenuOpened = () => modalMenuOpened !== null;
 
-            props.setModalPage("confirmação");
-        }
-    }
+    const submitDayUpdate = (isAvailable) => {
+        const data = {
+            exceptionDate: selectedDate.toLocaleDateString('pt-BR'),
+            startTime: formData.startTime,
+            endTime: formData.endTime,
+            isAvailable: isAvailable ? "1" : "0",
+        };
+        //console.log(data);
+        createException(data);
+        //props.setModalPage("confirmação");
+    };
 
+    const handleInputChange = (ev) => {
+        const { name, value } = ev.target;
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
 
     if (props.modalPage === "horário") {
         return (
             <Modal show={props.isOpen} onHide={props.onClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Dia {selectedDate.getDate() + "/" + selectedDate.getMonth() + "/" + selectedDate.getFullYear()} selecionado</Modal.Title>
+                    <Modal.Title>Dia {props.selectedDate.toLocaleDateString('pt-BR')} selecionado</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <div className="m-2 d-flex align-items-center flex-column">
@@ -55,63 +83,56 @@ const AfastamentosModal = (props) => {
                         className="menu-funcionamento"
                         aria-controls="modal-menu1"
                         aria-haspopup="true"
-                        onClick={(event) => {openModalMenu(event)}}>
+                        onClick={openModalMenu}>
                         <span className="mdi mdi-chevron-down">Horário de Funcionamento</span> 
                     </Button>
                     <Menu
                         id="modal-menu1"
                         keepMounted
                         anchorEl={modalMenuOpened}
-                        onClose={() => {setModalMenuOpened(null);}}
+                        onClose={() => setModalMenuOpened(null)}
                         open={isModalMenuOpened()}>
-                        <MenuItem onClick={() => {
-                            setModalMenuOpened(null);
-                            }}>
-                            Horário de Funcionamento
-                        </MenuItem>
-                        <MenuItem onClick={() => {
-                            handleModalPageChange("indisponibilidade");
-                            }}>
+                        <MenuItem onClick={() => handleModalPageChange("indisponibilidade")}>
                             Indisponibilidade
                         </MenuItem>
                     </Menu>
                     <div className="m-2 d-flex flex-row justify-content-center">
                         <div className="p-4 d-flex flex-column align-items-center">
                             <input
-                            type="time"
-                            defaultValue="09:10"
-                            onChange={(ev) => startTime = ev.target.value}
-                            ></input>
+                                type="time"
+                                name="startTime"
+                                value={formData.startTime}
+                                onChange={handleInputChange}
+                            />
                             <label>Início</label>
                         </div>
                         <div className="p-4 d-flex flex-column align-items-center">
                             <input
-                            type="time"
-                            defaultValue="18:00"
-                            onChange={(ev) => endTime = ev.target.value}
-                            ></input>
+                                type="time"
+                                name="endTime"
+                                value={formData.endTime}
+                                onChange={handleInputChange}
+                            />
                             <label>Fim</label>
                         </div>
                     </div>
                     <div className="m-2 d-flex align-items-center flex-column">
                         <input
-                        className="btn btn-success"
-                        type="submit"
-                        value="Confirmar Horários"
-                        onClick={() => submitDayUpdate(true, startTime, endTime)}
-                        >
-                        </input>
+                            className="btn btn-success"
+                            type="submit"
+                            value="Confirmar Horários"
+                            onClick={() => submitDayUpdate(1)}  // Chama a função para enviar os dados e cadastrar a exceção
+                        />
                     </div>
                 </Modal.Body>
             </Modal>
         );
     }
-    else if (props.modalPage === "indisponibilidade")
-    {
+    else if (props.modalPage === "indisponibilidade") {
         return (
             <Modal show={props.isOpen} onHide={props.onClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Dia {selectedDate.getDate() + "/" + selectedDate.getMonth() + "/" + selectedDate.getFullYear()} selecionado</Modal.Title>
+                    <Modal.Title>Dia {props.selectedDate.toLocaleDateString('pt-BR')} selecionado</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <div className="m-2 d-flex align-items-center flex-column">
@@ -121,45 +142,45 @@ const AfastamentosModal = (props) => {
                         className="menu-funcionamento"
                         aria-controls="modal-menu2"
                         aria-haspopup="true"
-                        onClick={(event) => {openModalMenu(event)}}>
+                        onClick={openModalMenu}>
                         <span className="mdi mdi-chevron-down">Indisponibilidade</span> 
                     </Button>
                     <Menu
                         className="modal-menu2"
                         keepMounted
                         anchorEl={modalMenuOpened}
-                        onClose={() => {setModalMenuOpened(null);}}
+                        onClose={() => setModalMenuOpened(null)}
                         open={isModalMenuOpened()}>
-                        <MenuItem onClick={() => {
-                            setModalMenuOpened(null);
-                            }}>
+                        <MenuItem onClick={() => setModalMenuOpened(null)}>
                             Indisponibilidade
                         </MenuItem>
-                        <MenuItem onClick={() => {
-                            handleModalPageChange("horário");
-                            }}>
+                        <MenuItem onClick={() => handleModalPageChange("horário")}>
                             Horário de Funcionamento
                         </MenuItem>
                     </Menu>
                     <div className="m-2 d-flex align-items-center flex-column">
                         <input
-                        className="btn btn-success"
-                        type="submit"
-                        value="Confirmar Indisponibilidade"
-                        onClick={() => submitDayUpdate(false, null, null)}
-                        >
-                        </input>
+                            className="btn btn-success"
+                            type="submit"
+                            value="Confirmar Indisponibilidade"
+                            onClick={() => {
+                                setFormData((prevData) => ({
+                                    ...prevData,
+                                    isAvailable: 0,  // Define isAvailable como 0 para indisponibilidade
+                                }));
+                                submitDayUpdate(0);  // Envia os dados com isAvailable = 0
+                            }}
+                        />
                     </div>
                 </Modal.Body>
             </Modal>
         );
     }
-    else if (props.modalPage === "confirmação")
-    {
+    else if (props.modalPage === "confirmação") {
         return (
             <Modal show={props.isOpen} onHide={props.onClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Dia {selectedDate.getDate() + "/" + selectedDate.getMonth() + "/" + selectedDate.getFullYear()} selecionado</Modal.Title>
+                    <Modal.Title>Dia {props.selectedDate.toLocaleDateString('pt-BR')} selecionado</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <div className="m-2 d-flex align-items-center flex-column">
@@ -167,12 +188,11 @@ const AfastamentosModal = (props) => {
                     </div>
                     <div className="m-2 d-flex align-items-center flex-column">
                         <input
-                        className="btn btn-danger"
-                        type="submit"
-                        value="Fechar"
-                        onClick={props.onClose}
-                        >
-                        </input>
+                            className="btn btn-danger"
+                            type="submit"
+                            value="Fechar"
+                            onClick={props.onClose}
+                        />
                     </div>
                 </Modal.Body>
             </Modal>
