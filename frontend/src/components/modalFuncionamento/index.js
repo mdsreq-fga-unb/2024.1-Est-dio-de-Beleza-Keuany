@@ -6,6 +6,9 @@ import Button from "@mui/material/Button";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import { useState, useEffect } from "react";
+import { patchWorkSchedule } from "../../store/modules/grade/sagas";
+
+let formData;
 
 const FuncionamentoModal = ({ isOpen, onClose, data, onSave }) => {
     const [editData, setEditData] = useState(data);
@@ -14,12 +17,28 @@ const FuncionamentoModal = ({ isOpen, onClose, data, onSave }) => {
         setEditData(data);
     }, [data]);
 
+    async function updateWorkSchedule(id, data) {
+        try {
+            const response = await patchWorkSchedule(id, data);
+      
+            if (response) {
+              if (response.status === 200) {
+                window.location.reload();
+              }
+            }
+          } catch (error) {
+            console.error('Erro ao atualizar grade horária');
+          }
+    }
+
     function handleSaveChanges() {
         // Apenas simula a atualização de dados
-        console.log("Changes saved:", editData);
-        if (onSave) {
-            onSave(editData); // Chama a função onSave para notificar o componente pai
-        }
+        formData = { ...editData }
+        let { idWorkSchedule, ...rest } = formData;
+        rest.activeDay = Number(editData.activeDay).toString();
+        
+        updateWorkSchedule(idWorkSchedule, rest);
+
         onClose(); // Fecha o modal após salvar
     }
 

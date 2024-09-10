@@ -190,6 +190,7 @@ const Funcionamento = () => {
             {workSchedules.map((workSchedule) => (
                 <FuncionamentoCard
                     key={workSchedule.idWorkSchedule}
+                    id={workSchedule.idWorkSchedule}
                     diaDaSemana={translationTable[workSchedule.dayOfWeek]}
                     startTime={workSchedule.startTime}
                     endTime={workSchedule.endTime}

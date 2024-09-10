@@ -2,12 +2,14 @@ import Button from "@mui/material/Button";
 import { useState } from "react";
 import FuncionamentoModal from "../modalFuncionamento";
 
-const FuncionamentoCard = ({ diaDaSemana, startTime, endTime, isActive }) => {
+const FuncionamentoCard = ({ id, diaDaSemana, startTime, endTime, isActive }) => {
     startTime = startTime.slice(0, 5); // 'HH:MM'
     endTime = endTime.slice(0, 5); // 'HH:MM'
 
+    const idWorkSchedule = id;
+
     const [isModalOpen, setModalOpen] = useState(false);
-    const [modalData, setModalData] = useState({ startTime: "", endTime: "", activeDay: false });
+    const [modalData, setModalData] = useState({ idWorkSchedule, startTime: "", endTime: "", activeDay: false });
 
     let activeIcon;
     if (isActive === 1) {
@@ -18,7 +20,7 @@ const FuncionamentoCard = ({ diaDaSemana, startTime, endTime, isActive }) => {
 
     function handleOpenModal() {
         // Passa os dados diretamente da API para o modal
-        setModalData({ startTime, endTime, activeDay: Boolean(isActive) });
+        setModalData({ idWorkSchedule, startTime, endTime, activeDay: Boolean(isActive) });
         setModalOpen(true);
     }
 
