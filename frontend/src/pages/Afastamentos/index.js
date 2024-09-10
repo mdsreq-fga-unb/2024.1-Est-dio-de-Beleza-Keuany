@@ -39,8 +39,8 @@ const Afastamentos = () => {
 
         if (selectedException) {
             setSelectedExceptionData({
-                startTime: selectedException.startTime,
-                endTime: selectedException.endTime,
+                startTime: selectedException.startTime.substring(0,5),
+                endTime: selectedException.endTime.substring(0,5),
                 isAvailable: selectedException.isAvailable,
                 idExceptionSchedule: selectedException.idExceptionSchedule // Passando o id da exceção
             });
