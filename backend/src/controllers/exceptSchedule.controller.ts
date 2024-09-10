@@ -47,9 +47,6 @@ const findAllExceptionSchedule = async (req: FastifyRequest, res: FastifyReply) 
     try {
         const exceptionSchedules = await exceptScheduleService.findAllService();
 
-        if (exceptionSchedules.length === 0)
-            return res.code(404).send({ message: 'Não há dias exceções cadastrados!' });
-
         res.code(200).send(exceptionSchedules);
     } catch (err: unknown) {
         if (err instanceof Error) 
@@ -103,9 +100,9 @@ const findUnavailableDays = async (req: FastifyRequest, res: FastifyReply) => {
     }
 }
 
-const updateExceptionSchedule = async (req: FastifyRequest<{ Params: URLParams }>, res: FastifyReply) => {
+const updateExceptionSchedule = async (req: FastifyRequest, res: FastifyReply) => {
     try {
-        const id = Number(req.params.id);
+        const id = Number((req.params as URLParams).id);
         const body = req.body as Partial<ExceptionSchedule>;
 
         if (isNaN(id))
@@ -140,9 +137,9 @@ const updateExceptionSchedule = async (req: FastifyRequest<{ Params: URLParams }
     }
 }
 
-const deleteExceptionSchedule = async (req: FastifyRequest<{ Params: URLParams }>, res: FastifyReply) => {
+const deleteExceptionSchedule = async (req: FastifyRequest, res: FastifyReply) => {
     try {
-        const id = Number(req.params.id);
+        const id = Number((req.params as URLParams).id);
 
         if (isNaN(id))
             return res.code(400).send({ message: 'ID da exceção não fornecido ou inválido!' });

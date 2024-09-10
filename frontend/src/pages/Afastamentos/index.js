@@ -1,9 +1,10 @@
 import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { getAllExceptions, postException, patchException, deleteException } from "../../store/modules/excecao/sagas";
+import { sessionStatus } from "../../contexts/AuthContext";
 import DatePicker from "react-datepicker";
 import AfastamentosModal from "../../components/modalAfastamentos";
 
@@ -17,12 +18,23 @@ const Afastamentos = () => {
     const [date, setDate] = useState(new Date());
     const [isModalOpened, setModalOpened] = useState(false);
     const [modalPage, setModalPage] = useState(null);
+
+    const [exceptions, setExceptions] = useState([]);
     
     const handleDaySelection = (dateSelected) => {
         setDate(dateSelected);
         setModalOpened(true);
         setModalPage("horário");
     }
+
+    async function listAllExceptions() {
+        const response = await getAllExceptions();
+
+        setExceptions(response.data);
+    }
+
+    /* if (exceptions)
+        console.log(exceptions); */
 
     const getRequest = [
         {
@@ -40,15 +52,20 @@ const Afastamentos = () => {
             "isAvaliable": "1"
         }
     ]
+
+    useEffect(() => {
+        sessionStatus(navigate)
+        .then(() => listAllExceptions());
+    }, []);
     
     const styleExceptions = (date) => {
-        for (let index = 0; index < getRequest.length; index++) {
-            const eachException = getRequest[index];
+        for (let index = 0; index < exceptions.length; index++) {
+            const eachException = exceptions[index];
             if (date.toISOString().split('T')[0] === eachException.exceptionDate)
             {
-                if (eachException.isAvaliable === "1")
+                if (eachException.isAvaliable === 1)
                 {
-                    return "text-warning";
+                    return "text-success";
                 } 
                 else
                 {
