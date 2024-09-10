@@ -59,7 +59,7 @@ const Afastamentos = () => {
 
     async function listAllExceptions() {
         const response = await getAllExceptions();
-        if (response)
+        if (response.data)
             setExceptions(response.data);
     }
 

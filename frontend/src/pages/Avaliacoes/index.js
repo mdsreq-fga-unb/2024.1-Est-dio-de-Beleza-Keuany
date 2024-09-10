@@ -8,7 +8,7 @@ const Avaliacoes = () => {
 
   async function listAllReviews() {
     const response = await getAllReviews();
-    if (response)
+    if (response.data)
       setReviews(response.data);
   }
 

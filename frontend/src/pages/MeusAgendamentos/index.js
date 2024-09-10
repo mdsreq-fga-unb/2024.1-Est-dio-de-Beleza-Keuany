@@ -28,7 +28,7 @@ export default function Agendamentos_Clientes() {
   async function listAllCustomerAppointments(customerPhone) {
     const response = await getAppointmentsFromCustomer(customerPhone);
 
-    if (response)
+    if (response.data)
       setAgendamentos(response.data);
   }
 

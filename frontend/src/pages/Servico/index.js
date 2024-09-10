@@ -50,7 +50,7 @@ const Servicos = () => {
 
     async function listAllProcedures() {
         const response = await getAllProcedures();
-        if (response)
+        if (response.data)
             setProcedimentos(response.data);
     }
 
