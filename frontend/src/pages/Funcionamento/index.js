@@ -21,7 +21,8 @@ const Funcionamento = () => {
     async function listAllWorkSchedule() {
         const response = await getAllWorkSchedule();
 
-        setWorkSchedules(response.data);
+        if (response.data)
+            setWorkSchedules(response.data);
     }
     
     // Esse valor é de exemplo. Use-a para guardar os valores de retorno do GET.
