@@ -80,7 +80,7 @@ const EditDeleteAfastamentoModal = (props) => {
     // Função para gerar horários com intervalo de 1 hora
     const generateTimeOptions = () => {
         const startHour = 8; // Começa às 8:00
-        const endHour = 20; // Termina às 20:00
+        const endHour = 18; // Termina às 20:00
         const times = [];
         for (let hour = startHour; hour <= endHour; hour++) {
             const time = `${hour.toString().padStart(2, '0')}:00`;
