@@ -6,7 +6,7 @@ const Sidebar = () => {
     const location = useLocation(); 
 
     return(
-        <sidebar className="col-2 h-100">
+        <sidebar className="col-sidebar col-2 h-100">
             <img src={foto} alt="" className="img-fluid px-3 py-4" />
             <ul className="p-0 m-0">
                 <li>

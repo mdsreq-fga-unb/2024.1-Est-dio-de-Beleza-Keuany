@@ -102,7 +102,7 @@ export default function Agendamentos_Clientes() {
       </Button>
     </div>
 
-    <div className="col-3 text-end">
+    <div className="div-meus-agendamentos col-3 text-end">
   <button 
     className="excluir" 
     onClick={() => onDelete(service.appointmentId)}

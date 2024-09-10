@@ -266,11 +266,11 @@ div.col-3 button.excluir i {
 
   
 
-.col-2 {
+.col-sidebar {
     height: 100px; /* Ajuste conforme necessário para garantir que haja espaço suficiente */
 }
 
-.col-3 {
+.div-meus-agendamentos {
     display: flex;
     justify-content: flex-end; /* Garante que o conteúdo esteja alinhado à direita */
     align-items: flex-end; /* Garante que o conteúdo esteja alinhado ao fundo do contêiner */

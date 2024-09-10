@@ -3,7 +3,7 @@ import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import FuncionamentoCard from "../../components/FuncionamentoCard";
 
 
 const Funcionamento = () => {
@@ -16,11 +16,11 @@ const Funcionamento = () => {
     const [isMenuOpened, setMenuOpened] = useState(null);
     
     // Esse valor é de exemplo. Use-a para guardar os valores de retorno do GET.
-    const getValues = [
+    const valuesExample = [
         {
           "idWorkSchedule": 1,
           "dayOfWeek": "MON",
-          "startTime": "08:00:00",
+          "startTime": "09:00:00",
           "endTime": "16:00:00",
           "activeDay": 1
         },
@@ -28,7 +28,7 @@ const Funcionamento = () => {
           "idWorkSchedule": 2,
           "dayOfWeek": "TUE",
           "startTime": "08:00:00",
-          "endTime": "16:00:00",
+          "endTime": "17:00:00",
           "activeDay": 0
         },
         {
@@ -66,11 +66,31 @@ const Funcionamento = () => {
           "endTime": "16:00:00",
           "activeDay": 0
         }
-        ];
+    ];
+
+    const translationTable = {
+        "MON": "Segunda-Feira",
+        "TUE": "Terça-Feira",
+        "WED": "Quarta-Feira",
+        "THU": "Quinta-Feira",
+        "FRI": "Sexta-Feira",
+        "SAT": "Sábado",
+        "SUN": "Domingo"
+    }
     
+    function getValue(apiReturn, dayofWeek, key) {
+        for (let i = 0; i < apiReturn.length; i++) {
+            const cell = apiReturn[i];
+            if (cell["dayOfWeek"] === dayofWeek)
+            {
+                return cell[key];
+            }   
+        }
+    }
+
     function getGradeHoraria (diaAlvo) {
-        for (let index = 0; index < getValues.length; index++) {
-            const dia = getValues[index];
+        for (let index = 0; index < valuesExample.length; index++) {
+            const dia = valuesExample[index];
             if (dia.dayOfWeek === diaAlvo) {
                 return [dia.startTime, dia.endTime, Boolean(dia.activeDay)];
                 // return example: ["10:00:00", "18:00:00", true]
@@ -79,8 +99,8 @@ const Funcionamento = () => {
     }
     
     function handleChanges(dayOfWeek, field, new_value) {
-        for (let index = 0; index < getValues.length; index++) {
-            const dia = getValues[index];
+        for (let index = 0; index < valuesExample.length; index++) {
+            const dia = valuesExample[index];
             if (dia.dayOfWeek === dayOfWeek) {
                 dia[field] = new_value;
                 console.log(dia);
@@ -93,11 +113,10 @@ const Funcionamento = () => {
     }
 
     return(
-        
         <div className="col m-5 overflow-auto h-100">
             <div className="row">
                 <div className="col-12">
-                    <div className="w-100 d-flex justify-content-between">
+                    <div className="w-100 d-flex ">
                         <Button
                             className="menu-funcionamento"
                             aria-controls="simple-menu"
@@ -127,7 +146,7 @@ const Funcionamento = () => {
                 </div>
             </div>
             <div className="row">
-                <div className="col-3">
+                <div className="col-2">
                     <div className="w-100 d-flex justify-content-center">
                         <span className="h5">Dias da Semana</span>
                     </div>
@@ -142,172 +161,60 @@ const Funcionamento = () => {
                         <span className="h5">Horário de Fim</span>
                     </div>
                 </div>
-                <div className="col-3">
+                <div className="col-2">
                     <div className="w-100 d-flex justify-content-center">
                         <span className="h5">Trabalhará?</span>
                     </div>
                 </div>
-            </div>
-
-            <div className="dias-da-semana row">
-                <div className="col-3">
-                    <div className="w-100 d-flex justify-content-between">
-                        <span>Segunda-Feira</span>
-                    </div>
-                </div>
-                <div className="col-3">
+                <div className="col-2">
                     <div className="w-100 d-flex justify-content-center">
-                        <input type="time" aria-label="time" defaultValue={getGradeHoraria("MON")[0]} onChange={(ev) => {handleChanges("MON", "startTime", String(ev.target.value))}}></input>
-                    </div>
-                </div>
-                <div className="col-3">
-                    <div className="w-100 d-flex justify-content-center">
-                        <input type="time" aria-label="time" defaultValue={getGradeHoraria("MON")[1]} onChange={(ev) => {handleChanges("MON", "endTime", String(ev.target.value))}}></input>
-                    </div>
-                </div>
-                <div className="col-3">
-                    <div className="w-100 d-flex justify-content-center">
-                        <input className="form-check-input" type="checkbox" defaultChecked={getGradeHoraria("MON")[2]} onChange={(ev) => {handleChanges("MON", "activeDay", String(ev.target.value))}}></input>
+                        <span className="h5">Editar</span>
                     </div>
                 </div>
             </div>
 
-            <div className="dias-da-semana row">
-                <div className="col-3">
-                    <div className="w-100 d-flex justify-content-between">
-                        <span>Terca-Feira</span>
-                    </div>
-                </div>
-                <div className="col-3">
-                    <div className="w-100 d-flex justify-content-center">
-                        <input type="time" aria-label="time" defaultValue={getGradeHoraria("TUE")[0]} onChange={(ev) => {handleChanges("TUE", "startTime", String(ev.target.value))}}></input>
-                    </div>
-                </div>
-                <div className="col-3">
-                    <div className="w-100 d-flex justify-content-center">
-                        <input type="time" aria-label="time" defaultValue={getGradeHoraria("TUE")[1]} onChange={(ev) => {handleChanges("TUE", "endTime", String(ev.target.value))}}></input>
-                    </div>
-                </div>
-                <div className="col-3">
-                    <div className="w-100 d-flex justify-content-center">
-                        <input className="form-check-input" type="checkbox" defaultChecked={getGradeHoraria("TUE")[2]} onChange={(ev) => {handleChanges("TUE", "activeDay", String(ev.target.value))}}></input>
-                    </div>
-                </div>
-            </div>
-            <div className="dias-da-semana row">
-                <div className="col-3">
-                    <div className="w-100 d-flex justify-content-between">
-                        <span>Quarta-Feira</span>
-                    </div>
-                </div>
-                <div className="col-3">
-                    <div className="w-100 d-flex justify-content-center">
-                        <input type="time" aria-label="time" defaultValue={getGradeHoraria("WED")[0]} onChange={(ev) => {handleChanges("WED", "startTime", String(ev.target.value))}}></input>
-                    </div>
-                </div>
-                <div className="col-3">
-                    <div className="w-100 d-flex justify-content-center">
-                        <input type="time" aria-label="time" defaultValue={getGradeHoraria("WED")[1]} onChange={(ev) => {handleChanges("WED", "endTime", String(ev.target.value))}}></input>
-                    </div>
-                </div>
-                <div className="col-3">
-                    <div className="w-100 d-flex justify-content-center">
-                        <input className="form-check-input" type="checkbox" defaultChecked={getGradeHoraria("WED")[2]} onChange={(ev) => {handleChanges("WED", "activeDay", String(ev.target.value))}}></input>
-                    </div>
-                </div>
-            </div>
-            <div className="dias-da-semana row">
-                <div className="col-3">
-                    <div className="w-100 d-flex justify-content-between">
-                        <span>Quinta-Feira</span>
-                    </div>
-                </div>
-                <div className="col-3">
-                    <div className="w-100 d-flex justify-content-center">
-                        <input type="time" aria-label="time" defaultValue={getGradeHoraria("THU")[0]} onChange={(ev) => {handleChanges("THU", "startTime", String(ev.target.value))}}></input>
-                    </div>
-                </div>
-                <div className="col-3">
-                    <div className="w-100 d-flex justify-content-center">
-                        <input type="time" aria-label="time" defaultValue={getGradeHoraria("THU")[1]} onChange={(ev) => {handleChanges("THU", "endTime", String(ev.target.value))}}></input>
-                    </div>
-                </div>
-                <div className="col-3">
-                    <div className="w-100 d-flex justify-content-center">
-                        <input className="form-check-input" type="checkbox" defaultChecked={getGradeHoraria("THU")[2]} onChange={(ev) => {handleChanges("THU", "activeDay", String(ev.target.value))}}></input>
-                    </div>
-                </div>
-            </div>
-            <div className="dias-da-semana row">
-                <div className="col-3">
-                    <div className="w-100 d-flex justify-content-between">
-                        <span>Sexta-Feira</span>
-                    </div>
-                </div>
-                <div className="col-3">
-                    <div className="w-100 d-flex justify-content-center">
-                        <input type="time" aria-label="time" defaultValue={getGradeHoraria("FRI")[0]} onChange={(ev) => {handleChanges("FRI", "startTime", String(ev.target.value))}}></input>
-                    </div>
-                </div>
-                <div className="col-3">
-                    <div className="w-100 d-flex justify-content-center">
-                        <input type="time" aria-label="time" defaultValue={getGradeHoraria("FRI")[0]} onChange={(ev) => {handleChanges("FRI", "endTime", String(ev.target.value))}}></input>
-                    </div>
-                </div>
-                <div className="col-3">
-                    <div className="w-100 d-flex justify-content-center">
-                        <input className="form-check-input" type="checkbox" defaultChecked={getGradeHoraria("FRI")[2]} onChange={(ev) => {handleChanges("FRI", "activeDay", String(ev.target.value))}}></input>
-                    </div>
-                </div>
-            </div>
-            <div className="dias-da-semana row">
-                <div className="col-3">
-                    <div className="w-100 d-flex justify-content-between">
-                        <span>Sábado</span>
-                    </div>
-                </div>
-                <div className="col-3">
-                    <div className="w-100 d-flex justify-content-center">
-                        <input type="time" aria-label="time" defaultValue={getGradeHoraria("SAT")[0]} onChange={(ev) => {handleChanges("SAT", "startTime", String(ev.target.value))}}></input>
-                    </div>
-                </div>
-                <div className="col-3">
-                    <div className="w-100 d-flex justify-content-center">
-                        <input type="time" aria-label="time" defaultValue={getGradeHoraria("SAT")[1]} onChange={(ev) => {handleChanges("SAT", "endTime", String(ev.target.value))}}></input>
-                    </div>
-                </div>
-                <div className="col-3">
-                    <div className="w-100 d-flex justify-content-center">
-                        <input className="form-check-input" type="checkbox" defaultChecked={getGradeHoraria("SAT")[2]} onChange={(ev) => {handleChanges("SAT", "activeDay", String(ev.target.value))}}></input>
-                    </div>
-                </div>
-            </div>
-            <div className="dias-da-semana row">
-                <div className="col-3">
-                    <div className="w-100 d-flex justify-content-between">
-                        <span>Domingo</span>
-                    </div>
-                </div>
-                <div className="col-3">
-                    <div className="w-100 d-flex justify-content-center">
-                        <input type="time" aria-label="time" defaultValue={getGradeHoraria("SUN")[0]} onChange={(ev) => {handleChanges("SUN", "startTime", String(ev.target.value))}}></input>
-                    </div>
-                </div>
-                <div className="col-3">
-                    <div className="w-100 d-flex justify-content-center">
-                        <input type="time" aria-label="time" defaultValue={getGradeHoraria("SUN")[1]} onChange={(ev) => {handleChanges("SUN", "endTime", String(ev.target.value))}}></input>
-                    </div>
-                </div>
-                <div className="col-3">
-                    <div className="w-100 d-flex justify-content-center">
-                        <input className="form-check-input" type="checkbox" defaultChecked={getGradeHoraria("SUN")[2]} onChange={(ev) => {handleChanges("SUN", "activeDay", String(ev.target.value))}}></input>
-                    </div>
-                </div>
-            </div>
-            <div className="row align-items-center">
-                <input type="submit" className="btn btn-primary" value="Confirmar Alterações" onClick={submitChanges}></input>
-            </div>
-                                
+            <FuncionamentoCard
+                diaDaSemana={translationTable["MON"]}
+                startTime={getValue(valuesExample, "MON", "startTime")}
+                endTime={getValue(valuesExample, "MON", "endTime")}
+                isActive={getValue(valuesExample, "MON", "activeDay")}
+            />
+            <FuncionamentoCard
+                diaDaSemana={translationTable["TUE"]}
+                startTime={getValue(valuesExample, "TUE", "startTime")}
+                endTime={getValue(valuesExample, "TUE", "endTime")}
+                isActive={getValue(valuesExample, "TUE", "activeDay")}
+            />
+            <FuncionamentoCard
+                diaDaSemana={translationTable["WED"]}
+                startTime={getValue(valuesExample, "WED", "startTime")}
+                endTime={getValue(valuesExample, "WED", "endTime")}
+                isActive={getValue(valuesExample, "WED", "activeDay")}
+            />
+            <FuncionamentoCard
+                diaDaSemana={translationTable["THU"]}
+                startTime={getValue(valuesExample, "THU", "startTime")}
+                endTime={getValue(valuesExample, "THU", "endTime")}
+                isActive={getValue(valuesExample, "THU", "activeDay")}
+            />
+            <FuncionamentoCard
+                diaDaSemana={translationTable["FRI"]}
+                startTime={getValue(valuesExample, "FRI", "startTime")}
+                endTime={getValue(valuesExample, "FRI", "endTime")}
+                isActive={getValue(valuesExample, "FRI", "activeDay")}
+            />
+            <FuncionamentoCard
+                diaDaSemana={translationTable["SAT"]}
+                startTime={getValue(valuesExample, "SAT", "startTime")}
+                endTime={getValue(valuesExample, "SAT", "endTime")}
+                isActive={getValue(valuesExample, "SAT", "activeDay")}
+            />
+            <FuncionamentoCard
+                diaDaSemana={translationTable["SUN"]}
+                startTime={getValue(valuesExample, "SUN", "startTime")}
+                endTime={getValue(valuesExample, "SUN", "endTime")}
+                isActive={getValue(valuesExample, "SUN", "activeDay")}
+            />       
         </div>
     ); 
 };
