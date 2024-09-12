@@ -9,6 +9,15 @@ O projeto BrowStyle, está sendo desenvolvido pela equipe Ordem dos Caçadores C
 O projeto vem com o objetivo que criar um site para Keuany Gomes, que trabalha como design de sobrancelha e possui seu próprio estúdio de beleza. O projeto tem o intuito de resolver problemas que a cliente possui com seu agendamento e cancelamento de agendamento de suas clientes. 
 </p>
 
+## Acesso ao site
+<p>
+Link da aplicação: <a href="https://browstyle.vercel.app/" target="_blank" rel="external">Aqui</a>
+</p>
+
+### Credenciais de Admin
+* Login: **admin**
+* Senha: **senha**
+
 ## Documentação
 <p>
 A documentação pode ser consultada <a href="https://mdsreq-fga-unb.github.io/2024.1-Est-dio-de-Beleza-Keuany/" target="_blank" rel="external">Aqui</a>
