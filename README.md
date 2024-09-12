@@ -18,6 +18,8 @@ Link da aplicação: <a href="https://browstyle.vercel.app/" target="_blank" rel
 * Login: **admin**
 * Senha: **senha**
 
+* **IMPORTANTE**: Caso queira receber a confirmação via WhatsApp saiba que o servidor todo dia as 08:00hrs faz uma busca sobre todos os atendimentos do dia seguinte e manda para os respectivos clientes mensagens de confirmação ao longo do dia começando as 08hrs. Ou seja por exemplo caso queira receber a mensagem no WhatsApp para um agendamento marcado para o dia 12/09/2024 o agendamento deve ter sido feito **ATÉ** as 08:00hrs do dia 11/09/2024, caso faça um atendimento após as 08hrs o status já entra como confirmado. Contudo independente do horário marcado a mensagem com link para avaliação do atendimento enviada no momento que o Admin marca o atendimento como finalizado funciona para ambas as situações.
+
 ## Documentação
 <p>
 A documentação pode ser consultada <a href="https://mdsreq-fga-unb.github.io/2024.1-Est-dio-de-Beleza-Keuany/" target="_blank" rel="external">Aqui</a>
